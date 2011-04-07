@@ -1,0 +1,936 @@
+    <DatabaseInstall Type="post">
+        <TableCreate Type="post" Name="configitem">
+            <Column AutoIncrement="true" Name="id" PrimaryKey="true" Required="true" Type="BIGINT"></Column>
+            <Column Name="configitem_number" Required="true" Size="100" Type="VARCHAR"></Column>
+            <Column Name="class_id" Required="true" Type="INTEGER"></Column>
+            <Column Name="last_version_id" Required="false" Type="BIGINT"></Column>
+            <Column Name="cur_depl_state_id" Required="false" Type="INTEGER"></Column>
+            <Column Name="cur_inci_state_id" Required="false" Type="INTEGER"></Column>
+            <Column Name="create_time" Required="true" Type="DATE"></Column>
+            <Column Name="create_by" Required="true" Type="INTEGER"></Column>
+            <Column Name="change_time" Required="true" Type="DATE"></Column>
+            <Column Name="change_by" Required="true" Type="INTEGER"></Column>
+            <Unique>
+                                <UniqueColumn Name="configitem_number"></UniqueColumn>
+</Unique>
+            <Index Name="configitem_class_id">
+                <IndexColumn Name="class_id">
+                </IndexColumn>
+            </Index>
+            <Index Name="configitem_last_version_id">
+                <IndexColumn Name="last_version_id">
+                </IndexColumn>
+            </Index>
+            <Index Name="configitem_cur_depl_state_id">
+                <IndexColumn Name="cur_depl_state_id">
+                </IndexColumn>
+            </Index>
+            <Index Name="configitem_cur_inci_state_id">
+                <IndexColumn Name="cur_inci_state_id">
+                </IndexColumn>
+            </Index>
+            <ForeignKey ForeignTable="general_catalog">
+                <Reference Foreign="id" Local="class_id">
+                </Reference>
+                <Reference Foreign="id" Local="cur_depl_state_id">
+                </Reference>
+                <Reference Foreign="id" Local="cur_inci_state_id">
+                </Reference>
+            </ForeignKey>
+            <ForeignKey ForeignTable="users">
+                <Reference Foreign="id" Local="create_by">
+                </Reference>
+                <Reference Foreign="id" Local="change_by">
+                </Reference>
+            </ForeignKey>
+        </TableCreate>
+        <TableCreate Type="post" Name="configitem_definition">
+            <Column AutoIncrement="true" Name="id" PrimaryKey="true" Required="true" Type="INTEGER"></Column>
+            <Column Name="class_id" Required="true" Type="INTEGER"></Column>
+            <Column Name="configitem_definition" Required="true" Type="LONGBLOB"></Column>
+            <Column Name="version" Required="true" Type="INTEGER"></Column>
+            <Column Name="create_time" Required="true" Type="DATE"></Column>
+            <Column Name="create_by" Required="true" Type="INTEGER"></Column>
+            <ForeignKey ForeignTable="general_catalog">
+                <Reference Foreign="id" Local="class_id">
+                </Reference>
+            </ForeignKey>
+            <ForeignKey ForeignTable="users">
+                <Reference Foreign="id" Local="create_by">
+                </Reference>
+            </ForeignKey>
+        </TableCreate>
+        <TableCreate Type="post" Name="configitem_version">
+            <Column AutoIncrement="true" Name="id" PrimaryKey="true" Required="true" Type="BIGINT"></Column>
+            <Column Name="configitem_id" Required="true" Type="BIGINT"></Column>
+            <Column Name="name" Required="true" Size="250" Type="VARCHAR"></Column>
+            <Column Name="definition_id" Required="true" Type="INTEGER"></Column>
+            <Column Name="depl_state_id" Required="true" Type="INTEGER"></Column>
+            <Column Name="inci_state_id" Required="false" Type="INTEGER"></Column>
+            <Column Name="create_time" Required="true" Type="DATE"></Column>
+            <Column Name="create_by" Required="true" Type="INTEGER"></Column>
+            <Index Name="configitem_version_configitem_id">
+                <IndexColumn Name="configitem_id">
+                </IndexColumn>
+            </Index>
+            <Index Name="configitem_version_depl_state_id">
+                <IndexColumn Name="depl_state_id">
+                </IndexColumn>
+            </Index>
+            <Index Name="configitem_version_inci_state_id">
+                <IndexColumn Name="inci_state_id">
+                </IndexColumn>
+            </Index>
+            <ForeignKey ForeignTable="configitem">
+                <Reference Foreign="id" Local="configitem_id">
+                </Reference>
+            </ForeignKey>
+            <ForeignKey ForeignTable="configitem_definition">
+                <Reference Foreign="id" Local="definition_id">
+                </Reference>
+            </ForeignKey>
+            <ForeignKey ForeignTable="general_catalog">
+                <Reference Foreign="id" Local="depl_state_id">
+                </Reference>
+                <Reference Foreign="id" Local="inci_state_id">
+                </Reference>
+            </ForeignKey>
+            <ForeignKey ForeignTable="users">
+                <Reference Foreign="id" Local="create_by">
+                </Reference>
+            </ForeignKey>
+        </TableCreate>
+        <TableCreate Type="post" Name="configitem_counter">
+            <Column Name="class_id" PrimaryKey="true" Required="true" Type="INTEGER"></Column>
+            <Column Name="counter_type" Required="true" Size="50" Type="VARCHAR"></Column>
+            <Column Name="counter" Required="true" Size="50" Type="VARCHAR"></Column>
+            <ForeignKey ForeignTable="general_catalog">
+                <Reference Foreign="id" Local="class_id">
+                </Reference>
+            </ForeignKey>
+        </TableCreate>
+        <TableCreate Type="post" Name="configitem_history_type">
+            <Column AutoIncrement="true" Name="id" PrimaryKey="true" Required="true" Type="INTEGER"></Column>
+            <Column Name="name" Required="true" Size="255" Type="VARCHAR"></Column>
+            <Column Name="comments" Size="255" Type="VARCHAR"></Column>
+            <Column Name="valid_id" Required="true" Type="SMALLINT"></Column>
+            <Column Name="create_time" Required="true" Type="DATE"></Column>
+            <Column Name="create_by" Required="true" Type="INTEGER"></Column>
+            <Column Name="change_time" Type="DATE"></Column>
+            <Column Name="change_by" Type="INTEGER"></Column>
+            <Unique Name="configitem_history_type_name">
+                                <UniqueColumn Name="name"></UniqueColumn>
+</Unique>
+            <ForeignKey ForeignTable="valid">
+                <Reference Foreign="id" Local="valid_id">
+                </Reference>
+            </ForeignKey>
+            <ForeignKey ForeignTable="users">
+                <Reference Foreign="id" Local="create_by">
+                </Reference>
+                <Reference Foreign="id" Local="change_by">
+                </Reference>
+            </ForeignKey>
+        </TableCreate>
+        <TableCreate Type="post" Name="configitem_history">
+            <Column AutoIncrement="true" Name="id" PrimaryKey="true" Required="true" Type="BIGINT"></Column>
+            <Column Name="configitem_id" Required="true" Type="BIGINT"></Column>
+            <Column Name="type_id" Required="true" Type="INTEGER"></Column>
+            <Column Name="content" Required="true" Size="255" Type="VARCHAR"></Column>
+            <Column Name="create_time" Required="true" Type="DATE"></Column>
+            <Column Name="create_by" Required="true" Type="INTEGER"></Column>
+            <ForeignKey ForeignTable="configitem">
+                <Reference Foreign="id" Local="configitem_id">
+                </Reference>
+            </ForeignKey>
+            <ForeignKey ForeignTable="configitem_history_type">
+                <Reference Foreign="id" Local="type_id">
+                </Reference>
+            </ForeignKey>
+            <ForeignKey ForeignTable="users">
+                <Reference Foreign="id" Local="create_by">
+                </Reference>
+            </ForeignKey>
+        </TableCreate>
+        <Insert Type="post" Table="general_catalog">
+            <Data Key="general_catalog_class" Type="Quote">ITSM::ConfigItem::Class</Data>
+            <Data Key="name" Type="Quote">Computer</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Type="post" Table="general_catalog">
+            <Data Key="general_catalog_class" Type="Quote">ITSM::ConfigItem::Class</Data>
+            <Data Key="name" Type="Quote">Hardware</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Type="post" Table="general_catalog">
+            <Data Key="general_catalog_class" Type="Quote">ITSM::ConfigItem::Class</Data>
+            <Data Key="name" Type="Quote">Location</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Type="post" Table="general_catalog">
+            <Data Key="general_catalog_class" Type="Quote">ITSM::ConfigItem::Class</Data>
+            <Data Key="name" Type="Quote">Network</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Type="post" Table="general_catalog">
+            <Data Key="general_catalog_class" Type="Quote">ITSM::ConfigItem::Class</Data>
+            <Data Key="name" Type="Quote">Software</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Type="post" Table="general_catalog">
+            <Data Key="general_catalog_class" Type="Quote">ITSM::ConfigItem::DeploymentState</Data>
+            <Data Key="name" Type="Quote">Expired</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Type="post" Table="general_catalog">
+            <Data Key="general_catalog_class" Type="Quote">ITSM::ConfigItem::DeploymentState</Data>
+            <Data Key="name" Type="Quote">Inactive</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Type="post" Table="general_catalog">
+            <Data Key="general_catalog_class" Type="Quote">ITSM::ConfigItem::DeploymentState</Data>
+            <Data Key="name" Type="Quote">Maintenance</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Type="post" Table="general_catalog">
+            <Data Key="general_catalog_class" Type="Quote">ITSM::ConfigItem::DeploymentState</Data>
+            <Data Key="name" Type="Quote">Pilot</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Type="post" Table="general_catalog">
+            <Data Key="general_catalog_class" Type="Quote">ITSM::ConfigItem::DeploymentState</Data>
+            <Data Key="name" Type="Quote">Planned</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Type="post" Table="general_catalog">
+            <Data Key="general_catalog_class" Type="Quote">ITSM::ConfigItem::DeploymentState</Data>
+            <Data Key="name" Type="Quote">Production</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Type="post" Table="general_catalog">
+            <Data Key="general_catalog_class" Type="Quote">ITSM::ConfigItem::DeploymentState</Data>
+            <Data Key="name" Type="Quote">Repair</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Type="post" Table="general_catalog">
+            <Data Key="general_catalog_class" Type="Quote">ITSM::ConfigItem::DeploymentState</Data>
+            <Data Key="name" Type="Quote">Retired</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Type="post" Table="general_catalog">
+            <Data Key="general_catalog_class" Type="Quote">ITSM::ConfigItem::DeploymentState</Data>
+            <Data Key="name" Type="Quote">Review</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Type="post" Table="general_catalog">
+            <Data Key="general_catalog_class" Type="Quote">ITSM::ConfigItem::DeploymentState</Data>
+            <Data Key="name" Type="Quote">Test/QA</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Type="post" Table="general_catalog">
+            <Data Key="general_catalog_class" Type="Quote">ITSM::ConfigItem::YesNo</Data>
+            <Data Key="name" Type="Quote">Yes</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Type="post" Table="general_catalog">
+            <Data Key="general_catalog_class" Type="Quote">ITSM::ConfigItem::YesNo</Data>
+            <Data Key="name" Type="Quote">No</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Type="post" Table="general_catalog">
+            <Data Key="general_catalog_class" Type="Quote">ITSM::ConfigItem::Computer::Type</Data>
+            <Data Key="name" Type="Quote">Laptop</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Type="post" Table="general_catalog">
+            <Data Key="general_catalog_class" Type="Quote">ITSM::ConfigItem::Computer::Type</Data>
+            <Data Key="name" Type="Quote">Desktop</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Type="post" Table="general_catalog">
+            <Data Key="general_catalog_class" Type="Quote">ITSM::ConfigItem::Computer::Type</Data>
+            <Data Key="name" Type="Quote">Phone</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Type="post" Table="general_catalog">
+            <Data Key="general_catalog_class" Type="Quote">ITSM::ConfigItem::Computer::Type</Data>
+            <Data Key="name" Type="Quote">PDA</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Type="post" Table="general_catalog">
+            <Data Key="general_catalog_class" Type="Quote">ITSM::ConfigItem::Computer::Type</Data>
+            <Data Key="name" Type="Quote">Server</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Type="post" Table="general_catalog">
+            <Data Key="general_catalog_class" Type="Quote">ITSM::ConfigItem::Computer::Type</Data>
+            <Data Key="name" Type="Quote">Other</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Type="post" Table="general_catalog">
+            <Data Key="general_catalog_class" Type="Quote">ITSM::ConfigItem::Hardware::Type</Data>
+            <Data Key="name" Type="Quote">Monitor</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Type="post" Table="general_catalog">
+            <Data Key="general_catalog_class" Type="Quote">ITSM::ConfigItem::Hardware::Type</Data>
+            <Data Key="name" Type="Quote">Printer</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Type="post" Table="general_catalog">
+            <Data Key="general_catalog_class" Type="Quote">ITSM::ConfigItem::Hardware::Type</Data>
+            <Data Key="name" Type="Quote">Switch</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Type="post" Table="general_catalog">
+            <Data Key="general_catalog_class" Type="Quote">ITSM::ConfigItem::Hardware::Type</Data>
+            <Data Key="name" Type="Quote">Router</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Type="post" Table="general_catalog">
+            <Data Key="general_catalog_class" Type="Quote">ITSM::ConfigItem::Hardware::Type</Data>
+            <Data Key="name" Type="Quote">WLAN Access Point</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Type="post" Table="general_catalog">
+            <Data Key="general_catalog_class" Type="Quote">ITSM::ConfigItem::Hardware::Type</Data>
+            <Data Key="name" Type="Quote">Security Device</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Type="post" Table="general_catalog">
+            <Data Key="general_catalog_class" Type="Quote">ITSM::ConfigItem::Hardware::Type</Data>
+            <Data Key="name" Type="Quote">Backup Device</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Type="post" Table="general_catalog">
+            <Data Key="general_catalog_class" Type="Quote">ITSM::ConfigItem::Hardware::Type</Data>
+            <Data Key="name" Type="Quote">Mouse</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Type="post" Table="general_catalog">
+            <Data Key="general_catalog_class" Type="Quote">ITSM::ConfigItem::Hardware::Type</Data>
+            <Data Key="name" Type="Quote">Keybord</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Type="post" Table="general_catalog">
+            <Data Key="general_catalog_class" Type="Quote">ITSM::ConfigItem::Hardware::Type</Data>
+            <Data Key="name" Type="Quote">Camera</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Type="post" Table="general_catalog">
+            <Data Key="general_catalog_class" Type="Quote">ITSM::ConfigItem::Hardware::Type</Data>
+            <Data Key="name" Type="Quote">Beamer</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Type="post" Table="general_catalog">
+            <Data Key="general_catalog_class" Type="Quote">ITSM::ConfigItem::Hardware::Type</Data>
+            <Data Key="name" Type="Quote">Modem</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Type="post" Table="general_catalog">
+            <Data Key="general_catalog_class" Type="Quote">ITSM::ConfigItem::Hardware::Type</Data>
+            <Data Key="name" Type="Quote">PCMCIA Card</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Type="post" Table="general_catalog">
+            <Data Key="general_catalog_class" Type="Quote">ITSM::ConfigItem::Hardware::Type</Data>
+            <Data Key="name" Type="Quote">USB Device</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Type="post" Table="general_catalog">
+            <Data Key="general_catalog_class" Type="Quote">ITSM::ConfigItem::Hardware::Type</Data>
+            <Data Key="name" Type="Quote">Docking Station</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Type="post" Table="general_catalog">
+            <Data Key="general_catalog_class" Type="Quote">ITSM::ConfigItem::Hardware::Type</Data>
+            <Data Key="name" Type="Quote">Scanner</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Type="post" Table="general_catalog">
+            <Data Key="general_catalog_class" Type="Quote">ITSM::ConfigItem::Hardware::Type</Data>
+            <Data Key="name" Type="Quote">Other</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Type="post" Table="general_catalog">
+            <Data Key="general_catalog_class" Type="Quote">ITSM::ConfigItem::Location::Type</Data>
+            <Data Key="name" Type="Quote">Building</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Type="post" Table="general_catalog">
+            <Data Key="general_catalog_class" Type="Quote">ITSM::ConfigItem::Location::Type</Data>
+            <Data Key="name" Type="Quote">Office</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Type="post" Table="general_catalog">
+            <Data Key="general_catalog_class" Type="Quote">ITSM::ConfigItem::Location::Type</Data>
+            <Data Key="name" Type="Quote">Floor</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Type="post" Table="general_catalog">
+            <Data Key="general_catalog_class" Type="Quote">ITSM::ConfigItem::Location::Type</Data>
+            <Data Key="name" Type="Quote">Room</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Type="post" Table="general_catalog">
+            <Data Key="general_catalog_class" Type="Quote">ITSM::ConfigItem::Location::Type</Data>
+            <Data Key="name" Type="Quote">Rack</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Type="post" Table="general_catalog">
+            <Data Key="general_catalog_class" Type="Quote">ITSM::ConfigItem::Location::Type</Data>
+            <Data Key="name" Type="Quote">Workplace</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Type="post" Table="general_catalog">
+            <Data Key="general_catalog_class" Type="Quote">ITSM::ConfigItem::Location::Type</Data>
+            <Data Key="name" Type="Quote">Outlet</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Type="post" Table="general_catalog">
+            <Data Key="general_catalog_class" Type="Quote">ITSM::ConfigItem::Location::Type</Data>
+            <Data Key="name" Type="Quote">IT Facility</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Type="post" Table="general_catalog">
+            <Data Key="general_catalog_class" Type="Quote">ITSM::ConfigItem::Location::Type</Data>
+            <Data Key="name" Type="Quote">Other</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Type="post" Table="general_catalog">
+            <Data Key="general_catalog_class" Type="Quote">ITSM::ConfigItem::Network::Type</Data>
+            <Data Key="name" Type="Quote">LAN</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Type="post" Table="general_catalog">
+            <Data Key="general_catalog_class" Type="Quote">ITSM::ConfigItem::Network::Type</Data>
+            <Data Key="name" Type="Quote">WLAN</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Type="post" Table="general_catalog">
+            <Data Key="general_catalog_class" Type="Quote">ITSM::ConfigItem::Network::Type</Data>
+            <Data Key="name" Type="Quote">Telco</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Type="post" Table="general_catalog">
+            <Data Key="general_catalog_class" Type="Quote">ITSM::ConfigItem::Network::Type</Data>
+            <Data Key="name" Type="Quote">GSM</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Type="post" Table="general_catalog">
+            <Data Key="general_catalog_class" Type="Quote">ITSM::ConfigItem::Network::Type</Data>
+            <Data Key="name" Type="Quote">Other</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Type="post" Table="general_catalog">
+            <Data Key="general_catalog_class" Type="Quote">ITSM::ConfigItem::Software::Type</Data>
+            <Data Key="name" Type="Quote">Client Application</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Type="post" Table="general_catalog">
+            <Data Key="general_catalog_class" Type="Quote">ITSM::ConfigItem::Software::Type</Data>
+            <Data Key="name" Type="Quote">Middleware</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Type="post" Table="general_catalog">
+            <Data Key="general_catalog_class" Type="Quote">ITSM::ConfigItem::Software::Type</Data>
+            <Data Key="name" Type="Quote">Server Application</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Type="post" Table="general_catalog">
+            <Data Key="general_catalog_class" Type="Quote">ITSM::ConfigItem::Software::Type</Data>
+            <Data Key="name" Type="Quote">Client OS</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Type="post" Table="general_catalog">
+            <Data Key="general_catalog_class" Type="Quote">ITSM::ConfigItem::Software::Type</Data>
+            <Data Key="name" Type="Quote">Server OS</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Type="post" Table="general_catalog">
+            <Data Key="general_catalog_class" Type="Quote">ITSM::ConfigItem::Software::Type</Data>
+            <Data Key="name" Type="Quote">Admin Tool</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Type="post" Table="general_catalog">
+            <Data Key="general_catalog_class" Type="Quote">ITSM::ConfigItem::Software::Type</Data>
+            <Data Key="name" Type="Quote">User Tool</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Type="post" Table="general_catalog">
+            <Data Key="general_catalog_class" Type="Quote">ITSM::ConfigItem::Software::Type</Data>
+            <Data Key="name" Type="Quote">Embedded</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Type="post" Table="general_catalog">
+            <Data Key="general_catalog_class" Type="Quote">ITSM::ConfigItem::Software::Type</Data>
+            <Data Key="name" Type="Quote">Other</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Type="post" Table="general_catalog">
+            <Data Key="general_catalog_class" Type="Quote">ITSM::ConfigItem::Software::LicenceType</Data>
+            <Data Key="name" Type="Quote">Single Licence</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Type="post" Table="general_catalog">
+            <Data Key="general_catalog_class" Type="Quote">ITSM::ConfigItem::Software::LicenceType</Data>
+            <Data Key="name" Type="Quote">Per User</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Type="post" Table="general_catalog">
+            <Data Key="general_catalog_class" Type="Quote">ITSM::ConfigItem::Software::LicenceType</Data>
+            <Data Key="name" Type="Quote">Concurrent Users</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Type="post" Table="general_catalog">
+            <Data Key="general_catalog_class" Type="Quote">ITSM::ConfigItem::Software::LicenceType</Data>
+            <Data Key="name" Type="Quote">Per Processor</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Type="post" Table="general_catalog">
+            <Data Key="general_catalog_class" Type="Quote">ITSM::ConfigItem::Software::LicenceType</Data>
+            <Data Key="name" Type="Quote">Per Server</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Type="post" Table="general_catalog">
+            <Data Key="general_catalog_class" Type="Quote">ITSM::ConfigItem::Software::LicenceType</Data>
+            <Data Key="name" Type="Quote">Per Node</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Type="post" Table="general_catalog">
+            <Data Key="general_catalog_class" Type="Quote">ITSM::ConfigItem::Software::LicenceType</Data>
+            <Data Key="name" Type="Quote">Volume Licence</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Type="post" Table="general_catalog">
+            <Data Key="general_catalog_class" Type="Quote">ITSM::ConfigItem::Software::LicenceType</Data>
+            <Data Key="name" Type="Quote">Enterprise Licence</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Type="post" Table="general_catalog">
+            <Data Key="general_catalog_class" Type="Quote">ITSM::ConfigItem::Software::LicenceType</Data>
+            <Data Key="name" Type="Quote">Developer Licence</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Type="post" Table="general_catalog">
+            <Data Key="general_catalog_class" Type="Quote">ITSM::ConfigItem::Software::LicenceType</Data>
+            <Data Key="name" Type="Quote">Demo</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Type="post" Table="general_catalog">
+            <Data Key="general_catalog_class" Type="Quote">ITSM::ConfigItem::Software::LicenceType</Data>
+            <Data Key="name" Type="Quote">Time Restricted</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Type="post" Table="general_catalog">
+            <Data Key="general_catalog_class" Type="Quote">ITSM::ConfigItem::Software::LicenceType</Data>
+            <Data Key="name" Type="Quote">Freeware</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Type="post" Table="general_catalog">
+            <Data Key="general_catalog_class" Type="Quote">ITSM::ConfigItem::Software::LicenceType</Data>
+            <Data Key="name" Type="Quote">Open Source</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Type="post" Table="general_catalog">
+            <Data Key="general_catalog_class" Type="Quote">ITSM::ConfigItem::Software::LicenceType</Data>
+            <Data Key="name" Type="Quote">Unlimited</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Type="post" Table="configitem_history_type">
+            <Data Key="name" Type="Quote">ConfigItemCreate</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Type="post" Table="configitem_history_type">
+            <Data Key="name" Type="Quote">ConfigItemDelete</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Type="post" Table="configitem_history_type">
+            <Data Key="name" Type="Quote">LinkAdd</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Type="post" Table="configitem_history_type">
+            <Data Key="name" Type="Quote">LinkDelete</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Type="post" Table="configitem_history_type">
+            <Data Key="name" Type="Quote">NameUpdate</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Type="post" Table="configitem_history_type">
+            <Data Key="name" Type="Quote">VersionCreate</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Type="post" Table="configitem_history_type">
+            <Data Key="name" Type="Quote">ValueUpdate</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Type="post" Table="configitem_history_type">
+            <Data Key="name" Type="Quote">DefinitionUpdate</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Type="post" Table="configitem_history_type">
+            <Data Key="name" Type="Quote">IncidentStateUpdate</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Type="post" Table="configitem_history_type">
+            <Data Key="name" Type="Quote">DeploymentStateUpdate</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Type="post" Table="configitem_history_type">
+            <Data Key="name" Type="Quote">VersionDelete</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+    </DatabaseInstall>

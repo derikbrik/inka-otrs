@@ -1,0 +1,79 @@
+# --
+# AdminInkaCITVendorTab.dtl - Contains the Vendor Tab, for the Inka Configuration Managment - Admin Templates section
+# Copyright (C) 2011 Juan Manuel Rodriguez
+# --
+# $Id: AdminInkaCITVendorTab.dtl $
+# --
+# This software comes with ABSOLUTELY NO WARRANTY. For details, see
+# the enclosed file COPYING for license information (AGPL). If you
+# did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
+# --
+       	  
+    	  <div class="divContainer">
+    		<div class="divLeft">
+    			<h2>$Text{"Relations"}</h2>
+    			<p>
+    				<table>
+    				<tr>
+						<td>$Text{"Configuration items and"}:</td>
+						<td>
+							<div id="linkSelectHumanCIContainer">
+								<select id="linkSelectHumanCI" onchange="return switchLinkCIUser(this.value); ">
+									<option value="1" selected="selected">$Text{"Users"}</option>
+									<option value="2">$Text{"Configuration Items"}</option>
+								</select>
+							</div>
+						</td>					
+    				</tr>
+    				</table>
+    			</p>   			
+    			<div class="innerLeft" id="linkInnerLeft">
+					<ul id="relationCIList"  style="display: none;">				    		
+					</ul>
+					<ul id="relationUserList" style="" >				    		
+					</ul>
+				</div>
+				<p><input type="button" value="$Text{"Create New"}" onclick=" return openLinkForm();" class="buttonCreateNew"/></p>
+			</div>			
+    		<div class="divRigth">
+    			<div id="linkForm" class="superInnerRigth">
+    				<div id="titleNewLink"><center><h2>$Text{"New"}</h2></center></div>
+    				<div id="titleEditLink"><center><h2>$Text{"Edit"}</h2></center></div>
+    			<div class="innerRigth"  >    				
+    				<form action="#">
+    					<table>
+    						<tbody>
+    							<tr>
+    								<td colspan="2">&nbsp;</td>
+    							</tr>
+    							<tr>
+    								<td>$Text{"Name"} :</td><td><input onkeypress="if((event.keyCode && event.keyCode == 13)||(event.which && event.which == 13)){ submitLinkForm(); return false; }else return validateinputtext(event, this);" type="text" name="linkName" id="linkName"/></td>
+    							</tr>    						
+    							<tr>
+    								<td colspan="2">&nbsp;</td>
+    							</tr>
+    							<tr>
+    								<td colspan="2">&nbsp;</td>
+    							</tr>
+    							<tr style="text-align: right;">
+    								<td style="text-align: left;">
+    									<input id="deleteLinkButton" type="button" value="$Text{"Delete"}" onclick="javascript: return deleteLink();" />
+    								</td>    								
+    								<td style="text-align: right;">
+    									<input type="button" value="$Text{"Submit"}"  onclick="javascript: return submitLinkForm();"/>
+    									<input type="button" value="$Text{"Cancel"}"  onclick="javascript: return closeLinkForm();" />    									
+										<input type="hidden" value="0" id="linkId"/>
+    								</td>    								
+    							</tr>
+    							
+    						</tbody>    					
+    					</table>
+    				</form>
+    			</div>    			
+    			</div> <!-- end super inner rigth -->
+    			<div id="linkMessageDiv">
+    							<div id="MessageOkLT" 	 class="messageOk">&nbsp;</div>
+    							<div id="MessageErrorLT" class="messageError">&nbsp;</div>
+    			</div>
+    		</div>
+		</div>

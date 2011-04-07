@@ -1,0 +1,77 @@
+# --
+# InkaOCSIAccessConfigTab - Contains the Help Tab, for the Inka Configuration Managment - OCSI Tab for Config Access
+# Copyright (C) 2011 Juan Manuel Rodriguez
+# --
+# $Id: InkaOCSIImportTab.dtl $
+# --
+# This software comes with ABSOLUTELY NO WARRANTY. For details, see
+# the enclosed file COPYING for license information (AGPL). If you
+# did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
+# --
+   
+<h2>$Text{"Configure OCS Inventory Web Service"}</h2>
+<center>
+			<form action="index.pl" method="POST" id="ocsiWebServiceForm" name="compose">
+				<input name="Action" type="hidden" value="AgentInkaConfigurationItems" />
+				<input name="subaction" type="hidden" value="ocs" />				
+				<input name="method" type="hidden" value="configureOCSIWebService" />
+	            <div class="Content" id="ciform_content">
+	            <input type="checkbox" id="ocsiwsenabled" value="1" class="ciformInputs" name="enabled" onchange="return enabledDisabledOCSI();"/>&nbsp;&nbsp;
+	            <label for="ocsiEnabled" >$Text{"Enable OCS Inventory compatibility"}</label>
+	            <br/>
+	            <br/>
+	            	<table width="80%" id="ocsiTable" >
+	            	<thead>
+	            		<tr style="background-color: #d7d7d7;">
+	            			<th>$Text{"Properties"}:</th>
+	            			<th>$Text{"Values"}</th>
+	            		</tr>
+	            	</thead>
+	            	<tbody>
+	            		<tr>
+	            			<td class="tdCaptionForm">$Text{"Server"}:</td>
+	            			<td colspan="2">								
+								<input type="text" name="URL" id="ocsiwsurl" value="$Data{"URL"}" class="ciformInputs" />								
+							</td>
+	            		</tr>	            		
+	            		<tr>
+	            			<td class="tdCaptionForm">$Text{"User"}:</td>
+	            			<td colspan="2">								
+								<input type="text" name="user" id="ocsiwsuser" value="$Data{"user"}" class="ciformInputs" />
+							</td>
+	            		</tr>           		
+	            		<tr>
+	            			<td class="tdCaptionForm">$Text{"Password"}:</td>
+	            			<td colspan="2">								
+								<input type="text" name="password" id="ocsiwspassword" value="$Data{"password"}" class="ciformInputs" />
+							</td>
+	            		</tr>
+	            		<tr>
+	            			<td class="tdCaptionForm">$Text{"Protocol"}:</td>
+	            			<td colspan="2">								
+								<select id="ocsiwsprotocol" name="protocol" value="$Data{"protocol"}" class="ciformInputs">
+									<option value="http">http</option>
+									<option value="https">https</option>									
+								</select>
+								
+							</td>
+	            		</tr>
+	            		<tr>
+	            			<td class="tdCaptionForm">$Text{"Path"}:</td>
+	            			<td colspan="2">								
+								<input type="text" name="path" id="ocsiwspath" value="$Data{"path"}" class="ciformInputs" />
+							</td>
+	            		</tr>
+	            	</tbody>
+	            	</table>	            	            		
+				</div>
+				<div class="buttonCreateNew" id="osciButtonContainer">
+					<button type="button" title="$Text{"Test Connection"}" accesskey="t" id="ocsiwbTestConn" onclick="return testConnection();" class="Primary">$Text{"Test Connection"}</button>
+					<button type="submit" title="$Text{"Next"}&gt;&gt;" accesskey="n" id="ocsiwbSubmit" onclick="return submitOCSIWBForm();" class="Primary">$Text{"Next"}&gt;&gt;</button>
+				</div>				 				 
+			</form>
+			<div>
+    			<div class="messageOk" id="ocsiCAMessOk">$Text{"$QData{"message_ok"}"}</div>
+    			<div class="messageError" id="ocsiCAMessError">$Text{"$QData{"message_eror"}"}</div>
+			</div>
+</center>

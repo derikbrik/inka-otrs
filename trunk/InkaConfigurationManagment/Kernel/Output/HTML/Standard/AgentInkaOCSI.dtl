@@ -1,0 +1,52 @@
+# --
+# AgentInkaOCSI.dtl - provides HTML form for Agent Inka Configuration Items - OCSI
+# Copyright (C) 2011 Juan Manuel Rodriguez
+# --
+# $Id: AgentInkaOCSI.dtl
+# --
+# This software comes with ABSOLUTELY NO WARRANTY. For details, see
+# the enclosed file COPYING for license information (AGPL). If you
+# did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
+# --
+ 
+ <div class="ContentColumn">
+        <div class="WidgetSimple">
+        	
+			<div class="HeaderForCI">
+            	<h2 class="classForh2">OCS Inventory</h2>
+            </div>
+
+            <div class="Content">
+            	<p class="classForP">
+            		<div id="tabsocsi">
+					    <ul>
+					        <li><a href="#import"><span>$Text{"$QData{"Tab01"}"}</span></a></li>
+					        <li><a href="#access"><span>$Text{"$QData{"Tab02"}"}</span></a></li>
+					        <li><a href="#categories"><span>$Text{"$QData{"Tab03"}"}</span></a></li>					        
+					    </ul>
+					    <div id="import" class="tabbodyLong">    	
+					        <!-- template container start -->
+							$Include{"InkaOCSIImportTab"}
+					        <!-- end template container -->      
+					    </div>    
+					    <div id="access" class="tabbodyLong">
+					    	<!-- Category container start -->
+					    	 $Include{"InkaOCSIAccessConfigTab"}
+					    	 <!-- end Category container --> 
+					    </div>
+					    <div id="categories" class="tabbodyLong">
+					    	<!-- State container start -->
+					    	 $Include{"InkaOCSICategoryConfigTab"}
+					    	 <!-- end State container -->    	 
+					    </div>
+					</div>
+            	</p>
+			</div>
+         </div>
+</div>            
+<!-- end main body -->
+</div>
+</td>
+</tr>
+</table>
+<!-- end form -->			

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="iso-8859-1" ?>
+<otrs_config version="1.0" init="Application">
+	
+	<ConfigItem Name="LinkObject::PossibleLink###7777" Required="0" Valid="1">
+        <Description Lang="en">This setting defines that a 'Configuration Item' object can be linked with other 'Ticket' objects using the 'Normal' link type.</Description>
+        <Description Lang="es">Esta configuración define un objecto 'Elemento de Configuración' el cual se puede vincular a distintos Tickets usando la vinculación: 'Normal'.</Description>
+        <Group>Framework</Group>
+        <SubGroup>Core::LinkObject</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Object1">InkaConfigurationItem</Item>
+                <Item Key="Object2">Ticket</Item>
+                <Item Key="Type">Normal</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    
+    <ConfigItem Name="Frontend::Module###AdminInkaConfigurationItemsTemplates" Required="0" Valid="1">
+        <Description Lang="en">Frontend module registration for the AdminInkaConfigurationItemsTemplates configuration in the admin area.</Description>
+        <Description Lang="es">Registro del modulo de frontend AdminInkaConfigurationItemsTemplates, en el area de Administración.</Description>
+        <Group>INKA Configuration Management</Group>
+        <SubGroup>Frontend::Admin::ModuleRegistration</SubGroup>
+        <Setting>
+            <FrontendModuleReg>
+                <Group>InkaConfigurationItems</Group>
+                <Description>Admin</Description>
+                <Title>Configuration Items Template</Title>
+                <NavBarName>Admin</NavBarName>
+                <NavBarModule>
+                    <Module>Kernel::Output::HTML::NavBarModuleAdmin</Module>
+                    <Name>Configuration Items Template</Name>
+                    <Block>Block3</Block>
+                    <Prio>495</Prio>
+                </NavBarModule>
+            </FrontendModuleReg>
+        </Setting>
+    </ConfigItem>
+    
+    <ConfigItem Name="Frontend::Module###AgentInkaConfigurationItems" Required="0" Valid="1">
+        <Description Lang="en">Frontend module registration for the AgentInkaConfigurationItems object in the agent interface.</Description>
+        <Description Lang="de">Frontendmodul-Registration des AgentInkaConfigurationItems-Objekts im Agent-Interface.</Description>
+        <Description Lang="es">Registración del modulo de frontend: AgentInkaConfigurationItems en la interfaz de Agentes.</Description>
+        <Group>Inka</Group>
+        <SubGroup>InkaConfigurationItems</SubGroup>
+        <Setting>
+            <FrontendModuleReg>
+				<Title>Configuration Items</Title>
+				<Group>InkaConfigurationItems</Group>
+				<Description>INKA Configuration Items</Description>
+				<NavBarName>Configuration Items</NavBarName>
+				<NavBar>
+					<Description>INKA Configuration Items</Description>
+					<Name>Configuration Items</Name>
+					<Image>inka_ci_icon.png</Image>
+					<Link>Action=AgentInkaConfigurationItems</Link>
+					<NavBar>Configuration Items</NavBar>
+					<Type>Menu</Type>
+					<Prio>8400</Prio>
+					<Block>ItemArea</Block>
+				</NavBar>
+			</FrontendModuleReg>           
+        </Setting>
+    </ConfigItem>
+    
+</otrs_config>

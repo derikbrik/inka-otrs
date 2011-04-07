@@ -1,0 +1,31 @@
+# --
+# AgentInkaCIHelp.dtl - provides HTML form for Agent Inka Configuration Items
+# Copyright (C) 2011 Juan Manuel Rodriguez
+# --
+# $Id: AgentInkaCIHelp.dtl
+# --
+# This software comes with ABSOLUTELY NO WARRANTY. For details, see
+# the enclosed file COPYING for license information (AGPL). If you
+# did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
+# --
+ 
+ 
+ <div class="ContentColumn">
+        <div class="WidgetSimple">
+        	
+			<div class="HeaderForCI">
+            	<h2 class="classForh2">$Text{"Help"}</h2>
+            </div>
+
+            <div class="Content">
+            	<p class="classForP">Help</p>
+			</div>
+			
+         </div>
+	</div>            
+<!-- end main body -->
+</div>
+</td>
+</tr>
+</table>
+<!-- end form -->			

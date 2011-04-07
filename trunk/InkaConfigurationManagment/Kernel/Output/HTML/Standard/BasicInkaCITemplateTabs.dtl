@@ -1,0 +1,54 @@
+# --
+# BasicInkaCITemplateTabs.dtl - provides HTML form for Inka Configuration Items Template
+# Copyright (C) 2011 Juan Manuel Rodriguez
+# --
+# $Id: BasicInkaCITemplateTabs.dtl
+# --
+# This software comes with ABSOLUTELY NO WARRANTY. For details, see
+# the enclosed file COPYING for license information (AGPL). If you
+# did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
+# --
+
+
+<div id="tabs">
+    <ul>
+        <li><a href="#templates"><span>$Text{"$QData{"Tab01"}"}</span></a></li>
+        <li><a href="#categories"><span>$Text{"$QData{"Tab02"}"}</span></a></li>
+        <li><a href="#states"><span>$Text{"$QData{"Tab03"}"}</span></a></li>
+        <li><a href="#vendors"><span>$Text{"$QData{"Tab04"}"}</span></a></li>
+        <li><a href="#generic_lists"><span>$Text{"$QData{"Tab05"}"}</span></a></li>
+        <li><a href="#links"><span>$Text{"$QData{"Tab06"}"}</span></a></li>
+        <li><a href="#templates_help"><span>$Text{"$QData{"Tab07"}"}</span></a></li>
+    </ul>
+    <div id="templates" class="tabbody">    	
+        <!-- template container start -->
+		$Include{"AdminInkaCITTemplateTab"}
+        <!-- end template container -->      
+    </div>    
+    <div id="categories" class="tabbody">
+    	<!-- Category container start -->
+    	 $Include{"AdminInkaCITCategoryTab"}
+    	 <!-- end Category container --> 
+    </div>
+    <div id="states" class="tabbody">
+    	<!-- State container start -->
+    	 $Include{"AdminInkaCITStateTab"}
+    	 <!-- end State container -->    	 
+    </div>    
+    <div id="vendors" class="tabbody">
+    	  <!-- Vendors container start-->
+    	  $Include{"AdminInkaCITVendorTab"}
+    	  <!-- end Vendors container-->
+    </div>    
+     <div id="generic_lists" class="tabbody">
+     	  <!-- Generic List container start -->
+     	  $Include{"AdminInkaCITGenericListTab"}
+     	  <!-- end Generic List container -->
+    </div>
+    <div id="links" class="tabbody">
+      	  $Include{"AdminInkaCITLinkTab"}
+    </div>
+    <div id="templates_help" class="tabbody">
+      	  $Include{"AdminInkaCITHelpTab"}
+    </div>
+</div>

@@ -1,0 +1,62 @@
+# --
+# InkaOCSICategoryConfigTab - Contains the Help Tab, for the Inka Configuration Managment - OCSI Tab for Config Categories to import
+# Copyright (C) 2011 Juan Manuel Rodriguez
+# --
+# $Id:InkaOCSICategoryConfigTab.dtl $
+# --
+# This software comes with ABSOLUTELY NO WARRANTY. For details, see
+# the enclosed file COPYING for license information (AGPL). If you
+# did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
+# --
+
+<h2>$Text{"$QData{"Tab03"}"}</h2>
+<center>
+			<form action="index.pl" method="POST" id="ocsiCategoryForm" name="compose">
+				<input name="Action"    type="hidden" value="AgentInkaConfigurationItems" />
+				<input name="subaction" type="hidden" value="ocs" />
+				<input name="method"    type="hidden" value="configureOCSICategoriesToImport" />
+	            <div class="Content" id="ciform_content">
+	            <br/>
+	            <br/>
+	            	<table width="80%" id="ocsiTable" >
+	            	<thead>
+	            		<tr style="background-color: #d7d7d7;">
+	            			<th colspan="2">$Text{"Properties"}:</th>
+	            			<th style="width: 150px">$Text{"Import this field?"}</th>
+	            			<th colspan="2">$Text{"Import as"}</th>
+	            		</tr>
+	            	</thead>
+	            	<tbody>
+						<!-- dtl:block:Category -->
+	            		<tr>
+	            			<td colspan="2" class="tdCaptionForm">$Text{"$QData{"name"}"}:</td>
+	            			<td>
+								<input type="checkbox" id="ocsicc_$Data{"id"}" name="ck_$Data{"name"}" value="1" class="ciformInputs" style="text-align: center;"  $Data{"HTMLcheckboxState"} onchange="toggleCategorySelect($Data{"id"});"/>
+							</td>
+							<td colspan="2">$Data{"HTMLimportTypeControl"}</td>
+	            		</tr>
+	            		<!-- dtl:block:Category -->
+	            	</tbody>
+	            	</table>
+				</div>
+				<div class="buttonCreateNew" id="osciButtonContainer">
+					<button type="submit" title="$Text{"Next"}&gt;&gt;" accesskey="n" id="ocsiccSubmit" onclick="return submitOCSICCForm();" class="Primary">$Text{"Next"}&gt;&gt;</button>
+				</div>
+			</form>
+			<div>
+    			<div class="messageOk"    id="ocsiCCMessOk">$Text{"$QData{"message_ok"}"}</div>
+    			<div class="messageError" id="ocsiCCMessError">$Text{"$QData{"message_eror"}"}</div>
+			</div>
+			<div>
+				<div id="ocsiMessageCreateTemplatesLoading" style="width: 150px"></div>
+    			<div class="messageLoading" id="ocsiMessageCreateTemplates"></div>    			
+			</div>
+			<div>
+				<div id="ocsiMessageCreateTemplatesLoading" style="width: 150px"></div>
+    			<div class="messageLoading" id="ocsiMessageCreateCategories"></div>    			
+			</div>
+			<div>
+				<div id="ocsiMessageImportDataLoading" style="width: 150px"></div>
+    			<div class="messageLoading" id="ocsiMessageImportData"></div>    			
+			</div>
+</center>

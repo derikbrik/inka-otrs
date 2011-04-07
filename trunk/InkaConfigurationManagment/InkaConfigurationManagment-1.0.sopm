@@ -1,0 +1,2120 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<otrs_package version="1.0">
+	<Name>InkaConfigurationManagment</Name>
+	<Version>0.1.4</Version>
+	<Framework>2.4.x</Framework>
+	<Vendor>Omilen IT Solutions</Vendor>
+	<URL>http://www.omilenitsolutions.com.ar/</URL>
+	<License>GNU GENERAL PUBLIC LICENSE Version 2, June 1991</License>
+	<Description  Lang="en">Configuration Items and Assest Managment Package</Description>
+	<Description  Lang="es">Paquete para la gestión de los elementos de configuración (CI) y activos</Description>
+	<IntroInstall Lang="en" Title="Thank you!" Type="pre">Thank you for choosing Inka::OTRS</IntroInstall>
+	<IntroInstall Lang="es" Title="Gracias!" Type="pre" >Gracias por elegir Inka::OTRS</IntroInstall>
+	<IntroInstall Lang="en" Title="Installation Information" Type="post">
+        &lt;br&gt;
+        &lt;b&gt;NOTICE&lt;/b&gt;
+        &lt;br&gt;
+        &lt;br&gt;
+        In order to grant users access to the config item menu, you need to add them as members of the group: 'InkaConfigurationItems'.
+        &lt;br&gt;
+        &lt;br&gt;
+        The menu items that were added by this package will be visible after you log-in to the system again.
+        &lt;br&gt;       
+    </IntroInstall>
+    <IntroInstall Lang="es" Title="Installation Information" Type="post">
+        &lt;br&gt;
+        &lt;b&gt;NOTA&lt;/b&gt;
+        &lt;br&gt;
+        &lt;br&gt;        
+        Para garantizar el acceso de los usuarios al menú de configuración, estos deben ser miembros del grupo: 'InkaConfigurationItems'.
+        &lt;br&gt;
+        &lt;br&gt;        
+        Los items de menú que son añadidos por este paquete serán visibles luego de que usted se vuelva a loguear en el sistema.
+        &lt;br&gt;
+        &lt;br&gt;        
+    </IntroInstall>    
+	<BuildDate>?</BuildDate>
+	<BuildHost>?</BuildHost>
+	<CodeInstall Type="pre">
+	unless(-e "var/httpd/htdocs/js/dtree/" ) {
+ 		mkdir("var/httpd/htdocs/js/dtree/");
+ 		mkdir("var/httpd/htdocs/js/dtree/img");
+ 	}
+ 	unless(-e "var/httpd/htdocs/js/flexigrid/" ) {
+ 		mkdir("var/httpd/htdocs/js/flexigrid");
+ 		mkdir("var/httpd/htdocs/js/flexigrid/images");
+ 	}
+ 	</CodeInstall>
+ 	 <CodeInstall Type="post">
+        # define function name
+        my $FunctionName = 'CodeInstall';
+
+        # create the package name
+        my $CodeModule = 'var::packagesetup::' . $Param{Structure}-&gt;{Name}-&gt;{Content};
+
+        # load the module
+        if ( $Self-&gt;{MainObject}-&gt;Require($CodeModule) ) {
+
+            # create new instance
+            my $CodeObject = $CodeModule-&gt;new( %{$Self} );
+
+            if ($CodeObject) {
+
+                # start methode
+                if ( !$CodeObject-&gt;$FunctionName(%{$Self}) ) {
+                    $Self-&gt;{LogObject}-&gt;Log(
+                        Priority =&gt; 'error',
+                        Message  =&gt; &quot;Could not call method $FunctionName() on $CodeModule.pm.&quot;
+                    );
+                }
+            }
+
+            # error handling
+            else {
+                $Self-&gt;{LogObject}-&gt;Log(
+                    Priority =&gt; 'error',
+                    Message  =&gt; &quot;Could not call method new() on $CodeModule.pm.&quot;
+                );
+            }
+        }
+    </CodeInstall>
+	
+	<CodeUninstall Type="pre">
+        # define function name
+        my $FunctionName = 'CodeUninstall';
+
+        # create the package name
+        my $CodeModule = 'var::packagesetup::' . $Param{Structure}-&gt;{Name}-&gt;{Content};
+
+        # load the module
+        if ( $Self-&gt;{MainObject}-&gt;Require($CodeModule) ) {
+
+            # create new instance
+            my $CodeObject = $CodeModule-&gt;new( %{$Self} );
+
+            if ($CodeObject) {
+
+                # start methode
+                if ( !$CodeObject-&gt;$FunctionName(%{$Self}) ) {
+                    $Self-&gt;{LogObject}-&gt;Log(
+                        Priority =&gt; 'error',
+                        Message  =&gt; &quot;Could not call method $FunctionName() on $CodeModule.pm.&quot;
+                    );
+                }
+            }
+
+            # error handling
+            else {
+                $Self-&gt;{LogObject}-&gt;Log(
+                    Priority =&gt; 'error',
+                    Message  =&gt; &quot;Could not call method new() on $CodeModule.pm.&quot;
+                );
+            }
+        }
+    </CodeUninstall>
+ 	<!-- CodeInstall Type="pre">
+ 	unless(-e $Config{"Frontend::JavaScriptPath"}."jquery-ui-1.8" ) {
+ 		mkdir($Config{"Frontend::JavaScriptPath"}."jquery-ui-1.8");
+ 	}
+		
+		move($Config{"Frontend::JavaScriptPath"}."jquery-1.4.2-optimized-trim.js",$Config{"Frontend::JavaScriptPath"}."jquery-1.4.2/jquery-1.4.2-optimized-trim.js");		
+		move($Config{"Frontend::JavaScriptPath"}."jquery-1.4.2-orig.js",$Config{"Frontend::JavaScriptPath"}."jquery-1.4.2/jquery-1.4.2-orig.js");
+		move($Config{"Frontend::JavaScriptPath"}."jquery.js",$Config{"Frontend::JavaScriptPath"}."jquery-1.4.2/jquery.js");
+		
+		move($Config{"Frontend::JavaScriptPath"}."jquery-ui-autocomplete.js",$Config{"Frontend::JavaScriptPath"}."jquery-ui-1.8/jquery-ui-autocomplete.js");
+		move($Config{"Frontend::JavaScriptPath"}."jquery-ui-core.js",$Config{"Frontend::JavaScriptPath"}."jquery-ui-1.8/jquery-ui-core.js");
+		move($Config{"Frontend::JavaScriptPath"}."jquery-ui-datepicker.js",$Config{"Frontend::JavaScriptPath"}."jquery-ui-1.8/jquery-ui-datepicker.js");
+		move($Config{"Frontend::JavaScriptPath"}."jquery-ui-draggable.js",$Config{"Frontend::JavaScriptPath"}."jquery-ui-1.8/jquery-ui-draggable.js");
+		move($Config{"Frontend::JavaScriptPath"}."jquery-ui-mouse.js",$Config{"Frontend::JavaScriptPath"}."jquery-ui-1.8/jquery-ui-mouse.js");
+		move($Config{"Frontend::JavaScriptPath"}."jquery-ui-position.js",$Config{"Frontend::JavaScriptPath"}."jquery-ui-1.8/jquery-ui-position.js");
+		move($Config{"Frontend::JavaScriptPath"}."jquery-ui-resizable.js",$Config{"Frontend::JavaScriptPath"}."jquery-ui-1.8/jquery-ui-resizable.js");
+		move($Config{"Frontend::JavaScriptPath"}."jquery-ui-sortable.js",$Config{"Frontend::JavaScriptPath"}."jquery-ui-1.8/jquery-ui-sortable.js");
+		move($Config{"Frontend::JavaScriptPath"}."jquery-ui-widget.js",$Config{"Frontend::JavaScriptPath"}."jquery-ui-1.8/jquery-ui-widget.js");
+	</CodeInstall-->
+	
+	
+	<Filelist>
+		<File Permission="644" Location="Kernel/Config/Files/InkaConfigurationManagment.xml"></File>
+		<File Permission="644" Location="Kernel/System/InkaCITemplates.pm"></File>
+		<File Permission="644" Location="Kernel/System/InkaCITemplatesCategory.pm"></File>
+		<File Permission="644" Location="Kernel/System/InkaCITemplatesState.pm"></File>
+		<File Permission="644" Location="Kernel/System/InkaCITemplatesVendor.pm"></File>
+		<File Permission="644" Location="Kernel/System/InkaCITemplatesGenericList.pm"></File>
+		<File Permission="644" Location="Kernel/System/InkaConfigurationItemsCtes.pm"></File>
+		<File Permission="644" Location="Kernel/System/InkaConfigurationItems.pm"></File>
+		<File Permission="644" Location="Kernel/System/InkaCITemplatesLink.pm"></File>
+		<File Permission="644" Location="Kernel/System/InkaFile.pm"></File>
+		<File Permission="644" Location="Kernel/System/LinkObject/InkaConfigurationItem.pm"></File>
+		<File Permission="644" Location="Kernel/System/InkaStats.pm"></File>
+		<File Permission="644" Location="Kernel/System/InkaStatsCtes.pm"></File>		
+		<File Permission="644" Location="Kernel/System/InkaOCSICtes.pm"></File>
+		<File Permission="644" Location="Kernel/System/InkaOCSInventory.pm"></File>				
+		<File Permission="644" Location="Kernel/Language/en_InkaConfigurationManagment.pm"></File>
+		<File Permission="644" Location="Kernel/Language/es_InkaConfigurationManagment.pm"></File>
+		<File Permission="644" Location="Kernel/Modules/AdminInkaConfigurationItemsTemplates.pm"></File>
+		<File Permission="644" Location="Kernel/Modules/AgentInkaConfigurationItems.pm"></File>
+		<File Permission="644" Location="Kernel/Modules/AgentInkaFile.pm"></File>
+		<File Permission="644" Location="Kernel/Language/en_InkaConfigurationManagment.pm"></File>
+		<File Permission="644" Location="Kernel/Language/es_InkaConfigurationManagment.pm"></File>
+		<File Permission="644" Location="Kernel/Output/HTML/Standard/AdminInkaCITemplates.dtl"></File>
+		<File Permission="644" Location="Kernel/Output/HTML/Standard/AdminInkaHeader.dtl"></File>
+		<File Permission="644" Location="Kernel/Output/HTML/Standard/AdminInkaCIAjax.dtl"></File>
+		<File Permission="644" Location="Kernel/Output/HTML/Standard/AdminInkaCITGenericListTab.dtl"></File>
+		<File Permission="644" Location="Kernel/Output/HTML/Standard/AdminInkaCITVendorTab.dtl"></File>
+		<File Permission="644" Location="Kernel/Output/HTML/Standard/AdminInkaCITHelpTab.dtl"></File>
+		<File Permission="644" Location="Kernel/Output/HTML/Standard/AdminInkaCITCategoryTab.dtl"></File>
+		<File Permission="644" Location="Kernel/Output/HTML/Standard/AdminInkaCITStateTab.dtl"></File>
+		<File Permission="644" Location="Kernel/Output/HTML/Standard/AdminInkaCITTemplateTab.dtl"></File>		
+		<File Permission="644" Location="Kernel/Output/HTML/Standard/AgentInkaCIMenu.dtl"></File>
+		<File Permission="644" Location="Kernel/Output/HTML/Standard/AgentInkaCIHelp.dtl"></File>
+		<File Permission="644" Location="Kernel/Output/HTML/Standard/AgentInkaCIHeader.dtl"></File>
+		<File Permission="644" Location="Kernel/Output/HTML/Standard/AgentInkaCILinksHeader.dtl"></File>
+		<File Permission="644" Location="Kernel/Output/HTML/Standard/AgentInkaCIHistoryHeader.dtl"></File>
+		<File Permission="644" Location="Kernel/Output/HTML/Standard/AgentInkaCIHistory.dtl"></File>
+		<File Permission="644" Location="Kernel/Output/HTML/Standard/AgentInkaCIList.dtl"></File>
+		<File Permission="644" Location="Kernel/Output/HTML/Standard/AgentInkaCITemplates.dtl"></File>
+		<File Permission="644" Location="Kernel/Output/HTML/Standard/BasicInkaCITemplateTabs.dtl"></File>
+		<File Permission="644" Location="Kernel/Output/HTML/Standard/AgentInkaCIForm.dtl"></File>
+		<File Permission="644" Location="Kernel/Output/HTML/Standard/AdminInkaCITLinkTab.dtl"></File>		
+		<File Permission="644" Location="Kernel/Output/HTML/Standard/AgentInkaOCSI.dtl"></File>		
+		<File Permission="644" Location="Kernel/Output/HTML/Standard/AgentInkaOCSIHeader.dtl"></File>
+		
+		<File Permission="644" Location="Kernel/Output/HTML/Standard/InkaOCSICategoryConfigTab.dtl"></File>
+		<File Permission="644" Location="Kernel/Output/HTML/Standard/InkaOCSIAccessConfigTab.dtl"></File>
+		<File Permission="644" Location="Kernel/Output/HTML/Standard/InkaOCSIImportTab.dtl"></File>
+								
+		<File Permission="644" Location="Kernel/Output/HTML/LinkObjectInkaConfigurationItem.pm"></File>		
+		<File Permission="644" Location="var/httpd/htdocs/js/inkaCM.js"></File>
+		<File Permission="644" Location="var/httpd/htdocs/js/inkaCM2.js"></File>
+		<File Permission="644" Location="var/httpd/htdocs/js/inkaCM3.js"></File>
+		<File Permission="644" Location="var/httpd/htdocs/js/inkaCM4.js"></File>
+		<File Permission="644" Location="var/httpd/htdocs/js/inkaCommon.js"></File>
+		<File Permission="644" Location="var/httpd/htdocs/js/json2.js"></File>
+		<File Permission="644" Location="var/httpd/htdocs/js/jquery-1.4.2-optimized-trim.js"></File>		
+		<File Permission="644" Location="var/httpd/htdocs/js/jquery-1.4.2-orig.js"></File>
+		<File Permission="644" Location="var/httpd/htdocs/js/jquery.js"></File>		
+		<File Permission="644" Location="var/httpd/htdocs/js/jquery-ui-autocomplete.js"></File>
+		<File Permission="644" Location="var/httpd/htdocs/js/jquery-ui-core.js"></File>
+		<File Permission="644" Location="var/httpd/htdocs/js/jquery-ui-datepicker.js"></File>
+		<File Permission="644" Location="var/httpd/htdocs/js/jquery-ui-draggable.js"></File>
+		<File Permission="644" Location="var/httpd/htdocs/js/jquery-ui-mouse.js"></File>
+		<File Permission="644" Location="var/httpd/htdocs/js/jquery-ui-position.js"></File>
+		<File Permission="644" Location="var/httpd/htdocs/js/jquery-ui-resizable.js"></File>
+		<File Permission="644" Location="var/httpd/htdocs/js/jquery-ui-sortable.js"></File>
+		<File Permission="644" Location="var/httpd/htdocs/js/jquery-ui-widget.js"></File>		
+		<File Permission="644" Location="var/httpd/htdocs/js/jquery-ui.min.js"></File>		
+		<File Permission="644" Location="var/httpd/htdocs/css/Standard/jquery-ui-otrs.css"></File>
+		<File Permission="644" Location="var/httpd/htdocs/css/Standard/inkaCM.css"></File>
+		<File Permission="644" Location="var/httpd/htdocs/js/dtree/dtree.css"></File>
+		<File Permission="644" Location="var/httpd/htdocs/js/dtree/dtree.js"></File>		
+		<File Permission="644" Location="var/httpd/htdocs/js/dtree/img/base.gif"></File>
+		<File Permission="644" Location="var/httpd/htdocs/js/dtree/img/empty.gif"></File>
+		<File Permission="644" Location="var/httpd/htdocs/js/dtree/img/folder.gif"></File>
+		<File Permission="644" Location="var/httpd/htdocs/js/dtree/img/folderopen.gif"></File>
+		<File Permission="644" Location="var/httpd/htdocs/js/dtree/img/join.gif"></File>
+		<File Permission="644" Location="var/httpd/htdocs/js/dtree/img/joinbottom.gif"></File>
+		<File Permission="644" Location="var/httpd/htdocs/js/dtree/img/line.gif"></File>
+		<File Permission="644" Location="var/httpd/htdocs/js/dtree/img/minus.gif"></File>
+		<File Permission="644" Location="var/httpd/htdocs/js/dtree/img/minusbottom.gif"></File>
+		<File Permission="644" Location="var/httpd/htdocs/js/dtree/img/nolines_minus.gif"></File>
+		<File Permission="644" Location="var/httpd/htdocs/js/dtree/img/nolines_plus.gif"></File>
+		<File Permission="644" Location="var/httpd/htdocs/js/dtree/img/page.gif"></File>
+		<File Permission="644" Location="var/httpd/htdocs/js/dtree/img/plus.gif"></File>
+		<File Permission="644" Location="var/httpd/htdocs/js/dtree/img/plusbottom.gif"></File>
+		<File Permission="644" Location="var/httpd/htdocs/js/dtree/img/question.gif"></File>		
+		<File Permission="644" Location="var/httpd/htdocs/images/Standard/inka_loading.gif"></File>
+		<File Permission="644" Location="var/httpd/htdocs/images/Standard/inka_loading_small.gif"></File>
+		<File Permission="644" Location="var/httpd/htdocs/images/Standard/inka_state.gif"></File>
+		<File Permission="644" Location="var/httpd/htdocs/images/Standard/inka_ci_icon.png"></File>
+		<File Permission="644" Location="var/httpd/htdocs/images/Standard/inka_widget_bg_100.png"></File>
+		<File Permission="644" Location="var/httpd/htdocs/images/Standard/inka_smallDarkGradient.png"></File>
+		<File Permission="644" Location="var/httpd/htdocs/images/Standard/inka_plus-button.png"></File>
+		<File Permission="644" Location="var/httpd/htdocs/images/Standard/inka_less-button.png"></File>
+		<File Permission="644" Location="var/httpd/htdocs/images/Standard/inka_calendar.png"></File>		
+		<File Permission="644" Location="var/httpd/htdocs/images/Standard/inka_relation_icon.png"></File>
+		<File Permission="644" Location="var/httpd/htdocs/images/Standard/inka_up_icon.gif"></File>
+		<File Permission="644" Location="var/httpd/htdocs/images/Standard/inka_down_icon.gif"></File>
+		<File Permission="644" Location="var/httpd/htdocs/images/Standard/inka_ci_history.gif"></File>		
+		<File Permission="644" Location="var/httpd/htdocs/images/Standard/inka_arrow_in.gif"></File>
+		<File Permission="644" Location="var/httpd/htdocs/images/Standard/inka_arrow_out.gif"></File>		
+		<File Permission="644" Location="var/httpd/htdocs/images/Standard/inka_edit.png"></File>
+		<File Permission="644" Location="var/httpd/htdocs/js/flexigrid/flexigrid.css"></File>
+		<File Permission="644" Location="var/httpd/htdocs/js/flexigrid/flexigrid.js"></File>
+		<File Permission="644" Location="var/httpd/htdocs/js/flexigrid/images/bg.gif"></File>
+		<File Permission="644" Location="var/httpd/htdocs/js/flexigrid/images/btn-sprite.gif"></File>
+		<File Permission="644" Location="var/httpd/htdocs/js/flexigrid/images/ddn.png"></File>
+		<File Permission="644" Location="var/httpd/htdocs/js/flexigrid/images/dn.png"></File>
+		<File Permission="644" Location="var/httpd/htdocs/js/flexigrid/images/fhbg.gif"></File>
+		<File Permission="644" Location="var/httpd/htdocs/js/flexigrid/images/first.gif"></File>
+		<File Permission="644" Location="var/httpd/htdocs/js/flexigrid/images/hl.png"></File>
+		<File Permission="644" Location="var/httpd/htdocs/js/flexigrid/images/last.gif"></File>
+		<File Permission="644" Location="var/httpd/htdocs/js/flexigrid/images/line.gif"></File>
+		<File Permission="644" Location="var/httpd/htdocs/js/flexigrid/images/load.gif"></File>
+		<File Permission="644" Location="var/httpd/htdocs/js/flexigrid/images/load.png"></File>
+		<File Permission="644" Location="var/httpd/htdocs/js/flexigrid/images/magnifier.png"></File>
+		<File Permission="644" Location="var/httpd/htdocs/js/flexigrid/images/next.gif"></File>
+		<File Permission="644" Location="var/httpd/htdocs/js/flexigrid/images/prev.gif"></File>
+		<File Permission="644" Location="var/httpd/htdocs/js/flexigrid/images/up.png"></File>
+		<File Permission="644" Location="var/httpd/htdocs/js/flexigrid/images/uup.png"></File>
+		<File Permission="644" Location="var/httpd/htdocs/js/flexigrid/images/wbg.gif"></File>
+		<File Permission="644" Location="var/packagesetup/InkaConfigurationManagment.pm"></File>
+		<File Permission="644" Location="var/stats/InkaCI-CI_per_category.xml"></File>
+		<File Permission="644" Location="var/stats/InkaCI-CI_created_last_month.xml"></File>
+		<File Permission="644" Location="var/stats/InkaCI-CI_created_last_month_state.xml"></File>
+		<File Permission="644" Location="var/stats/InkaCI-CI_per_category_and_date.xml"></File>
+		
+		<File Permission="644" Location="Kernel/System/Stats/Static/InkaCIxCategory.pm"></File>
+		<File Permission="644" Location="Kernel/System/Stats/Static/InkaCICreatedxMonthCategory.pm"></File>
+		<File Permission="644" Location="Kernel/System/Stats/Static/InkaCICreatedxMonthState.pm"></File>
+		<File Permission="644" Location="Kernel/System/Stats/Static/InkaCIxCategoryDate.pm"></File>
+	</Filelist>
+	
+	<DatabaseInstall>
+	    <TableCreate Name="inka_ci_template">
+	        <Column AutoIncrement="true" Name="id" PrimaryKey="true" Required="true" Type="INTEGER"></Column>
+	        <Column Name="name" Required="true" Size="255" Type="VARCHAR"></Column>
+	        <Column Name="hasDefaultFields"    Type="SMALLINT"></Column>
+	        <Unique Name="unique_inka_ci_template_name">
+					<UniqueColumn Name="name"></UniqueColumn>
+	     	</Unique>
+	        
+	 	</TableCreate>		
+	 	<TableCreate  Name="inka_category">
+	        <Column AutoIncrement="true" Name="id" PrimaryKey="true" Required="true" Type="INTEGER"></Column>
+	        <Column Name="id_parent"   	 Required="true" Type="INTEGER"></Column>
+	        <Column Name="id_template"   Required="true" Type="INTEGER"></Column>
+	        <Column Name="level"   		 Required="true" Type="INTEGER"></Column>
+	        <Column Name="name"	 		 Required="true" Size="255" Type="VARCHAR"></Column>
+	        <Column Name="id_file"  	 Type="INTEGER"></Column>
+	        <Column Name="is_branch"   	 Required="true" Type="SMALLINT"></Column>	        
+	        <Index Name="inka_id_template_category_FK">
+	            <IndexColumn Name="id_template">
+	            </IndexColumn>
+	        </Index>
+	        <Index Name="inka_id_parent_FK">
+	            <IndexColumn Name="id_parent">
+	            </IndexColumn>
+	            <IndexColumn Name="level">
+	            </IndexColumn>
+	        </Index>
+	        <!-- ForeignKey ForeignTable="inka_category">
+	                <Reference Foreign="id" Local="id_parent">
+	                </Reference>
+			</ForeignKey-->
+	        <ForeignKey ForeignTable="inka_ci_template">
+	                <Reference Foreign="id" Local="id_template">
+	                </Reference>
+			</ForeignKey>
+			<ForeignKey ForeignTable="inka_file">
+	                <Reference Foreign="id" Local="id_file">
+	                </Reference>
+			</ForeignKey>				
+	 	</TableCreate>
+		<TableCreate  Name="inka_ci_state">
+	        <Column AutoIncrement="true" Name="id" PrimaryKey="true" Required="true" Type="INTEGER"></Column>
+	        <Column Name="id_category"   Required="true" Type="INTEGER"></Column>
+	        <Column Name="name"	 		 Required="true" Size="255" Type="VARCHAR"></Column>
+	 		<Index Name="inka_id_category_FK">
+	            <IndexColumn Name="id_category">
+	            </IndexColumn>
+	        </Index>
+	 		 <ForeignKey ForeignTable="inka_category">
+	                <Reference Foreign="id" Local="id_category">
+	                </Reference>
+			</ForeignKey>
+		</TableCreate>
+		<TableCreate  Name="inka_ci_provider_list">
+	 		<Column AutoIncrement="true" Name="id" PrimaryKey="true" Required="true" Type="INTEGER"></Column>
+	 		<Column Name="id_category"   Required="true" Type="INTEGER"></Column>
+	 		<Column Name="name"	 		 Required="true" Size="255" Type="VARCHAR"></Column>
+	 		<Index Name="inka_id_category_provider_list_FK">
+	            <IndexColumn Name="id_category">
+	            </IndexColumn>
+	        </Index>
+	 		<ForeignKey ForeignTable="inka_category">
+	                <Reference Foreign="id" Local="id_category">
+	                </Reference>
+			</ForeignKey>		        
+		</TableCreate>
+		<TableCreate  Name="inka_ci">
+	 		<Column AutoIncrement="true" Name="id" PrimaryKey="true" Required="true" Type="INTEGER"></Column>
+	 		<Column Name="id_category"   Required="true" Type="INTEGER"></Column>
+	 		<Column Name="id_state"   Required="true" Type="INTEGER"></Column>
+	 		<Column Name="id_provider"  Type="INTEGER"></Column>
+	 		<Column Name="unique_name"	 Required="true" Size="255" Type="VARCHAR"></Column>
+	 		<Column Name="serial_number" Size="255" Type="VARCHAR"></Column>
+	 		<Column Name="description"   Type="LONGBLOB"></Column>
+			<Column Name="cost"   Type="DECIMAL" Size="10,2"></Column>
+			<Column Name="acquisition_day"   Type="BIGINT" ></Column>
+			<Column Name="creation_date"  	 Type="BIGINT" ></Column>
+			<Index Name="inka_id_category_FK">
+	            <IndexColumn Name="id_category">
+	            </IndexColumn>
+	        </Index>
+			<Index Name="inka_id_state_FK">
+	            <IndexColumn Name="id_state">
+	            </IndexColumn>
+	        </Index>
+			<Index Name="inka_id_provider_ci_FK">
+	            <IndexColumn Name="id_provider">
+	            </IndexColumn>
+	        </Index>
+			<ForeignKey ForeignTable="inka_category">
+	                <Reference Foreign="id" Local="id_category">
+	                </Reference>
+			</ForeignKey>
+			<ForeignKey ForeignTable="inka_ci_state">
+	                <Reference Foreign="id" Local="id_state">
+	                </Reference>
+			</ForeignKey>
+			<ForeignKey ForeignTable="inka_ci_provider_list">
+	                <Reference Foreign="id" Local="id_provider">
+	                </Reference>
+			</ForeignKey>			
+		</TableCreate>
+	    <TableCreate  Name="inka_metatype">
+	        <Column AutoIncrement="true" Name="id" PrimaryKey="true" Required="true" Type="INTEGER"></Column>
+	        <Column Name="name" Required="true" Size="255" Type="VARCHAR"></Column>
+	 	</TableCreate>
+	    <TableCreate  Name="inka_ci_generic_list">
+	        <Column AutoIncrement="true" Name="id" PrimaryKey="true" Required="true" Type="INTEGER"></Column>			
+			<Column Name="id_category"   Required="true" Type="INTEGER"></Column>		
+	        <Column Name="name" Required="true" Size="255" Type="VARCHAR"></Column>	      
+			<Index Name="inka_id_category_generic_list_FK">
+	            <IndexColumn Name="id_category">
+	            </IndexColumn>
+	        </Index>
+	        <ForeignKey ForeignTable="inka_category">
+	                <Reference Foreign="id" Local="id_category">
+	                </Reference>
+			</ForeignKey>				        
+	 	</TableCreate>	 	
+	 	<TableCreate  Name="inka_ci_generic_list_element">
+	        <Column AutoIncrement="true" Name="id" PrimaryKey="true" Required="true" Type="INTEGER"></Column>
+			<Column Name="id_list"   Required="true" Type="INTEGER"></Column>
+	        <Column Name="name"  Required="true" Size="255" Type="VARCHAR"></Column>
+			<Column Name="value" Required="true" Size="255" Type="VARCHAR"></Column>
+			<Index Name="inka_id_category_generic_list_element_FK">
+	            <IndexColumn Name="id_list">
+	            </IndexColumn>
+	        </Index>
+	        <ForeignKey ForeignTable="inka_ci_generic_list">
+	                <Reference Foreign="id" Local="id_list">
+	                </Reference>
+			</ForeignKey>				        
+	 	</TableCreate>	 		 	
+		<TableCreate  Name="inka_file">
+		        <Column AutoIncrement="true" Name="id" PrimaryKey="true" Required="true" Type="INTEGER"></Column>
+				<Column Name="filename"  Required="true" Size="255" Type="VARCHAR"></Column>
+				<Column Name="content_type"  Size="255" Type="VARCHAR"></Column>
+				<Column Name="content_size"  Size="30" Type="VARCHAR"></Column>		
+		 		<Column Name="content"  Required="true" Type="LONGBLOB"></Column>
+				<Column Name="creation_date"  Required="true" Type="DATE"></Column>
+				<Column Name="modification_date"  Required="true" Type="DATE"></Column>
+		</TableCreate>
+	    <TableCreate  Name="inka_ci_properties_group">
+	        	<Column AutoIncrement="true" Name="id" PrimaryKey="true" Required="true" Type="INTEGER"></Column>
+	    	    <Column Name="name" Required="true" Size="255" Type="VARCHAR"></Column>
+	 	</TableCreate>
+		<TableCreate  Name="inka_ci_template_property">
+		        <Column AutoIncrement="true" Name="id" PrimaryKey="true" Required="true" Type="INTEGER"></Column> 	
+				<Column Name="id_template"   Required="true" Type="INTEGER"></Column>
+				<Column Name="id_metatype"   Required="true"  Type="INTEGER"></Column>
+				<Column Name="id_list"  	 Required="false" Type="INTEGER"></Column>
+				<Column Name="id_properties_group"   Required="true" Type="INTEGER"></Column>			
+	  			<Column Name="caption" Required="true" Size="255" Type="VARCHAR"></Column>
+				<Column Name="mandatory"  Type="SMALLINT"></Column>
+				<Column Name="display"    Type="SMALLINT"></Column>
+				<Index Name="inka_id_template_template_properties_FK">
+	            	<IndexColumn Name="id_template">
+	            	</IndexColumn>
+	        	</Index>
+				<Index Name="inka_id_metatype_template_properies_FK">
+	            	<IndexColumn Name="id_metatype">
+	            	</IndexColumn>
+	        	</Index>        	
+	 			<Index Name="inka_id_properties_group_template_properties_properties_group">
+	            	<IndexColumn Name="id_properties_group">
+	            	</IndexColumn>
+	        	</Index> 
+	 			<ForeignKey ForeignTable="inka_ci_template">
+	                <Reference Foreign="id" Local="id_template">
+	                </Reference>
+				</ForeignKey>	
+				<ForeignKey ForeignTable="inka_metatype">
+	                <Reference Foreign="id" Local="id_metatype">
+	                </Reference>
+				</ForeignKey>			
+				<ForeignKey ForeignTable="inka_ci_properties_group">
+	                <Reference Foreign="id" Local="id_properties_group">
+	                </Reference>
+				</ForeignKey>				
+				<ForeignKey ForeignTable="inka_ci_generic_list">
+	                <Reference Foreign="id" Local="id_list">
+	                </Reference>
+				</ForeignKey>							
+		</TableCreate>
+		<TableCreate  Name="inka_ci_property">
+		        <Column AutoIncrement="true" Name="id" PrimaryKey="true" Required="true" Type="INTEGER"></Column> 	
+				<Column Name="id_ci"   Required="true" Type="INTEGER"></Column>
+				<Column Name="id_metatype"   Required="true" Type="INTEGER"></Column>
+	 			<Column Name="name" Required="true" Size="255" Type="VARCHAR"></Column>
+	 			<Column Name="id_template_properties"  Required="true" Type="INTEGER"></Column>
+				<Column Name="value_int"   Type="INTEGER"></Column>
+				<Column Name="value_float" Type="DECIMAL" Size="10,2"></Column>
+	 			<Column Name="value_str"   Size="255" Type="VARCHAR"></Column>
+	  			<Column Name="value_date" Type="BIGINT"></Column>
+	  			<Column Name="id_generic_item_list"   Type="INTEGER"></Column>
+	  			<Column Name="id_file"   Type="INTEGER"></Column>			
+	  			<Index  Name="inka_id_ci_FK">
+	            	<IndexColumn Name="id_ci">
+	            	</IndexColumn>
+	        	</Index>
+	        	<Index  Name="inka_id_metatype_FK">
+	            	<IndexColumn Name="id_metatype">
+	            	</IndexColumn>
+	        	</Index>
+	        	<Index  Name="inka_id_template_properties_template_properties_properties">
+	            	<IndexColumn Name="id_template_properties">
+	            	</IndexColumn>
+	        	</Index>
+	        	<ForeignKey ForeignTable="inka_ci">
+	                <Reference Foreign="id" Local="id_ci">
+	                </Reference>
+				</ForeignKey>
+				<ForeignKey ForeignTable="inka_metatype">
+	                <Reference Foreign="id" Local="id_metatype">
+	                </Reference>
+				</ForeignKey>
+				<ForeignKey ForeignTable="inka_ci_generic_list_element">
+	                <Reference Foreign="id" Local="id_generic_item_list">
+	                </Reference>
+				</ForeignKey>
+				<ForeignKey ForeignTable="inka_file">
+	                <Reference Foreign="id" Local="id_file">
+	                </Reference>
+				</ForeignKey>
+				<ForeignKey ForeignTable="inka_ci_template_property">
+	                <Reference Foreign="id" Local="id_template_properties">
+	                </Reference>
+				</ForeignKey>
+		</TableCreate>			
+		<TableCreate  Name="inka_ci_history">
+		        <Column AutoIncrement="true" Name="id" PrimaryKey="true" Required="true" Type="INTEGER"></Column> 	
+				<Column Name="modification_date"   Type="DATE"></Column>
+				<Column Name="modificated_by"      Type="INTEGER"></Column>
+	 			<Column Name="id_ci" 			   Required="true" Type="INTEGER"></Column>
+	 			<Column Name="new_state"  		   Required="true" Type="INTEGER"></Column>
+	 			<Column Name="note"  Size="255" Type="VARCHAR"></Column>
+				<Index  Name="inka_id_ci_history_FK">
+			            	<IndexColumn Name="id_ci">
+			            	</IndexColumn>
+			    </Index>
+			    <Index  Name="inka_new_state_FK">
+			            	<IndexColumn Name="new_state">
+			            	</IndexColumn>
+			    </Index>
+			    <Index  Name="inka_ci_history_modificated_by_FK">
+			            	<IndexColumn Name="modificated_by">
+			            	</IndexColumn>
+			    </Index>
+				<ForeignKey ForeignTable="inka_ci">
+			              <Reference Foreign="id" Local="id_ci">
+			              </Reference>
+				</ForeignKey>
+				<ForeignKey ForeignTable="inka_ci_state">
+			              <Reference Foreign="id" Local="new_state">
+			              </Reference>
+				</ForeignKey>
+				<ForeignKey ForeignTable="users">
+	                <Reference Foreign="id" Local="modificated_by">
+	                </Reference>
+				</ForeignKey>
+		</TableCreate>
+	    <TableCreate  Name="inka_ci_link_type">
+	        	<Column AutoIncrement="true" Name="id" PrimaryKey="true" Required="true" Type="INTEGER"></Column>
+	    	    <Column Name="name" Required="true" Size="255" Type="VARCHAR"></Column>
+	 	</TableCreate>
+	    <TableCreate  Name="inka_ci_user_link_type">
+	        	<Column AutoIncrement="true" Name="id" PrimaryKey="true" Required="true" Type="INTEGER"></Column>
+	    	    <Column Name="name" Required="true" Size="255" Type="VARCHAR"></Column>
+	 	</TableCreate>
+		<TableCreate  Name="inka_ci_ci_link">
+	        	<Column Name="id_ci_up"     Required="true" Type="INTEGER"></Column>
+	        	<Column Name="id_ci_down"   Required="true" Type="INTEGER"></Column>
+	        	<Column Name="id_link_type" Required="true" Type="INTEGER"></Column>
+				<Index  Name="inka_inka_ci_ci_link_full_FK">
+			            	<IndexColumn Name="id_ci_up">
+			            	</IndexColumn>		    
+			            	<IndexColumn Name="id_ci_down">
+			            	</IndexColumn>		    
+			            	<IndexColumn Name="id_link_type">
+			            	</IndexColumn>
+			    </Index>		    		    
+				<ForeignKey ForeignTable="inka_ci">
+			              <Reference Foreign="id" Local="id_ci_up">
+			              </Reference>			
+			              <Reference Foreign="id" Local="id_ci_down">
+			              </Reference>
+				</ForeignKey>
+				<ForeignKey ForeignTable="inka_ci_link_type">
+			              <Reference Foreign="id" Local="id_link_type">
+			              </Reference>
+				</ForeignKey>
+		</TableCreate>
+		<TableCreate  Name="inka_ci_user_link">
+	        	<Column Name="id_ci"     Required="true" Type="INTEGER"></Column>
+	        	<Column Name="id_user"   Required="true" Type="INTEGER"></Column>
+	        	<Column Name="id_user_link_type" Required="true" Type="INTEGER"></Column>
+				<Index  Name="fk_inka_inka_ci_user_link_all">
+			            	<IndexColumn Name="id_ci">
+			            	</IndexColumn>		  
+			            	<IndexColumn Name="id_user">
+			            	</IndexColumn>		 
+			            	<IndexColumn Name="id_user_link_type">
+			            	</IndexColumn>		              
+				</Index>
+				<ForeignKey ForeignTable="inka_ci">
+			              <Reference Foreign="id" Local="id_ci">
+			              </Reference>
+				</ForeignKey>
+				<ForeignKey ForeignTable="users">
+	                <Reference Foreign="id" Local="id_user">
+	                </Reference>
+				</ForeignKey>
+				<ForeignKey ForeignTable="inka_ci_user_link_type">
+			              <Reference Foreign="id" Local="id_user_link_type">
+			              </Reference>
+				</ForeignKey>
+		</TableCreate>
+		<!--START create tables for OCS-Inventory interoperability START-->
+		<TableCreate  Name="inka_ocsi_config">
+		 		<Column AutoIncrement="true" Name="id" PrimaryKey="true" Required="true" Type="INTEGER"></Column> 	
+	        	<Column Name="keyname"     Required="true" Size="255" Type="VARCHAR"></Column>
+	        	<Column Name="value"   Size="255" Type="VARCHAR"></Column>				
+		</TableCreate>
+		
+		<TableCreate  Name="inka_ocsi_category">
+		 		<Column AutoIncrement="true" Name="id" PrimaryKey="true" Required="true" Type="INTEGER"></Column> 	
+	        	<Column Name="name"     	   Required="true" Size="255" Type="VARCHAR"></Column>
+	        	<Column Name="checksum_code"   Required="true" Size="255" Type="VARCHAR"></Column>				
+	        	<Column Name="import"  	       Type="INTEGER"></Column>
+	        	<Column Name="types"  		   Required="true" Size="100" Type="VARCHAR"></Column>
+	        	<Column Name="selected_type"   Required="true" Type="INTEGER"></Column>
+		</TableCreate>
+		
+		<TableCreate  Name="inka_ocsi_ci">		 		
+	        	<Column Name="id_ocsi" 	    Required="true" Type="INTEGER"></Column>
+	        	<Column Name="id_ci"        Required="true" Type="INTEGER"></Column>				
+	        	<Column Name="last_come"    Type="BIGINT" ></Column>
+				<Column Name="last_date"  	Type="BIGINT" ></Column>
+				<Unique Name="unique_inka_ocsi_ci">
+					<UniqueColumn Name="id_ocsi"></UniqueColumn>
+					<UniqueColumn Name="id_ci"></UniqueColumn>
+	     		</Unique>
+				<Index  Name="index_inka_ocsi_ci">
+			            	<IndexColumn Name="id_ocsi">
+			            	</IndexColumn>		  
+			            	<IndexColumn Name="id_ci">
+			            	</IndexColumn>   
+				</Index>
+				<ForeignKey ForeignTable="inka_ci">
+			              <Reference Foreign="id" Local="id_ci">
+			              </Reference>
+				</ForeignKey>
+		</TableCreate>
+
+		<TableCreate  Name="inka_ocsi_log">
+		 		<Column AutoIncrement="true" Name="id" PrimaryKey="true" Required="true" Type="INTEGER"></Column>
+	        	<Column Name="date"   Required="true" Size="255" Type="VARCHAR"></Column>
+	        	<Column Name="mode"   				  Size="50" Type="VARCHAR"></Column>
+	        	<Column Name="id_user"  Required="true" Type="INTEGER"></Column>
+				<Column Name="log"					    Type="LONGBLOB"></Column>
+				<ForeignKey ForeignTable="users">
+			      	<Reference Foreign="id" Local="id_user">
+	                </Reference>
+				</ForeignKey>				
+		</TableCreate>
+		<!--END create tables for OCS-Inventory interoperability END-->		
+		<!--START insert related with OCS-Inventory integration START-->
+		<Insert Table="inka_ocsi_config">
+            <Data Key="keyname"   Type="Quote">enabled</Data>
+            <Data Key="value" Type="Quote">0</Data>
+        </Insert>
+        <Insert Table="inka_ocsi_config">
+            <Data Key="keyname"   Type="Quote">URL</Data>            
+        </Insert>
+        <Insert Table="inka_ocsi_config">
+            <Data Key="keyname"   Type="Quote">user</Data>            
+        </Insert>
+        <Insert Table="inka_ocsi_config">
+            <Data Key="keyname"   Type="Quote">password</Data>            
+        </Insert>
+        <Insert Table="inka_ocsi_config">
+            <Data Key="keyname"   Type="Quote">protocol</Data>
+            <Data Key="value" Type="Quote">http</Data>
+        </Insert>
+        <Insert Table="inka_ocsi_config">
+            <Data Key="keyname"   Type="Quote">log_count</Data>
+            <Data Key="value" Type="Quote">0</Data>
+        </Insert>
+        <Insert Table="inka_ocsi_config">
+            <Data Key="keyname"   Type="Quote">import_in_process</Data>
+            <Data Key="value" Type="Quote">0</Data>
+        </Insert>
+        <Insert Table="inka_ocsi_config">
+            <Data Key="keyname"   Type="Quote">path</Data>
+            <Data Key="value" Type="Quote">/Apache/Ocsinventory/Interface</Data>
+        </Insert>
+        <Insert Table="inka_ocsi_config">
+            <Data Key="keyname"   Type="Quote">progress</Data>
+            <Data Key="value" >0</Data>
+        </Insert>
+        
+        <Insert Table="inka_ocsi_category">            
+            <Data Key="name" Type="Quote">CPU</Data>
+	        <Data Key="checksum_code" Type="Quote">1</Data>				
+	        <Data Key="import">0</Data>
+	        <Data Key="types" Type="Quote">0|1</Data>
+	        <Data Key="selected_type">0</Data>            
+        </Insert>
+        <Insert Table="inka_ocsi_category">            
+            <Data Key="name" Type="Quote">BIOS</Data>
+	        <Data Key="checksum_code" Type="Quote">2</Data>				
+	        <Data Key="import">0</Data>
+	        <Data Key="types" Type="Quote">0|1</Data>
+	        <Data Key="selected_type">0</Data>            
+        </Insert>
+        <Insert Table="inka_ocsi_category">            
+            <Data Key="name" Type="Quote">RAM Memory</Data>
+	        <Data Key="checksum_code" Type="Quote">4</Data>				
+	        <Data Key="import">0</Data>
+	        <Data Key="types" Type="Quote">0|1</Data>
+	        <Data Key="selected_type">0</Data>            
+        </Insert>
+        <Insert Table="inka_ocsi_category">            
+            <Data Key="name" Type="Quote">Storage</Data>
+	        <Data Key="checksum_code" Type="Quote">256</Data>				
+	        <Data Key="import">0</Data>
+	        <Data Key="types" Type="Quote">0|1</Data>
+	        <Data Key="selected_type">0</Data>            
+        </Insert>
+        <Insert Table="inka_ocsi_category">            
+            <Data Key="name" Type="Quote">Sound device</Data>
+	        <Data Key="checksum_code" Type="Quote">16384</Data>				
+	        <Data Key="import">0</Data>
+	        <Data Key="types" Type="Quote">0|1</Data>
+	        <Data Key="selected_type">0</Data>            
+        </Insert>
+        <Insert Table="inka_ocsi_category">            
+            <Data Key="name" Type="Quote">Video device</Data>
+	        <Data Key="checksum_code" Type="Quote">32768</Data>				
+	        <Data Key="import">0</Data>
+	        <Data Key="types" Type="Quote">0|1</Data>
+	        <Data Key="selected_type">0</Data>            
+        </Insert>
+        <Insert Table="inka_ocsi_category">            
+            <Data Key="name" Type="Quote">Network Interface</Data>
+	        <Data Key="checksum_code" Type="Quote">4096</Data>				
+	        <Data Key="import">0</Data>
+	        <Data Key="types" Type="Quote">0|1</Data>
+	        <Data Key="selected_type">0</Data>            
+        </Insert>
+        
+        <Insert Table="inka_ocsi_category">            
+            <Data Key="name" Type="Quote">Keyboard, Mouse and Others Inputs</Data>
+	        <Data Key="checksum_code" Type="Quote">1024</Data>				
+	        <Data Key="import">0</Data>
+	        <Data Key="types" Type="Quote">1</Data>
+	        <Data Key="selected_type">1</Data>            
+        </Insert>
+        <Insert Table="inka_ocsi_category">            
+            <Data Key="name" Type="Quote">Printer</Data>
+	        <Data Key="checksum_code" Type="Quote">8192</Data>				
+	        <Data Key="import">0</Data>
+	        <Data Key="types" Type="Quote">1</Data>
+	        <Data Key="selected_type">1</Data>            
+        </Insert>
+        <Insert Table="inka_ocsi_category">            
+            <Data Key="name" Type="Quote">Monitor</Data>
+	        <Data Key="checksum_code" Type="Quote">64</Data>				
+	        <Data Key="import">0</Data>
+	        <Data Key="types" Type="Quote">1</Data>
+	        <Data Key="selected_type">1</Data>            
+        </Insert>
+        <Insert Table="inka_ocsi_category">            
+            <Data Key="name" Type="Quote">Software</Data>
+	        <Data Key="checksum_code" Type="Quote">65536</Data>				
+	        <Data Key="import">0</Data>
+	        <Data Key="types" Type="Quote">1</Data>
+	        <Data Key="selected_type">1</Data>            
+        </Insert>
+        
+        <Insert Table="inka_ocsi_category">            
+            <Data Key="name" Type="Quote">Slot</Data>
+	        <Data Key="checksum_code" Type="Quote">8</Data>				
+	        <Data Key="import">0</Data>
+	        <Data Key="types" Type="Quote">2</Data>
+	        <Data Key="selected_type">2</Data>            
+        </Insert>
+        <Insert Table="inka_ocsi_category">            
+            <Data Key="name" Type="Quote">Drive</Data>
+	        <Data Key="checksum_code" Type="Quote">512</Data>				
+	        <Data Key="import">0</Data>
+	        <Data Key="types" Type="Quote">2</Data>
+	        <Data Key="selected_type">2</Data>            
+        </Insert>
+        <Insert Table="inka_ocsi_category">            
+            <Data Key="name" Type="Quote">Port</Data>
+	        <Data Key="checksum_code" Type="Quote">128</Data>				
+	        <Data Key="import">0</Data>
+	        <Data Key="types" Type="Quote">2</Data>
+	        <Data Key="selected_type">2</Data>            
+        </Insert>
+        <Insert Table="inka_ocsi_category">            
+            <Data Key="name" Type="Quote">Controller</Data>
+	        <Data Key="checksum_code" Type="Quote">32</Data>				
+	        <Data Key="import">0</Data>
+	        <Data Key="types" Type="Quote">2</Data>
+	        <Data Key="selected_type">2</Data>            
+        </Insert>
+                
+		<!--END insert related with OCS-Inventory integration START END-->
+		<Insert Table="inka_metatype">
+            <Data Key="name" Type="Quote">INTEGER</Data>
+        </Insert>
+        <Insert Table="inka_metatype">
+            <Data Key="name" Type="Quote">FLOAT</Data>
+        </Insert>
+        <Insert Table="inka_metatype">
+            <Data Key="name" Type="Quote">STRING</Data>
+        </Insert>
+        <Insert Table="inka_metatype">
+            <Data Key="name" Type="Quote">DATE TIME</Data>
+        </Insert>
+        <Insert Table="inka_metatype">
+            <Data Key="name" Type="Quote">BOOLEAN</Data>
+        </Insert>
+        <Insert Table="inka_metatype">
+            <Data Key="name" Type="Quote">FILE</Data>
+        </Insert>
+        <Insert Table="inka_metatype">
+            <Data Key="name" Type="Quote">GENERIC LIST</Data>
+        </Insert>        
+		
+		<Insert Table="inka_ci_properties_group">
+            <Data Key="name" Type="Quote">Default</Data>
+        </Insert>
+		<Insert Table="inka_ci_template">
+            <Data Key="name" Type="Quote">Default</Data>
+            <Data Key="hasDefaultFields">1</Data>
+        </Insert>
+        <Insert Table="inka_ci_template">
+            <Data Key="name" Type="Quote">Software</Data>
+            <Data Key="hasDefaultFields">1</Data>
+        </Insert>
+        <Insert Table="inka_ci_template_property">
+			<Data Key="id_template">2</Data>
+			<Data Key="id_metatype">7</Data>
+			<Data Key="id_list">1</Data>
+			<Data Key="id_properties_group">1</Data>
+			<Data Key="caption"  Type="Quote">Type</Data>
+			<Data Key="mandatory">0</Data>
+			<Data Key="display">1</Data>
+        </Insert>        
+        <Insert Table="inka_ci_template_property">
+			<Data Key="id_template">2</Data>
+			<Data Key="id_metatype">1</Data>
+			<Data Key="id_list">1</Data>
+			<Data Key="id_properties_group">1</Data>
+			<Data Key="caption" Type="Quote">License count</Data>
+			<Data Key="mandatory">0</Data>
+			<Data Key="display">1</Data>
+        </Insert>
+        <Insert Table="inka_ci_template_property">
+			<Data Key="id_template">2</Data>
+			<Data Key="id_metatype">1</Data>
+			<Data Key="id_list">1</Data>
+			<Data Key="id_properties_group">1</Data>
+			<Data Key="caption" Type="Quote">Installation count</Data>
+			<Data Key="mandatory">0</Data>
+			<Data Key="display">1</Data>
+        </Insert>
+        <Insert Table="inka_ci_template_property">
+			<Data Key="id_template">2</Data>
+			<Data Key="id_metatype">3</Data>
+			<Data Key="id_list">1</Data>
+			<Data Key="id_properties_group">1</Data>
+			<Data Key="caption" Type="Quote">Version</Data>
+			<Data Key="mandatory">0</Data>
+			<Data Key="display">1</Data>
+        </Insert>
+                
+        <Insert Table="inka_category">            
+            <Data Key="id_parent">0</Data>
+            <Data Key="id_template">1</Data>
+            <Data Key="level">0</Data>
+            <Data Key="name" Type="Quote" >All</Data>
+            <Data Key="is_branch">1</Data>
+        </Insert>
+        <Insert Table="inka_category">            
+            <Data Key="id_parent">1</Data>
+            <Data Key="id_template">1</Data>
+            <Data Key="level">1</Data>
+            <Data Key="name"  Type="Quote" >IT</Data>
+            <Data Key="is_branch">1</Data>
+        </Insert>
+        <Insert Table="inka_category">            
+            <Data Key="id_parent">1</Data>
+            <Data Key="id_template">1</Data>
+            <Data Key="level">1</Data>
+            <Data Key="name"  Type="Quote" >Non IT</Data>
+            <Data Key="is_branch">1</Data>            
+        </Insert>
+        <Insert Table="inka_category">            
+            <Data Key="id_parent">2</Data>
+            <Data Key="id_template">1</Data>
+            <Data Key="level">2</Data>
+            <Data Key="name"  Type="Quote" >Component</Data>
+            <Data Key="is_branch">1</Data>            
+        </Insert>
+		<Insert Table="inka_category">            
+            <Data Key="id_parent">2</Data>
+            <Data Key="id_template">1</Data>
+            <Data Key="level">2</Data>
+            <Data Key="name"  Type="Quote" >Network</Data>
+            <Data Key="is_branch">1</Data>            
+        </Insert>
+		<Insert Table="inka_category">            
+            <Data Key="id_parent">1</Data>
+            <Data Key="id_template">2</Data>
+            <Data Key="level">1</Data>
+            <Data Key="name" Type="Quote" >Software</Data>
+            <Data Key="is_branch">0</Data>            
+        </Insert>
+        <Insert Table="inka_category">            
+            <Data Key="id_parent">3</Data>
+            <Data Key="id_template">1</Data>
+            <Data Key="level">2</Data>
+            <Data Key="name"  Type="Quote" >Desk</Data>
+            <Data Key="is_branch">0</Data>            
+        </Insert>
+        <Insert Table="inka_category">            
+            <Data Key="id_parent">3</Data>
+            <Data Key="id_template">1</Data>
+            <Data Key="level">2</Data>
+            <Data Key="name"  Type="Quote" >Chair</Data>
+            <Data Key="is_branch">0</Data>            
+        </Insert>
+        <Insert Table="inka_category">            
+            <Data Key="id_parent">3</Data>
+            <Data Key="id_template">1</Data>
+            <Data Key="level">2</Data>
+            <Data Key="name"  Type="Quote" >Projector</Data>
+            <Data Key="is_branch">0</Data>            
+        </Insert>
+         <Insert Table="inka_category">            
+            <Data Key="id_parent">5</Data>
+            <Data Key="id_template">1</Data>
+            <Data Key="level">2</Data>
+            <Data Key="name"  Type="Quote" >Access Point</Data>
+            <Data Key="is_branch">0</Data>            
+        </Insert>
+        <Insert Table="inka_category">            
+            <Data Key="id_parent">2</Data>
+            <Data Key="id_template">1</Data>
+            <Data Key="level">2</Data>
+            <Data Key="name"  Type="Quote" >Printer</Data>
+            <Data Key="is_branch">0</Data>            
+        </Insert>
+        <Insert Table="inka_category">            
+            <Data Key="id_parent">5</Data>
+            <Data Key="id_template">1</Data>
+            <Data Key="level">2</Data>
+            <Data Key="name"  Type="Quote" >Router</Data>
+            <Data Key="is_branch">0</Data>            
+        </Insert>
+        <Insert Table="inka_category">            
+            <Data Key="id_parent">5</Data>
+            <Data Key="id_template">1</Data>
+            <Data Key="level">2</Data>
+            <Data Key="name"  Type="Quote" >Switch</Data>
+            <Data Key="is_branch">0</Data>            
+        </Insert>
+        <Insert Table="inka_category">            
+            <Data Key="id_parent">2</Data>
+            <Data Key="id_template">1</Data>
+            <Data Key="level">2</Data>
+            <Data Key="name"  Type="Quote" >Server</Data>
+            <Data Key="is_branch">0</Data>            
+        </Insert>
+        <Insert Table="inka_category">            
+            <Data Key="id_parent">2</Data>
+            <Data Key="id_template">1</Data>
+            <Data Key="level">2</Data>
+            <Data Key="name"  Type="Quote" >Workstation</Data>
+            <Data Key="is_branch">0</Data>            
+        </Insert>
+                
+        <Insert Table="inka_category">            
+            <Data Key="id_parent">4</Data>
+            <Data Key="id_template">1</Data>
+            <Data Key="level">3</Data>
+            <Data Key="name"  Type="Quote" >Keyboard</Data>
+            <Data Key="is_branch">0</Data>            
+        </Insert>
+        <Insert Table="inka_category">            
+            <Data Key="id_parent">4</Data>
+            <Data Key="id_template">1</Data>
+            <Data Key="level">3</Data>
+            <Data Key="name"  Type="Quote" >Mouse</Data>
+            <Data Key="is_branch">0</Data>            
+        </Insert>
+        <Insert Table="inka_category">            
+            <Data Key="id_parent">4</Data>
+            <Data Key="id_template">1</Data>
+            <Data Key="level">3</Data>
+            <Data Key="name"  Type="Quote" >Monitor</Data>
+            <Data Key="is_branch">0</Data>            
+        </Insert>
+        <Insert Table="inka_category">            
+            <Data Key="id_parent">4</Data>
+            <Data Key="id_template">1</Data>
+            <Data Key="level">3</Data>
+            <Data Key="name"  Type="Quote" >Case</Data>
+            <Data Key="is_branch">0</Data>            
+        </Insert>
+        <Insert Table="inka_ci_state">
+        	<Data Key="id_category">1</Data>
+            <Data Key="name"  Type="Quote" >available on stock</Data>
+		</Insert>
+		<Insert Table="inka_ci_state">
+        	<Data Key="id_category">1</Data>
+            <Data Key="name"  Type="Quote" >in use</Data>
+		</Insert>
+		<Insert Table="inka_ci_state">
+        	<Data Key="id_category">1</Data>
+            <Data Key="name"  Type="Quote" >on maintenance</Data>
+		</Insert>
+		<Insert Table="inka_ci_state">
+        	<Data Key="id_category">1</Data>
+            <Data Key="name"  Type="Quote" >not available</Data>
+		</Insert>
+		
+		<!-- Net components manufacturers -->
+		<Insert Table="inka_ci_provider_list">
+			<Data Key="id_category">1</Data>
+			<Data Key="name" Type="Quote" >Unknown</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+        	<Data Key="id_category">5</Data>
+            <Data Key="name" Type="Quote" >SMC</Data>
+		</Insert>			
+		<Insert Table="inka_ci_provider_list">
+        	<Data Key="id_category">5</Data>
+            <Data Key="name" Type="Quote" >Belkin</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+        	<Data Key="id_category">5</Data>
+            <Data Key="name" Type="Quote" >Asus</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+        	<Data Key="id_category">5</Data>
+            <Data Key="name" Type="Quote" >2Wire</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+        	<Data Key="id_category">5</Data>
+            <Data Key="name" Type="Quote" >3Com</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+        	<Data Key="id_category">5</Data>
+            <Data Key="name" Type="Quote" >Alcatel</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+        	<Data Key="id_category">5</Data>
+            <Data Key="name" Type="Quote" >Cisco</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+        	<Data Key="id_category">5</Data>
+            <Data Key="name" Type="Quote" >Comtrend</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+        	<Data Key="id_category">5</Data>
+            <Data Key="name" Type="Quote" >D-Link</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+        	<Data Key="id_category">5</Data>
+            <Data Key="name" Type="Quote" >Huawei</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+        	<Data Key="id_category">5</Data>
+            <Data Key="name" Type="Quote" >Linksys</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+        	<Data Key="id_category">5</Data>
+            <Data Key="name" Type="Quote" >Nokia</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+        	<Data Key="id_category">5</Data>
+            <Data Key="name" Type="Quote" >Netgear</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+        	<Data Key="id_category">5</Data>
+            <Data Key="name" Type="Quote" >Xavi</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+        	<Data Key="id_category">5</Data>
+            <Data Key="name" Type="Quote" >Thomson</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+        	<Data Key="id_category">5</Data>
+            <Data Key="name" Type="Quote" >U.S. Robotics</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+        	<Data Key="id_category">5</Data>
+            <Data Key="name" Type="Quote" >ZyXEL</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+        	<Data Key="id_category">5</Data>
+            <Data Key="name" Type="Quote" >Air-Link</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+        	<Data Key="id_category">5</Data>
+            <Data Key="name" Type="Quote" >Encore</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+        	<Data Key="id_category">5</Data>
+            <Data Key="name" Type="Quote" >Supergrass</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+        	<Data Key="id_category">5</Data>
+            <Data Key="name" Type="Quote" >Kozumi</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+        	<Data Key="id_category">5</Data>
+            <Data Key="name" Type="Quote" >Billion</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+        	<Data Key="id_category">5</Data>
+            <Data Key="name" Type="Quote" >Johnson</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+        	<Data Key="id_category">5</Data>
+            <Data Key="name" Type="Quote" >Baudtec</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+        	<Data Key="id_category">5</Data>
+            <Data Key="name" Type="Quote" >Zhone</Data>
+		</Insert>
+		
+		<!-- PC and Workstations -->
+		<Insert Table="inka_ci_provider_list">
+        	<Data Key="id_category">2</Data>
+            <Data Key="name" Type="Quote" >Sun</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+        	<Data Key="id_category">2</Data>
+            <Data Key="name" Type="Quote" >Oracle</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+        	<Data Key="id_category">2</Data>
+            <Data Key="name" Type="Quote" >Dell</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+        	<Data Key="id_category">2</Data>
+            <Data Key="name" Type="Quote" >Compaq</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+        	<Data Key="id_category">2</Data>
+            <Data Key="name" Type="Quote" >IBM</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+        	<Data Key="id_category">2</Data>
+            <Data Key="name" Type="Quote" >Acer</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+        	<Data Key="id_category">2</Data>
+            <Data Key="name" Type="Quote" >Lenovo</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+        	<Data Key="id_category">2</Data>
+            <Data Key="name" Type="Quote" >Sony</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+        	<Data Key="id_category">2</Data>
+            <Data Key="name" Type="Quote" >Apple</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+        	<Data Key="id_category">2</Data>
+            <Data Key="name" Type="Quote" >Asus</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+        	<Data Key="id_category">2</Data>
+            <Data Key="name" Type="Quote" >MSI</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+        	<Data Key="id_category">2</Data>
+            <Data Key="name" Type="Quote" >Canon</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+        	<Data Key="id_category">2</Data>
+            <Data Key="name" Type="Quote" >Hewlett-Packard</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+        	<Data Key="id_category">2</Data>
+            <Data Key="name" Type="Quote" >Toshiba</Data>
+		</Insert>
+		
+		<!-- Printers manufacturers -->
+	    <Insert Table="inka_ci_provider_list">
+        	<Data Key="id_category">11</Data>
+			<Data Key="name" Type="Quote" >Brother</Data>
+	    </Insert>
+	    <Insert Table="inka_ci_provider_list">
+        	<Data Key="id_category">11</Data>
+			<Data Key="name" Type="Quote" >Canon</Data>
+	    </Insert>
+	    <Insert Table="inka_ci_provider_list">
+        	<Data Key="id_category">11</Data>
+            <Data Key="name" Type="Quote" >Olivetti</Data>
+	    </Insert>
+	    <Insert Table="inka_ci_provider_list">
+        	<Data Key="id_category">11</Data>
+			<Data Key="name" Type="Quote" >Epson</Data>
+	    </Insert>
+	    <Insert Table="inka_ci_provider_list">
+        	<Data Key="id_category">11</Data>
+            <Data Key="name" Type="Quote" >Hewlett-Packard</Data>
+	    </Insert>
+	    <Insert Table="inka_ci_provider_list">
+        	<Data Key="id_category">11</Data>
+            <Data Key="name" Type="Quote" >Lenovo</Data>
+	    </Insert>
+		<Insert Table="inka_ci_provider_list">
+        	<Data Key="id_category">11</Data>
+            <Data Key="name" Type="Quote" >Lexmark</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+        	<Data Key="id_category">11</Data>
+            <Data Key="name" Type="Quote" >OKI</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+        	<Data Key="id_category">11</Data>
+            <Data Key="name" Type="Quote" >Panasonic</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+        	<Data Key="id_category">11</Data>
+            <Data Key="name" Type="Quote" >PENTAX</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+        	<Data Key="id_category">11</Data>
+            <Data Key="name" Type="Quote" >Planon</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+        	<Data Key="id_category">11</Data>
+            <Data Key="name" Type="Quote" >prolink</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+        	<Data Key="id_category">11</Data>
+            <Data Key="name" Type="Quote" >Dell</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+        	<Data Key="id_category">11</Data>
+            <Data Key="name" Type="Quote" >Ricoh</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+        	<Data Key="id_category">11</Data>
+            <Data Key="name" Type="Quote" >Samsung</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+        	<Data Key="id_category">11</Data>
+            <Data Key="name" Type="Quote" >Kodak</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+        	<Data Key="id_category">11</Data>
+            <Data Key="name" Type="Quote" >Konica Minolta</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+        	<Data Key="id_category">11</Data>
+            <Data Key="name" Type="Quote" >Kyocera</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+        	<Data Key="id_category">11</Data>
+            <Data Key="name" Type="Quote" >Xerox</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+        	<Data Key="id_category">11</Data>
+            <Data Key="name" Type="Quote" >TVS Electronics</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+        	<Data Key="id_category">11</Data>
+            <Data Key="name" Type="Quote" >WeP</Data>
+		</Insert>
+		
+		<!-- Case manufacturers -->
+		<Insert Table="inka_ci_provider_list">
+          	  <Data Key="id_category">19</Data>
+              <Data Key="name" Type="Quote" >Akasa</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+          	  <Data Key="id_category">19</Data>
+              <Data Key="name" Type="Quote" >Antec</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+          	  <Data Key="id_category">19</Data>
+              <Data Key="name" Type="Quote" >AOpen</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+          	  <Data Key="id_category">19</Data>
+              <Data Key="name" Type="Quote" >APEVIA</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+          	  <Data Key="id_category">19</Data>
+              <Data Key="name" Type="Quote" >AplusCase</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+          	  <Data Key="id_category">19</Data>
+              <Data Key="name" Type="Quote" >Arctic Cooling</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+          	  <Data Key="id_category">19</Data>
+              <Data Key="name" Type="Quote" >Ark Technology Inc.</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+          	  <Data Key="id_category">19</Data>
+              <Data Key="name" Type="Quote" >AeroCool</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+          	  <Data Key="id_category">19</Data>
+              <Data Key="name" Type="Quote" >ASUS</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+          	  <Data Key="id_category">19</Data>
+              <Data Key="name" Type="Quote" >Astone</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+          	  <Data Key="id_category">19</Data>
+              <Data Key="name" Type="Quote" >Athena Power</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+          	  <Data Key="id_category">19</Data>
+              <Data Key="name" Type="Quote" >Athenatech U.S.A. Inc.</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+          	  <Data Key="id_category">19</Data>
+              <Data Key="name" Type="Quote" >ATOP Technology</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+          	  <Data Key="id_category">19</Data>
+              <Data Key="name" Type="Quote" >Auzentech</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+          	  <Data Key="id_category">19</Data>
+              <Data Key="name" Type="Quote" >Aywun</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+          	  <Data Key="id_category">19</Data>
+              <Data Key="name" Type="Quote" >Azza</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+          	  <Data Key="id_category">19</Data>
+              <Data Key="name" Type="Quote" >Chassis Plans</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+          	  <Data Key="id_category">19</Data>
+              <Data Key="name" Type="Quote" >Chieftec</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+          	  <Data Key="id_category">19</Data>
+              <Data Key="name" Type="Quote" >CCiVO</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+          	  <Data Key="id_category">19</Data>
+              <Data Key="name" Type="Quote" >Circle</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+          	  <Data Key="id_category">19</Data>
+              <Data Key="name" Type="Quote" >Compucase</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+          	  <Data Key="id_category">19</Data>
+              <Data Key="name" Type="Quote" >Cooler Master</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+          	  <Data Key="id_category">19</Data>
+              <Data Key="name" Type="Quote" >Corsair Memory</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+          	  <Data Key="id_category">19</Data>
+              <Data Key="name" Type="Quote" >Dell</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+          	  <Data Key="id_category">18</Data>
+              <Data Key="name" Type="Quote" >Compaq</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+          	  <Data Key="id_category">19</Data>
+              <Data Key="name" Type="Quote" >Odessy</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+          	  <Data Key="id_category">19</Data>
+              <Data Key="name" Type="Quote" >DFI</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+          	  <Data Key="id_category">19</Data>
+              <Data Key="name" Type="Quote" >Dynapower USA</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+          	  <Data Key="id_category">19</Data>
+              <Data Key="name" Type="Quote" >ECS</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+          	  <Data Key="id_category">19</Data>
+              <Data Key="name" Type="Quote" >Enermax</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+          	  <Data Key="id_category">19</Data>
+              <Data Key="name" Type="Quote" >Foxconn</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+          	  <Data Key="id_category">19</Data>
+              <Data Key="name" Type="Quote" >Frontech</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+          	  <Data Key="id_category">19</Data>
+              <Data Key="name" Type="Quote" >Gigabyte</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+          	  <Data Key="id_category">19</Data>
+              <Data Key="name" Type="Quote" >Green</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+          	  <Data Key="id_category">19</Data>
+              <Data Key="name" Type="Quote" >GMC Company</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+          	  <Data Key="id_category">19</Data>
+              <Data Key="name" Type="Quote" >G-view</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+          	  <Data Key="id_category">19</Data>
+              <Data Key="name" Type="Quote" >HEC Compucase</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+          	  <Data Key="id_category">19</Data>
+              <Data Key="name" Type="Quote" >HIPER</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+          	  <Data Key="id_category">19</Data>
+              <Data Key="name" Type="Quote" >Iball</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+          	  <Data Key="id_category">19</Data>
+              <Data Key="name" Type="Quote" >I-Star Computer Co. Ltd</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+          	  <Data Key="id_category">19</Data>
+              <Data Key="name" Type="Quote" >In Win Development</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+          	  <Data Key="id_category">19</Data>
+              <Data Key="name" Type="Quote" >Intel</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+          	  <Data Key="id_category">19</Data>
+              <Data Key="name" Type="Quote" >Intex</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+          	  <Data Key="id_category">19</Data>
+              <Data Key="name" Type="Quote" >Jeantech</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+          	  <Data Key="id_category">19</Data>
+              <Data Key="name" Type="Quote" >JPAC COMPUTER</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+          	  <Data Key="id_category">19</Data>
+              <Data Key="name" Type="Quote" >Kobian Pte. Ltd. Mercury brand</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+          	  <Data Key="id_category">19</Data>
+              <Data Key="name" Type="Quote" >Lenova</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+          	  <Data Key="id_category">19</Data>
+              <Data Key="name" Type="Quote" >Lian Li</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+          	  <Data Key="id_category">19</Data>
+              <Data Key="name" Type="Quote" >Linkworld</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+          	  <Data Key="id_category">19</Data>
+              <Data Key="name" Type="Quote" >Logisys Computer</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+          	  <Data Key="id_category">19</Data>
+              <Data Key="name" Type="Quote" >Maxcube</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+          	  <Data Key="id_category">19</Data>
+              <Data Key="name" Type="Quote" >Olson Metal Products (defunct)</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+          	  <Data Key="id_category">19</Data>
+              <Data Key="name" Type="Quote" >Power Logic</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+          	  <Data Key="id_category">19</Data>
+              <Data Key="name" Type="Quote" >IXIUM</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+          	  <Data Key="id_category">19</Data>
+              <Data Key="name" Type="Quote" >RAIDMax</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+          	  <Data Key="id_category">19</Data>
+              <Data Key="name" Type="Quote" >Rosewill</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+          	  <Data Key="id_category">19</Data>
+              <Data Key="name" Type="Quote" >Scythe</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+          	  <Data Key="id_category">19</Data>
+              <Data Key="name" Type="Quote" >Sigma Product</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+          	  <Data Key="id_category">19</Data>
+              <Data Key="name" Type="Quote" >SilverStone</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+          	  <Data Key="id_category">19</Data>
+              <Data Key="name" Type="Quote" >Sunbeam Tech</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+          	  <Data Key="id_category">19</Data>
+              <Data Key="name" Type="Quote" >Supermicro</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+          	  <Data Key="id_category">19</Data>
+              <Data Key="name" Type="Quote" >Thermaltake</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+          	  <Data Key="id_category">19</Data>
+              <Data Key="name" Type="Quote" >Trenton Technology</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+          	  <Data Key="id_category">19</Data>
+              <Data Key="name" Type="Quote" >TUNIQ</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+          	  <Data Key="id_category">19</Data>
+              <Data Key="name" Type="Quote" >TomMade</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+          	  <Data Key="id_category">19</Data>
+              <Data Key="name" Type="Quote" >Ultra Products</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+          	  <Data Key="id_category">19</Data>
+              <Data Key="name" Type="Quote" >XClio</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+          	  <Data Key="id_category">19</Data>
+              <Data Key="name" Type="Quote" >Xitrix Corp</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+          	  <Data Key="id_category">19</Data>
+              <Data Key="name" Type="Quote" >Zalman</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+          	  <Data Key="id_category">19</Data>
+              <Data Key="name" Type="Quote" >Zebronics</Data>
+		</Insert>
+		
+		<!-- Mouse & keyboard -->
+		<Insert Table="inka_ci_provider_list">
+          	  <Data Key="id_category">4</Data>
+              <Data Key="name" Type="Quote" >A4Tech</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+          	  <Data Key="id_category">4</Data>
+              <Data Key="name" Type="Quote" >Adesso</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+          	  <Data Key="id_category">4</Data>
+              <Data Key="name" Type="Quote" >Alps</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+          	  <Data Key="id_category">4</Data>
+              <Data Key="name" Type="Quote" >APEVIA</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+          	  <Data Key="id_category">4</Data>
+              <Data Key="name" Type="Quote" >ATOP Technology</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+          	  <Data Key="id_category">4</Data>
+              <Data Key="name" Type="Quote" >BTC</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+          	  <Data Key="id_category">4</Data>
+              <Data Key="name" Type="Quote" >Bytecc</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+          	  <Data Key="id_category">4</Data>
+              <Data Key="name" Type="Quote" >Chassis Plans</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+          	  <Data Key="id_category">4</Data>
+              <Data Key="name" Type="Quote" >Cherry</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+          	  <Data Key="id_category">4</Data>
+              <Data Key="name" Type="Quote" >Chester Creek Technologies</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+          	  <Data Key="id_category">4</Data>
+              <Data Key="name" Type="Quote" >Chicony Electronics</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+          	  <Data Key="id_category">4</Data>
+              <Data Key="name" Type="Quote" >Creative</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+          	  <Data Key="id_category">4</Data>
+              <Data Key="name" Type="Quote" >DCT Factory, Inc.</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+          	  <Data Key="id_category">4</Data>
+              <Data Key="name" Type="Quote" >Enermax</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+          	  <Data Key="id_category">4</Data>
+              <Data Key="name" Type="Quote" >Farassoo</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+          	  <Data Key="id_category">4</Data>
+              <Data Key="name" Type="Quote" >Fujitsu - Siemens</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+          	  <Data Key="id_category">4</Data>
+              <Data Key="name" Type="Quote" >Gear Head</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+          	  <Data Key="id_category">4</Data>
+              <Data Key="name" Type="Quote" >Genius</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+          	  <Data Key="id_category">4</Data>
+              <Data Key="name" Type="Quote" >HIPER</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+          	  <Data Key="id_category">4</Data>
+              <Data Key="name" Type="Quote" >HAVIT</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+          	  <Data Key="id_category">4</Data>
+              <Data Key="name" Type="Quote" >i-rocks !check!</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+          	  <Data Key="id_category">4</Data>
+              <Data Key="name" Type="Quote" >Iball</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+          	  <Data Key="id_category">4</Data>
+              <Data Key="name" Type="Quote" >Intex</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+          	  <Data Key="id_category">4</Data>
+              <Data Key="name" Type="Quote" >Ideazon</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+          	  <Data Key="id_category">4</Data>
+              <Data Key="name" Type="Quote" >IOGEAR</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+          	  <Data Key="id_category">4</Data>
+              <Data Key="name" Type="Quote" >Kensington Computer Products Group</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+          	  <Data Key="id_category">4</Data>
+              <Data Key="name" Type="Quote" >Key Tronic</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+          	  <Data Key="id_category">4</Data>
+              <Data Key="name" Type="Quote" >KeyScan</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+          	  <Data Key="id_category">4</Data>
+              <Data Key="name" Type="Quote" >Labtec</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+          	  <Data Key="id_category">4</Data>
+              <Data Key="name" Type="Quote" >Linkworld Electronics</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+          	  <Data Key="id_category">4</Data>
+              <Data Key="name" Type="Quote" >Lite-On</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+          	  <Data Key="id_category">4</Data>
+              <Data Key="name" Type="Quote" >Logisys Computer</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+          	  <Data Key="id_category">4</Data>
+              <Data Key="name" Type="Quote" >Logitech</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+          	  <Data Key="id_category">4</Data>
+              <Data Key="name" Type="Quote" >Macally (Mace Group)</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+          	  <Data Key="id_category">4</Data>
+              <Data Key="name" Type="Quote" >Micro Innovations</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+          	  <Data Key="id_category">4</Data>
+              <Data Key="name" Type="Quote" >Microsoft</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+          	  <Data Key="id_category">4</Data>
+              <Data Key="name" Type="Quote" >Mitsumi</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+          	  <Data Key="id_category">4</Data>
+              <Data Key="name" Type="Quote" >Nan Tan Computer (NTC)</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+          	  <Data Key="id_category">4</Data>
+              <Data Key="name" Type="Quote" >NMEDIAPC</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+          	  <Data Key="id_category">4</Data>
+              <Data Key="name" Type="Quote" >OCZ Technology</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+          	  <Data Key="id_category">4</Data>
+              <Data Key="name" Type="Quote" >Power Logic</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+          	  <Data Key="id_category">4</Data>
+              <Data Key="name" Type="Quote" >Qumax</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+          	  <Data Key="id_category">4</Data>
+              <Data Key="name" Type="Quote" >Razer</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+          	  <Data Key="id_category">4</Data>
+              <Data Key="name" Type="Quote" >Rosewill</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+          	  <Data Key="id_category">4</Data>
+              <Data Key="name" Type="Quote" >Saitek</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+          	  <Data Key="id_category">4</Data>
+              <Data Key="name" Type="Quote" >Samsung</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+          	  <Data Key="id_category">4</Data>
+              <Data Key="name" Type="Quote" >SolidTek</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+          	  <Data Key="id_category">4</Data>
+              <Data Key="name" Type="Quote" >Spec Research</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+          	  <Data Key="id_category">4</Data>
+              <Data Key="name" Type="Quote" >SteelSeries</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+          	  <Data Key="id_category">4</Data>
+              <Data Key="name" Type="Quote" >Syba</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+          	  <Data Key="id_category">4</Data>
+              <Data Key="name" Type="Quote" >Targus</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+          	  <Data Key="id_category">4</Data>
+              <Data Key="name" Type="Quote" >Thermaltake</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+          	  <Data Key="id_category">4</Data>
+              <Data Key="name" Type="Quote" >Topre</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+          	  <Data Key="id_category">4</Data>
+              <Data Key="name" Type="Quote" >Trust</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+          	  <Data Key="id_category">4</Data>
+              <Data Key="name" Type="Quote" >TVS Electronics</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+          	  <Data Key="id_category">4</Data>
+              <Data Key="name" Type="Quote" >Wolfking</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+          	  <Data Key="id_category">4</Data>
+              <Data Key="name" Type="Quote" >Xitrix Computer Corporation</Data>
+		</Insert>
+		
+		<!-- Software manufacturers -->
+		<Insert Table="inka_ci_provider_list">
+          	  <Data Key="id_category">6</Data>
+              <Data Key="name" Type="Quote" >Adobe Systems, Inc.</Data>
+		</Insert>              
+		<Insert Table="inka_ci_provider_list">
+          	  <Data Key="id_category">6</Data>
+              <Data Key="name" Type="Quote" >Autodesk, Inc.</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+          	  <Data Key="id_category">6</Data>
+              <Data Key="name" Type="Quote" >Broadcom Corporation</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+          	  <Data Key="id_category">6</Data>
+              <Data Key="name" Type="Quote" >BVRP Software, Inc.</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+          	  <Data Key="id_category">6</Data>
+              <Data Key="name" Type="Quote" >Canonical Ltd.</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+          	  <Data Key="id_category">6</Data>
+              <Data Key="name" Type="Quote" >Constantin Kaplinsky</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+          	  <Data Key="id_category">6</Data>
+              <Data Key="name" Type="Quote" >Corel Corporation</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+          	  <Data Key="id_category">6</Data>
+              <Data Key="name" Type="Quote" >Dell</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+          	  <Data Key="id_category">6</Data>
+              <Data Key="name" Type="Quote" >DivX, Inc.</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+          	  <Data Key="id_category">6</Data>
+              <Data Key="name" Type="Quote" >DivXNetworks, Inc.</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+          	  <Data Key="id_category">6</Data>
+              <Data Key="name" Type="Quote" >Electronic Arts, Inc.</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+          	  <Data Key="id_category">6</Data>
+              <Data Key="name" Type="Quote" >Google</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+          	  <Data Key="id_category">6</Data>
+              <Data Key="name" Type="Quote" >IBM</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+          	  <Data Key="id_category">6</Data>
+              <Data Key="name" Type="Quote" >Intel Corporation</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+          	  <Data Key="id_category">6</Data>
+              <Data Key="name" Type="Quote" >Microsoft Corporation</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+          	  <Data Key="id_category">6</Data>
+              <Data Key="name" Type="Quote" >Mozilla</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+          	  <Data Key="id_category">6</Data>
+              <Data Key="name" Type="Quote" >MP4Converter</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+          	  <Data Key="id_category">6</Data>
+              <Data Key="name" Type="Quote" >Nvidia</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+          	  <Data Key="id_category">6</Data>
+              <Data Key="name" Type="Quote" >Oracle</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+          	  <Data Key="id_category">6</Data>
+              <Data Key="name" Type="Quote" >OTRS Inc.</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+          	  <Data Key="id_category">6</Data>
+              <Data Key="name" Type="Quote" >SAP AG</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+          	  <Data Key="id_category">6</Data>
+              <Data Key="name" Type="Quote" >Sun Microsystems, Inc.</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+          	  <Data Key="id_category">6</Data>
+              <Data Key="name" Type="Quote" >Symantec Corporation</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+          	  <Data Key="id_category">6</Data>
+              <Data Key="name" Type="Quote" >WinZip Computing, Inc.</Data>
+		</Insert>
+		
+		<!-- Monitors -->		
+		<Insert Table="inka_ci_provider_list">
+          	  <Data Key="id_category">18</Data>
+              <Data Key="name" Type="Quote" >3M</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+          	  <Data Key="id_category">18</Data>
+              <Data Key="name" Type="Quote" >Apple</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+          	  <Data Key="id_category">18</Data>
+              <Data Key="name" Type="Quote" >Acer</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+          	  <Data Key="id_category">18</Data>
+              <Data Key="name" Type="Quote" >AG Neovo</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+          	  <Data Key="id_category">18</Data>
+              <Data Key="name" Type="Quote" >AOC Monitors</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+          	  <Data Key="id_category">18</Data>
+              <Data Key="name" Type="Quote" >ASUS</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+          	  <Data Key="id_category">18</Data>
+              <Data Key="name" Type="Quote" >AU Optronics</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+          	  <Data Key="id_category">18</Data>
+              <Data Key="name" Type="Quote" >BenQ</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+          	  <Data Key="id_category">18</Data>
+              <Data Key="name" Type="Quote" >BTC Korea Co., Ltd.</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+          	  <Data Key="id_category">18</Data>
+              <Data Key="name" Type="Quote" >Chassis Plans</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+          	  <Data Key="id_category">18</Data>
+              <Data Key="name" Type="Quote" >Chi Mei</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+          	  <Data Key="id_category">18</Data>
+              <Data Key="name" Type="Quote" >COMPAQ</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+          	  <Data Key="id_category">18</Data>
+              <Data Key="name" Type="Quote" >Dell</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+          	  <Data Key="id_category">18</Data>
+              <Data Key="name" Type="Quote" >DoubleSight</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+          	  <Data Key="id_category">18</Data>
+              <Data Key="name" Type="Quote" >Eizo</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+          	  <Data Key="id_category">18</Data>
+              <Data Key="name" Type="Quote" >Gateway</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+          	  <Data Key="id_category">18</Data>
+              <Data Key="name" Type="Quote" >Hanns-G</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+          	  <Data Key="id_category">18</Data>
+              <Data Key="name" Type="Quote" >Hewlett-Packard</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+          	  <Data Key="id_category">18</Data>
+              <Data Key="name" Type="Quote" >Hyundai</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+          	  <Data Key="id_category">18</Data>
+              <Data Key="name" Type="Quote" >IC Power</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+          	  <Data Key="id_category">18</Data>
+              <Data Key="name" Type="Quote" >iZ3D</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+          	  <Data Key="id_category">18</Data>
+              <Data Key="name" Type="Quote" >LaCie</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+          	  <Data Key="id_category">18</Data>
+              <Data Key="name" Type="Quote" >LG</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+          	  <Data Key="id_category">18</Data>
+              <Data Key="name" Type="Quote" >NEC</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+          	  <Data Key="id_category">18</Data>
+              <Data Key="name" Type="Quote" >Philips</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+          	  <Data Key="id_category">18</Data>
+              <Data Key="name" Type="Quote" >Planar Systems</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+          	  <Data Key="id_category">18</Data>
+              <Data Key="name" Type="Quote" >Samsung</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+          	  <Data Key="id_category">18</Data>
+              <Data Key="name" Type="Quote" >Sceptre Incorporated</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+          	  <Data Key="id_category">18</Data>
+              <Data Key="name" Type="Quote" >Sharp</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+          	  <Data Key="id_category">18</Data>
+              <Data Key="name" Type="Quote" >Shuttle Inc.</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+          	  <Data Key="id_category">18</Data>
+              <Data Key="name" Type="Quote" >Sony</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+          	  <Data Key="id_category">18</Data>
+              <Data Key="name" Type="Quote" >Taiwan Video and Monitor Corporation (TVM)</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+          	  <Data Key="id_category">18</Data>
+              <Data Key="name" Type="Quote" >Tatung Company</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+          	  <Data Key="id_category">18</Data>
+              <Data Key="name" Type="Quote" >VIEWERA</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+          	  <Data Key="id_category">18</Data>
+              <Data Key="name" Type="Quote" >ViewSonic</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+          	  <Data Key="id_category">18</Data>
+              <Data Key="name" Type="Quote" >Westinghouse Digital Electronics</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+          	  <Data Key="id_category">18</Data>
+              <Data Key="name" Type="Quote" >Xitrix Corporation</Data>
+		</Insert>
+		<Insert Table="inka_ci_provider_list">
+          	  <Data Key="id_category">18</Data>
+              <Data Key="name" Type="Quote" >Zalman</Data>
+		</Insert>
+		
+		<!-- default list -->		
+		<Insert Table="inka_ci_generic_list">
+          	  <Data Key="id_category">6</Data>
+              <Data Key="name" Type="Quote" >Software Type</Data>
+		</Insert>
+		
+		<!-- software type list -->		
+		<Insert Table="inka_ci_generic_list_element">
+          	  <Data Key="id_list">1</Data>
+              <Data Key="name" Type="Quote">Accounting</Data>
+              <Data Key="value" Type="Quote">accounting</Data>
+		</Insert>
+		<Insert Table="inka_ci_generic_list_element">
+          	  <Data Key="id_list">1</Data>
+              <Data Key="name" Type="Quote">Multimedia</Data>
+              <Data Key="value" Type="Quote">multimedia</Data>
+		</Insert>
+		<Insert Table="inka_ci_generic_list_element">
+          	  <Data Key="id_list">1</Data>
+              <Data Key="name" Type="Quote">Internet</Data>
+              <Data Key="value" Type="Quote">internet</Data>
+		</Insert>
+		<Insert Table="inka_ci_generic_list_element">
+          	  <Data Key="id_list">1</Data>
+              <Data Key="name" Type="Quote">Graphics</Data>
+              <Data Key="value" Type="Quote">graphics</Data>
+		</Insert>		
+		<Insert Table="inka_ci_generic_list_element">
+          	  <Data Key="id_list">1</Data>
+              <Data Key="name" Type="Quote">Game</Data>
+              <Data Key="value" Type="Quote">game</Data>
+		</Insert>		
+		<Insert Table="inka_ci_generic_list_element">
+          	  <Data Key="id_list">1</Data>
+              <Data Key="name" Type="Quote">Operating System</Data>
+              <Data Key="value" Type="Quote">operating_system</Data>
+		</Insert>		
+		<Insert Table="inka_ci_generic_list_element">
+          	  <Data Key="id_list">1</Data>
+              <Data Key="name" Type="Quote">Development</Data>
+              <Data Key="value" Type="Quote">development</Data>
+		</Insert>		
+		<Insert Table="inka_ci_generic_list_element">
+          	  <Data Key="id_list">1</Data>
+              <Data Key="name" Type="Quote">Database</Data>
+              <Data Key="value" Type="Quote">database</Data>
+		</Insert>
+		<Insert Table="inka_ci_generic_list_element">
+          	  <Data Key="id_list">1</Data>
+              <Data Key="name" Type="Quote">Office Suite</Data>
+              <Data Key="value" Type="Quote">office_suite</Data>
+		</Insert>		
+		<Insert Table="inka_ci_generic_list_element">
+          	  <Data Key="id_list">1</Data>
+              <Data Key="name" Type="Quote">Others</Data>
+              <Data Key="value" Type="Quote">others</Data>
+		</Insert>
+		
+		<!-- insert relation types -->
+		<Insert Table="inka_ci_user_link_type">
+              <Data Key="name" Type="Quote">used by</Data>
+		</Insert>
+		<Insert Table="inka_ci_link_type">
+              <Data Key="name" Type="Quote">connected to</Data>
+		</Insert>
+		<Insert Table="inka_ci_link_type">
+              <Data Key="name" Type="Quote">includes</Data>
+		</Insert>
+		<Insert Table="inka_ci_link_type">
+              <Data Key="name" Type="Quote">depends on</Data>
+		</Insert>
+		<Insert Table="inka_ci_link_type">
+              <Data Key="name" Type="Quote">relevant to</Data>
+		</Insert>		
+		<Insert Table="inka_ci_link_type">
+              <Data Key="name" Type="Quote">alternative to</Data>
+		</Insert>
+	</DatabaseInstall>
+	
+	<DatabaseUninstall>
+		<TableDrop Name="inka_ci_user_link" />
+		<TableDrop Name="inka_ci_ci_link"   />
+		<TableDrop Name="inka_ci_user_link_type" />
+		<TableDrop Name="inka_ci_link_type" />
+		<TableDrop Name="inka_ci_history" />		
+		<TableDrop Name="inka_ci_property" />
+		<TableDrop Name="inka_ci_template_property" />
+		<TableDrop Name="inka_metatype" />
+		<TableDrop Name="inka_ocsi_ci" />
+		<TableDrop Name="inka_ci" />
+		<TableDrop Name="inka_ci_properties_group" />
+		<TableDrop Name="inka_ci_provider_list" />
+		<TableDrop Name="inka_ci_state" />
+		<TableDrop Name="inka_ci_generic_list_element" />		
+		<TableDrop Name="inka_ci_generic_list" />
+		<TableDrop Name="inka_category" />
+		<TableDrop Name="inka_file" />		
+		<TableDrop Name="inka_ci_template" />
+		<TableDrop Name="inka_ocsi_log" />		
+		<TableDrop Name="inka_ocsi_category" />
+		<TableDrop Name="inka_ocsi_config" />				
+	</DatabaseUninstall>
+</otrs_package>

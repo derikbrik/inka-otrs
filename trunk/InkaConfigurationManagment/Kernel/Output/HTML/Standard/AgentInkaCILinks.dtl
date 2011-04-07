@@ -1,0 +1,57 @@
+# --
+# AgentInkaCILinks.dtl - provides HTML form for Agent Inka Configuration Items
+# Copyright (C) 2011 Juan Manuel Rodriguez
+# --
+# $Id: AgentInkaCILinks.dtl
+# --
+# This software comes with ABSOLUTELY NO WARRANTY. For details, see
+# the enclosed file COPYING for license information (AGPL). If you
+# did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
+# --
+
+
+ <div class="ContentColumn">
+        <div class="WidgetSimple">     	
+			<div class="HeaderForCI">
+            	<h2 class="classForh2">$Text{"Relations"}: <b>$QData{"unique_name"}</b></h2>
+            </div>
+			<div id="accordionRelation">
+				<!-- dtl:block:Links -->
+				<h3 class="h3Reltaions"><a href="#">$Text{"$QData{"name"}"} <span id="labelCount_$Data{"linktype"}_$Data{"id"}">($QData{"count"})</span></a></h3>
+				<div class="accordionBackground">
+					<div style="height: 450px;" id="Container_$Data{"linktype"}_$Data{"id"}">
+						<div style="display: none;" id="inputShowContainer_$Data{"linktype"}_$Data{"id"}"><input id="inputShow_$Data{"linktype"}_$Data{"id"}" type="checkbox" value="1" name="showInverse" onclick="showInverseRelation($Data{"id_ci"},$Data{"id"},$Data{"linktype"});">$Text{"Show inverse relations"}</div>
+						<p><table id="CIRelation_$Data{"linktype"}_$Data{"id"}" style="display:none"></table></p>
+						<p class="ciAddRemoveContainer" style="display: none;" id="addRemoveCIContainer_$Data{"linktype"}_$Data{"id"}">
+						<button onclick="updateRelation($Data{"id_ci"},$Data{"id"},$Data{"linktype"},'link');" class="CallForAction Up" type="submit" style="margin-right: 10px;">
+				            		<span>$Text{"Add"}</span>
+						</button>
+						<button onclick="updateRelation($Data{"id_ci"},$Data{"id"},$Data{"linktype"},'unlink');" class="CallForAction Down" type="submit" style="margin-right: 10px;">
+				            		<span>$Text{"Remove"}</span>
+						</button>
+						<div id="stateMessageDiv" >    					
+    							<div id="MessageError_$Data{"linktype"}_$Data{"id"}" class="messageError">&nbsp;</div>
+    					</div>
+						<p>
+						<p id="CINONRelated_$Data{"linktype"}_$Data{"id"}_Container"><table id="CINONRelated_$Data{"linktype"}_$Data{"id"}" style="display:none"></table></p>
+					</div>
+					<div style="width: 100%; text-align: right;">
+								<div id="editContent_$Data{"linktype"}_$Data{"id"}_1">
+				            	<button onclick="editRelation($Data{"id_ci"},$Data{"id"},$Data{"linktype"},$Data{"count"});" class="CallForAction Edit" type="submit" style="margin-right: 10px;">
+				            		<span>$Text{"Edit"}</span>
+				            	</button>$Text{"or"} <a href="index.pl?Action=AgentInkaConfigurationItems">$Text{"Cancel"}</a>
+				            	</div>
+				            	<div id="editContent_$Data{"linktype"}_$Data{"id"}_2" style="display: none;">				            	
+				            		<div class="fakeLink" onclick="return cancelEditMode($Data{"id"},$Data{"linktype"});">$Text{"Close edit mode"}</div>
+				            	</div>
+			        </div>
+				</div>
+				<!-- dtl:block:Links -->
+			</div>
+		</div>
+<!-- end main body -->
+</div>
+</td>
+</tr>
+</table>
+<!-- end form -->

@@ -1,0 +1,25 @@
+# --
+# AdminInkaCITHelpTab.dtl - Contains the Help Tab, for the Inka Configuration Managment - Admin Templates section
+# Copyright (C) 2011 Juan Manuel Rodriguez
+# --
+# $Id: AdminInkaCITHelpTab.dtl $
+# --
+# This software comes with ABSOLUTELY NO WARRANTY. For details, see
+# the enclosed file COPYING for license information (AGPL). If you
+# did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
+# --
+   
+<h2>$Text{"$QData{"Tab01"}"}</h2>
+	<p><strong>$Text{"Description"}:</strong>&nbsp;$Text{"TEMPLATE_DESCRIPTION"}</p>
+	<p><p><strong>$Text{"Use"}:</strong>&nbsp;
+		$Text{"TEMPLATE_HELP"}
+	</p>
+<h2>$Text{"$QData{"Tab02"}"}</h2>
+	<p><strong>$Text{"Description"}:</strong>&nbsp;$Text{"CATEGORY_DESCRIPTION"}</p>
+	<p><p><strong>$Text{"Use"}:</strong>&nbsp;
+		$Text{"CATEGORY_HELP"}
+	</p>
+	
+<h2>$Text{"$QData{"Tab03"}"}</h2>
+<h2>$Text{"$QData{"Tab04"}"}</h2>
+<h2>$Text{"$QData{"Tab05"}"}</h2>

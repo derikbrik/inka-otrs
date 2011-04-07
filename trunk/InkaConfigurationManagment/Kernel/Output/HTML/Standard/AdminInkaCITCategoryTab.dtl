@@ -1,0 +1,83 @@
+# --
+# AdminInkaCITCategoryTab.dtl - Contains the Category Tab, for the Inka Configuration Managment - Admin Templates section
+# Copyright (C) 2011 Juan Manuel Rodriguez
+# --
+# $Id: AdminInkaCITCategoryTab.dtl $
+# --
+# This software comes with ABSOLUTELY NO WARRANTY. For details, see
+# the enclosed file COPYING for license information (AGPL). If you
+# did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
+# --
+
+   <div id="wrap" class="divContainer">
+    		<div id="left"  class="divLeft">
+    		<h2>$Text{"Categories"}</h2>
+    		<p><a href="javascript: categoryTree.openAll();">$Text{"open all"}</a> | <a href="javascript: categoryTree.closeAll();">$Text{"close all"}</a></p>
+    		<div class="innerLeft" id="categoryInnerLeft">
+    			
+					<div id="categoryTree" style="height: 300px;">				    		
+					</div>
+			
+			</div>
+			<p><input type="button" value="$Text{"Create New"}" onclick="javascritp: return openCategoryForm();" class="buttonCreateNew"/></p>
+    		</div>
+    		<div id="right" class="divRigth">
+    			<div id="categoryForm" class="superInnerRigth">
+    				<div id="titleNewCategory"><center><h2>$Text{"New"}</h2></center></div>
+    				<div id="titleEditCategory"><center><h2>$Text{"Edit"}</h2></center></div>
+    				<div class="innerRigth">
+    				<form action="#">
+    					<table>
+    						<tbody>
+    							<tr>
+    								<td colspan="2">&nbsp;
+    								</td>
+    							</tr>
+    							<tr>
+    								<td>$Text{"Name"} :</td><td><input type="text" name="categoryName" id="categoryName"/>	</td>
+    							</tr>
+    							
+    							<tr>
+    								<td>$Text{"Is parent?"} :</td>
+    								<td><input type="checkbox" name="categoryGroup" onclick="switchCategoryGroup();" id="categoryGroup"/></td>
+    							</tr>
+    							<tr>
+    								<td>$Text{"Parent"} :</td>
+    								<td id="tdCategoryParent">    									
+    									<select name="categoryParent" id="categoryParentCT">
+    									
+    									</select>
+    								</td>
+    							</tr>
+    							<tr>	
+    								<td>$Text{"Template"} :</td>
+    								<td id="tdCategoryTemplate">
+    									<select name="categoryTemplate" id="categoryTemplateCT">    									
+    									
+    									</select>	
+    								</td>
+    							</tr>
+    							<!-- tr>
+    								<td>$Text{"Image"} :</td><td><input type="file" name="categoryImage"/>	</td>
+    							</tr-->
+    							<tr>
+    								<td colspan="2">&nbsp;</td>
+    							</tr>
+    							<tr style="text-align: right;">
+    								<td style="text-align: left;"><input type="button" value="$Text{"Delete"}"   onclick="javascript: return deleteCategory();" /></td>
+    								<td style="text-align: right;"><input type="button" value="$Text{"Submit"}"  onclick="javascript: return submitCategoryForm();"/>
+    									<input type="button" value="$Text{"Cancel"}" onclick="javascript: return closeCategoryForm();" />
+										<input type="hidden" value="0" name="categoryId" id="categoryId"/>	
+    								</td>    								
+    							</tr>    							
+    						</tbody>    					
+    					</table>
+    				</form>
+    				</div>
+    			</div>
+    			<div>
+    					<div id="MessageOkCT" class="messageOk">&nbsp;</div>
+						<div id="MessageErrorCT" class="messageError">&nbsp;</div>
+    			</div>
+    		</div>
+		</div>

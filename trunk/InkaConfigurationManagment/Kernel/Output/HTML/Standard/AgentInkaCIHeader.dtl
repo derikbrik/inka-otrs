@@ -1,0 +1,135 @@
+# --
+# AgentInkaCIHeader.dtl - provides global HTML header for Inka screens. Support Jquery Ajax
+# Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
+# Copyright (C) 2011 Juan Manuel Rodriguez
+# --
+# $Id: AgentInkaCIHeader.dtl $
+# --
+# This software comes with ABSOLUTELY NO WARRANTY. For details, see
+# the enclosed file COPYING for license information (AGPL). If you
+# did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
+# --
+#
+# http headers
+Content-Type: text/html; charset=$Env{"UserCharset"};
+Content-Disposition: $Data{"ContentDisposition"}
+X-Powered-By: $Config{"Product"} $Config{"Version"} - Open Ticket Request System (http://otrs.org/)
+Expires: Tue, 1 Jan 1980 12:00:00 GMT
+Cache-Control: no-cache
+Pragma: no-cache
+
+# include Copyright.dtl
+$Include{"Copyright"}
+# --
+# set some html variables
+# --
+<dtl set $Env{"Box0"} = "[ ">
+<dtl set $Env{"Box1"} = " ]">
+# --
+<html>
+<head>
+<!-- dtl:block:MetaHttpEquivRefresh -->
+  <meta http-equiv="refresh" content="$QData{"Refresh"}"/>
+<!-- dtl:block:MetaHttpEquivRefresh -->
+<!-- dtl:block:MetaLink -->
+  <link rel="$QData{"Rel"}" type="$QData{"Type"}" title="$QData{"Title"}" href="$Data{"Href"}"/>
+<!-- dtl:block:MetaLink -->
+	<link rel="shortcut icon" href="$Config{"Frontend::ImagePath"}product.ico" type="image/ico"/>
+# include css file
+	<link href="$Config{"Frontend::CSSPath"}Standard/agent.css" rel="stylesheet" type="text/css"/>
+	<link rel="stylesheet" type="text/css" href="$Config{"Frontend::JavaScriptPath"}flexigrid/flexigrid.css" />	        
+	<script type="text/javascript" src="$Config{"Frontend::JavaScriptPath"}jquery.js"></script>	
+	<script type="text/javascript" src="$Config{"Frontend::JavaScriptPath"}jquery-ui.min.js"></script>		
+	<script type="text/javascript" src="$Config{"Frontend::JavaScriptPath"}flexigrid/flexigrid.js"></script>
+	<script type="text/javascript" src="$Config{"Frontend::JavaScriptPath"}inkaCommon.js"></script>
+	<script type="text/javascript" src="$Config{"Frontend::JavaScriptPath"}inkaCM2.js"></script>	
+	<script type="text/javascript" src="$Config{"Frontend::JavaScriptPath"}json2.js"></script>	
+	
+	<link href="$Config{"Frontend::CSSPath"}Standard/jquery-ui-otrs.css" rel="stylesheet" type="text/css" />
+	<link href="$Config{"Frontend::CSSPath"}Standard/inkaCM.css" rel="stylesheet" type="text/css" />	
+	<title>$Config{"ProductName"} $Text{"$QData{"Title"}"}</title>
+	
+<script type="text/javascript" >
+//Javascript constants
+var JAVASCRIPT_PATH = '$Config{"Frontend::JavaScriptPath"}';
+var IMAGE_PATH = '$Config{"Frontend::ImagePath"}';
+var CHARSET = '$Env{"UserCharset"}';
+var CURRENT_SECTION =  '$QData{"Section"}';
+var MESSAGE_OK = "$Data{"MessageOk"}";
+var MESSAGE_ERROR = "$Data{"MessageError"}";
+//Dictionary
+var dic = new Array();
+	 dic["TABLE_TITLE"]="$Text{"Configuration Items"}";
+	 dic["COL_0"]="$Text{"Unique name"}";
+	 dic["COL_1"]="$Text{"Serial number"}";
+	 dic["COL_2"]="$Text{"Category"}";
+	 dic["COL_3"]="$Text{"State"}";
+	 dic["COL_4"]="$Text{"Vendor"}";
+	 dic["COL_5"]="$Text{"Cost"}";
+	 dic["COL_6"]="$Text{"Day of acquisition"}";
+	 dic["COL_7"]="$Text{"Relations"}";
+	 dic["COL_8"]="$Text{"History"}";	 
+	 dic["FLEX_pagestat"]="$Text{"Displaying {from} to {to} of {total} items"}";
+	 dic["FLEX_pagetext"]="$Text{"Page"}";
+	 dic["FLEX_outof"]	 ="$Text{"of"}";
+	 dic["FLEX_findtext"]="$Text{"Find"}";
+	 dic["FLEX_procmsg"] ="$Text{"Processing, please wait ..."}";
+	 dic["FLEX_nomsg"]   ="$Text{"No items"}";
+	 dic["NO_VENDOR_LIST"]="$Text{"Unable to get vendor list"}";
+	 dic["OTHER"]="$Text{"other"}";
+	 dic["NO_CAT_PARENTS"] = "$Text{"Unable to obtain category parents"}";
+	 dic["NO_STATES"]="$Text{"Unable to get states"}";
+	 dic["FIELD_REQ"]="$Text{"This field is requiered"}";
+	 dic["NAME_EXISTS"]="$Text{"Name alredy exists"}";
+	 dic["CI_U_NAME"]="$Text{"All configuration items must have a unique name"}";
+	 dic["CI_C"]="$Text{"All configuration items must have a category"}";
+	 dic["NO_FIELDS"]="$Text{"Unable to get form fields"}. $Text{"Please reload the form"}.";
+	 dic["NO_LIST_ITEMS"]="$Text{"Unable to get list items"}";
+	 dic['NONE']="$Text{"none"}";
+	 dic['PROP_GROUP']="$Text{"Properties Group"}";
+	 dic['CLICK_REL']="$Text{"Click to reload"}";
+	 dic['UNDO'] = "$Text{"Undo"}";
+	 
+	 
+jQuery.noConflict();
+jQuery(document).ready(function() {
+	 if(CURRENT_SECTION == 'AgentInkaCIList'){
+	 	createCITable();
+	 }else if(CURRENT_SECTION == 'AgentInkaCIForm'){
+	 	initializeCIForm();
+	 }
+
+	 if(MESSAGE_OK.length != 0){
+		 jQuery('#MessageMenuDiv').removeClass('OTRS3Error');
+		 jQuery('#MessageMenuDiv').addClass('OTRS3Notice');
+		 jQuery('#MessageMenuP').html(MESSAGE_OK);
+		 jQuery('#MessageMenuDiv').show("fast");
+		 
+	 }else if(MESSAGE_ERROR.length != 0){
+		 jQuery('#MessageMenuDiv').removeClass('OTRS3Notice');
+		 jQuery('#MessageMenuDiv').addClass('OTRS3Error');		 
+		 jQuery('#MessageMenuP').html(MESSAGE_ERROR);
+		 jQuery('#MessageMenuDiv').show("fast"); 
+	}
+	 
+  });
+
+
+</script>
+
+</head>
+<body>
+<a name="top"></a>
+<table border="0" width="100%" cellspacing="0" cellpadding="3">
+  <tr>
+    <td align="left" width="20%" class="header">
+      <b>
+      $Env{"Box0"}<a href="$Env{"Baselink"}" accesskey="h" onmouseover="window.status='$JSText{"Home"}'; return true;" onmouseout="window.status='';" class="headeritem">$Config{"ProductName"}</a>$Env{"Box1"}
+      </b>
+    </td>
+    <td align="right" width="80%" class="header">
+      $Env{"UserFirstname"} $Env{"UserLastname"} $Env{"UserLoginIdentifier"} $Env{"TimeLong"}
+    </td>
+  </tr>
+</table>
+<!-- end header -->

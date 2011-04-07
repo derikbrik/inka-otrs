@@ -1,0 +1,44 @@
+# --
+# AgentInkaCIHistory.dtl - provides HTML form for Agent Inka Configuration Items History section
+# Copyright (C) 2011 Juan Manuel Rodriguez
+# --
+# $Id: AgentInkaCIHistory.dtl
+# --
+# This software comes with ABSOLUTELY NO WARRANTY. For details, see
+# the enclosed file COPYING for license information (AGPL). If you
+# did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
+# --
+
+
+ <div class="ContentColumn">
+        <div class="WidgetSimple">     	
+			<div class="HeaderForCI">
+            	<h2 class="classForh2">$Text{"History"}: <b>$QData{"unique_name"}</b></h2>            	
+            </div>
+            
+			<div id="tabs">
+			    <ul>
+			        <li><a href="#historyStates"><span>$Text{"$QData{"Tab01"}"}</span></a></li>
+			        <li><a href="#historyTickets"><span>$Text{"$QData{"Tab02"}"}</span></a></li>        
+			    </ul>
+			    <div id="historyStates" class="tabbody">    	
+			        <p>
+						<table id="CIHistoryTable" style="display:none"></table>
+					</p>
+			    </div>    
+			    <div id="historyTickets" class="tabbody">
+			    	<p>
+						<table id="CITicketsTable" style="display:none"></table>
+					</p> 
+			    </div>
+		    </div>        
+            
+			
+			<a href="index.pl?Action=AgentInkaConfigurationItems">$Text{"Cancel"}</a>
+		</div>
+<!-- end main body -->
+</div>
+</td>
+</tr>
+</table>
+<!-- end form -->

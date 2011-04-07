@@ -1,0 +1,669 @@
+/*
+ * InkaCM.css
+ *
+ * Copyright 2011, Juan Manuel Rodriguez
+ * licensed under the AFGPL v 2 
+ */
+ 
+ div.divContainer{ 
+ 	position:relative;
+ }
+ 
+ div.divLeft{ 
+ 	margin-right:201px;
+ 	width: 400px;
+ }
+ 
+ div.innerLeft{
+ 
+ 	border:1px solid #AAAAAA;
+ 	height:300px;
+	margin-right:201px;
+	overflow:auto;
+	padding:5px;
+	width:400px;
+ 
+ }
+ 
+ .buttonCreateNew{
+ 	/*margin-left: 320px;*/
+ 	float: right;
+ 	position: relative; 	
+ }
+ .pButtonRight{ 
+ 	text-align: right;
+ }
+ 
+ .buttonCreateTop{
+ 	margin-left: 20px;
+ }
+ 
+ div.divRigth{
+ 
+ 	position:absolute;
+ 	width:400px;
+ 	right:0;
+ 	top:0; 
+ 	left:500px;	
+ }
+ 
+ div.innerRigth{
+ 	
+ 	border:1px solid #AAAAAA;
+ 	height:250px;	
+	overflow:auto;
+	padding:5px;
+	padding-top: 40px;
+	padding-left: 50px;
+ }
+ 
+ div.superInnerRigth{
+
+	display: none;
+ }
+ 
+ div.loading{
+ 	position: absolute;		
+	z-index: 999;
+	width: 48px;
+	height: 48px;	
+ 	background:  url(../../images/Standard/inka_loading.gif) no-repeat center center; 	
+ }
+ 
+ div.loadingCIForm{
+	width: 100%;
+	height: 48px;	
+ 	background:  url(../../images/Standard/inka_loading.gif) no-repeat 0 0; 	
+ }
+ 
+#ciformTextLoadingFields{
+	font-style: italic;
+	font-weight: bold;
+	padding-left: 80px;
+    padding-top: 15px;
+}
+
+div.loadingSmall{
+ 	position: absolute;		
+	z-index: 999;
+	width: 24px;
+	height: 24px;	
+ 	background:  url(../../images/Standard/inka_loading_small.gif) no-repeat center center;
+}
+
+li.state{ 		
+ 	background:  url(../../images/Standard/inka_state.gif) no-repeat scroll left center;
+ 	cursor: pointer;
+	padding-left:25px;
+}
+
+li.vendors{
+	
+	font-family:Verdana,Geneva,Arial,Helvetica,sans-serif;
+	font-size:11px;
+	padding:1px 2px;
+	white-space:nowrap;
+	color:#333333;
+	text-decoration:none;
+	cursor: pointer;
+	padding-left:10px;
+}
+ 
+ .clickeable{ 
+ 	cursor: pointer;
+ }
+ 
+ .fakeLink{ 
+ 	cursor: pointer;
+ 	text-decoration: underline;
+ }
+ 
+ div.messageOk{
+ 	color: green;
+ 	text-align: center;
+ }
+  div.messageLoading{
+ 	color: green;
+ 	text-align: center;
+ 	padding-left: 150px;
+ }
+ div.messageError{
+ 	color: red;
+ 	text-align: center;
+ }
+ 
+ div.tabbody{
+ 	height: 500px; 
+ }
+ 
+ div.tabbodyLong{
+ 	height: 650px;
+ }
+ 
+ .noeditable{
+ 	color: gray;
+ 	font-style: italic;
+ }
+
+li.vendorsEmpty {
+
+	font-family:Verdana,Geneva,Arial,Helvetica,sans-serif;
+	font-size:12px;
+	padding:1px 2px;	
+	color:black;
+	text-decoration:none;
+	font-weight: bold;	
+	padding-left:10px;
+	list-style: none;
+}
+
+li.list{
+	
+	font-family:Verdana,Geneva,Arial,Helvetica,sans-serif;
+	font-size:11px;
+	padding:1px 2px;
+	white-space:nowrap;
+	color:#333333;
+	text-decoration:none;
+	cursor: pointer;
+	padding-left:10px;
+}
+
+li.listEmpty{
+	
+	font-family:Verdana,Geneva,Arial,Helvetica,sans-serif;
+	font-size:12px;
+	padding:1px 2px;	
+	color:black;
+	text-decoration:none;
+	font-weight: bold;	
+	padding-left:10px;
+	list-style: none;
+}
+
+div.shortInnerLeft{
+	border:1px solid #AAAAAA;
+ 	height:200px;
+	margin-right:201px;
+	overflow:auto;
+	padding:5px;
+	width:400px;
+}
+div.shortTopInnerLeft{
+	border:1px solid #AAAAAA;
+ 	height:28px;
+	margin-right:201px;
+	overflow:auto;
+	padding:5px;
+	width:400px;
+}
+
+.listField{
+
+	text-align:center;	
+	padding-left:10px;	
+}
+
+.templateTable{
+	border-collapse:collapse;
+	font-family:"Lucida Sans Unicode","Lucida Grande",Sans-Serif;
+	font-size:12px;	
+	text-align:left;
+	width:390px;
+}
+
+.templateTable th {
+	background:none repeat scroll 0 0 #B9C9FE;
+	border-bottom:1px solid #FFFFFF;
+	border-top:4px solid #AABCFE;
+	color:#003399;
+	font-size:13px;
+	font-weight:normal;
+	padding:4px;
+}
+
+.templateTable td {
+	background:none repeat scroll 0 0 #E8EDFF;
+	border-bottom:1px solid #FFFFFF;
+	border-top:1px solid transparent;
+	color:#666699;
+	padding:0px;
+}
+
+.templateTable td  a{
+	text-align:left;
+}
+
+.templateTableDefault{
+	border-collapse:collapse;
+	font-family:"Lucida Sans Unicode","Lucida Grande",Sans-Serif;
+	font-size:12px;	
+	text-align:left;
+	width:390px;
+}
+
+.templateTableDefault th {
+	background:none repeat scroll 0 0 #000000;
+	border-bottom:1px solid #FFFFFF;
+	border-top:4px solid #3a3a3a;
+	color:#FFFFFF;
+	font-size:13px;
+	font-weight:normal;
+	padding:4px;
+}
+
+.templateTableDefault td {
+	background:none repeat scroll 0 0 #c1c1c1;
+	border-bottom:1px solid #FFFFFF;
+	border-top:1px solid transparent;
+	color:#FFFFFF;
+	padding:0px;
+}
+
+.percent40{
+	width: 40%;
+}
+
+.percent10{
+	width: 10%;
+}
+.percent30{
+	width: 30%;
+}
+
+.buttonDeleteSelected{
+	float: left;
+	position: relative;
+}
+
+/**main**/
+
+.mainBoxCI{
+
+	padding: 4px 16px 8px 8px;
+	position: relative;
+	display: block;
+	background-image: none;
+	border:0 none;
+	direction: inherit;
+	font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;
+	font-size:100%;
+	font-style:inherit;
+	font-weight:inherit;
+	margin:0;
+	outline:0 none;	
+	vertical-align:baseline;
+}
+
+.SidebarColumn{
+
+	float:left;
+	margin-left:0;
+	margin-right:10px;
+	width:270px;
+	overflow-x:hidden;	
+	border:0 none;	
+	vertical-align:baseline;
+	font-size:12px;
+	text-align:left;
+	color:black;
+	line-height:1;
+}
+
+.WidgetSimple {
+	-moz-border-radius:2px 2px 2px 2px;
+	background:url("../../images/Standard/inka_widget_bg_100.png") repeat-x scroll 0 0 #EEEEEE;
+	border:1px solid #CCCCCC;
+	margin-bottom:10px;
+}
+
+.HeaderForCI {
+	-moz-border-radius-topleft:2px;
+	-moz-border-radius-topright:2px;
+	border-color:#FFFFFF #FFFFFF #CCCCCC;
+	border-style:solid;
+	border-width:1px;
+	padding:2px 5px 3px;
+	position:relative;
+}
+
+.ContentColumn {
+	vertical-align:baseline;
+	overflow:hidden;
+}
+
+.classForh2{
+
+	margin:0;
+	padding:4px 3px;
+	color:#474747;
+	font-size:14px;
+	margin-bottom:2px;
+	background-image:none;
+	border:0 none;
+	direction:inherit;
+	font-family:inherit;
+	font-style:inherit;
+	font-weight:inherit;
+	
+}
+
+.classForP{
+
+	line-height:1.3em;
+	text-align:left;
+	color:black;
+	margin:0;
+	outline:0 none;
+	padding:0;
+	vertical-align:baseline;
+}
+
+.Content {
+	-moz-border-radius-bottomleft:2px;
+	-moz-border-radius-bottomright:2px;/*
+	border-color:#FFFFFF #FFFFFF -moz-use-text-color;
+	border-style:solid solid none;
+	border-width:1px 1px medium;
+	*/padding:8px 8px 10px;	
+}
+
+.MenuLi {
+	
+	list-style:none outside none;
+	margin-bottom:16px;
+	padding-bottom: 2px; 
+	padding-top: 2px;
+}
+
+.ActionList{
+	padding-left: 20px;
+}
+
+.CallForAction{
+
+	-moz-border-radius:3px 3px 3px 3px;
+	-moz-box-shadow:0 1px 0 #E6E6E6;
+	background:url("../../images/Standard/inka_smallDarkGradient.png") repeat-x scroll 0 0 #F3F3F3;
+	border-color:#999999 #999999 #888888;
+	border-style:solid;
+	border-width:1px;
+	cursor:pointer;
+	display:inline-block;
+	padding:0;	
+ 	margin-top: 8px;
+ 	margin-right: 40px;
+}
+
+.CallForAction.Plus span, .CallForAction.Download span, .CallForAction.Upload span {
+	
+	background-position:2px 2px;
+	padding-left:23px;
+}
+
+.CallForAction.Plus span {
+		
+	background:url("../../images/Standard/inka_plus-button.png") no-repeat scroll 0 0 transparent;
+}
+
+.CallForAction.Edit span {
+	
+	background-position:2px 2px;
+	padding-left:23px;
+	background:url("../../images/Standard/inka_edit.png") no-repeat scroll 0 0 transparent;
+}
+
+.CallForAction.Up span {
+	
+	background-position:2px 2px;
+	padding-left:23px;
+	background:url("../../images/Standard/inka_up_icon.gif") no-repeat scroll 0 0 transparent;
+}
+
+.CallForAction.Down span {
+	
+	background-position:2px 2px;
+	padding-left:23px;
+	background:url("../../images/Standard/inka_down_icon.gif") no-repeat scroll 0 0 transparent;
+}
+
+
+.CallForAction.Less span {
+	
+	background-position:2px 2px;
+	padding-left:23px;
+	background:url("../../images/Standard/inka_less-button.png") no-repeat scroll 0 0 transparent;
+}
+
+div.DeleteIcon {
+
+	background:url("../../images/Standard/inka_less-button.png") no-repeat scroll 0 0 transparent;
+	height: 16px;
+	width: 16px;
+	display: inline-table;
+	z-index: 10;
+}
+
+.CallForAction span {
+	
+	-moz-border-radius:3px 3px 3px 3px;
+	/*border-color:#FFFFFF #FFFFFF -moz-use-text-color;
+	border-style:solid solid none;
+	border-width:1px 1px medium;*/
+	color:#333333;
+	cursor:pointer;
+	display:block;
+	font-size:11px;
+	font-weight:bold;
+	height:12px;
+	line-height:14px;
+	padding:3px 7px 6px;
+	text-shadow:0 1px 0 #FFFFFF;
+	vertical-align:middle;
+}
+.groupOfProperties{
+	border: thin;	
+	border-color: #7e7e7e;
+	border-width: 1px;
+	border-style: solid;
+	padding: 10px;
+}
+
+.tdForCategory{
+
+	border-color: -moz-use-text-color -moz-use-text-color #7E7E7E;
+    border-style: none none solid;
+    border-width: 0 0 1px;   
+    padding-bottom: 5px;
+}
+
+.ciformSelects{
+
+}
+
+.ciformInputs{
+	max-width: 100%;
+    color: #333333;
+    font-size: 12px;
+    padding: 3px;
+    -moz-box-shadow: 0 1px 2px #E8E8E8 inset, 0 1px 0 #FFFFFF;
+    background-color: #FFFFFF;
+    border-color: #C0C0C0 #C9C9C9 #C9C9C9;
+    border-right: 1px solid #C9C9C9;
+    border-style: solid;
+    border-width: 1px;
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    width: 50%;   
+}
+
+#ciformSubCategory{
+	width: 160px;
+}
+
+.floatDatePicker{
+	display: block;
+    left: 541.9px;
+    position: absolute;
+    top: 691.2px;
+    z-index: 1;
+}
+
+.Calendar{
+	background:url("../../images/Standard/inka_calendar.png") no-repeat scroll 0 0 transparent;
+	height: 16px;
+    width: 16px;
+}
+
+.tdCaptionForm{
+	color: #888888;
+    line-height: 1.3em;
+    padding-bottom: 3px;
+    padding-top: 3px;
+    text-align: right;
+    text-shadow: 0 1px 0 #FAFAFA;
+    width: 30%;
+}
+
+.labelError{
+ 	color: #FF505E !important;
+}
+.labelErrorMessage{
+ 	color: #FF505E !important;
+ 	float: right;
+ 	z-index: 10;
+ 	display: block;
+}
+
+.inputError{
+	border-color: #FF505E !important;
+}
+
+.Error {
+    color: #FF505E !important;
+}
+
+.inputOk{
+	border-color: green !important;
+}
+
+.labelOkMessage{
+ 	color: green !important;
+ 	float: right;
+ 	z-index: 10;
+ 	display: block;
+ 	background:url("../../images/Standard/inka_ready.png") no-repeat scroll 0 0 transparent;
+    height: 15px;
+    padding-right: 20px;
+    width: 15px;	
+}
+
+.newGroupOfProperties{
+	border: thin;	
+	border-color: #7e7e7e;	
+	border-width: 1px;
+	border-style: solid;
+	padding: 10px;	
+	margin-top: 10px;
+}
+
+.OTRS3MessageBox {
+    -moz-border-radius-bottomleft: 4px;
+    -moz-border-radius-bottomright: 4px;
+    -moz-box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
+    background: none repeat scroll 0 0 #F39C19;
+    border: 1px solid #B9821C;
+    margin: -3px 18px 0 10px;
+    position: relative;
+    z-index: 1;
+    height: 40px;
+}
+.OTRS3MessageBox p {
+    -moz-border-radius-bottomleft: 2px;
+    -moz-border-radius-bottomright: 2px;
+    border-left: 1px solid #F6AF2F;
+    border-right: 1px solid #F6AF2F;
+    font-weight: bold;
+    /*padding: 7px 12px 6px;*/
+    text-align: center;
+}
+.OTRS3Notice {
+    color: #333333;
+}
+.OTRS3Error{
+	background: none repeat scroll 0 0 #F03432;
+	border-color: #A6281C;
+}
+
+div.reloadOnfault{
+	font-size: 10px;
+	font-style: italic;
+	background:url("../../js/flexigrid/images/inka_load.png") no-repeat scroll 0 0 transparent;
+	cursor: pointer;
+	    height: 18px;
+    padding-left: 20px;
+}
+
+.link_icon{
+	background:url("../../images/Standard/inka_relation_icon.png") no-repeat scroll 0 0 transparent;
+	cursor: pointer;
+	height: 6px;
+    width: 16px;
+    padding: 0;
+}
+
+.history_icon{
+	background:url("../../images/Standard/inka_ci_history.gif") no-repeat scroll 0 0 transparent;
+	cursor: pointer;
+	height: 6px;
+    width: 16px;
+    padding: 0;
+}
+
+.arrow_out_icon{
+	background:url("../../images/Standard/inka_arrow_out.gif") no-repeat scroll 0 0 transparent;	
+	height: 6px;
+	padding-left: 18px;
+}
+
+.arrow_in_icon{
+	background:url("../../images/Standard/inka_arrow_in.gif") no-repeat scroll 0 0 transparent;	
+	height: 6px;
+    padding-left: 18px;
+}
+
+.edit_icon{
+	background:url("../../images/Standard/inka_edit.png") no-repeat scroll 0 0 transparent;
+	cursor: pointer;
+	height: 6px;
+    width: 16px;
+    padding-left: 24px;
+}
+
+.TableRelation {
+	-moz-border-radius:2px 2px 2px 2px;
+	background:url("../../images/Standard/inka_widget_bg_100.png") repeat-x scroll 0 0 #EEEEEE;
+	border:1px solid #CCCCCC;
+}
+
+.RelationWidget {
+	-moz-border-radius:2px 2px 2px 2px;
+	background:url("../../images/Standard/inka_widget_bg_100.png") repeat-x scroll 0 0 #EEEEEE;
+	border:1px solid #CCCCCC;
+	margin-bottom:10px;
+	margin-top: 20px;	
+	width: 60%;
+	padding: 10px;
+}
+
+.accordionBackground {
+	background:url("../../images/Standard/inka_widget_bg_100.png") repeat-x scroll 0 0 #EEEEEE;
+}
+
+.h3Reltaions{
+	font-weight: bold;
+}
+
+.ciAddRemoveContainer{
+	text-align: center;
+	width: 600px;
+}

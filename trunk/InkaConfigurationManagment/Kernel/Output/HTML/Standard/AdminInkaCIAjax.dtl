@@ -1,0 +1,19 @@
+# --
+# AdminInkaCIAjax.dtl - this HTML Template is used to return Ajax Requests,
+# Copyright (C) 2011 Juan Manuel Rodriguez
+# --
+# $Id: AdminInkaCIAjax.dtl,$
+# --
+# This software comes with ABSOLUTELY NO WARRANTY. For details, see
+# the enclosed file COPYING for license information (AGPL). If you
+# did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
+# --
+#
+# http headers
+Content-Type: text/html; charset=$Env{"UserCharset"};
+Content-Disposition: $Data{"ContentDisposition"}
+Expires: Tue, 1 Jan 1980 12:00:00 GMT
+Cache-Control: no-cache
+Pragma: no-cache
+
+$Data{"json"}

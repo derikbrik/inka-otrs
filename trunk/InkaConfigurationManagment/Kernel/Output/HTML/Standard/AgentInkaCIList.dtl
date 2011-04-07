@@ -1,0 +1,37 @@
+# --
+# AgentInkaCIList.dtl - provides HTML form for Agent Inka Configuration Items
+# Copyright (C) 2011 Juan Manuel Rodriguez
+# --
+# $Id: AgentInkaCIList.dtl
+# --
+# This software comes with ABSOLUTELY NO WARRANTY. For details, see
+# the enclosed file COPYING for license information (AGPL). If you
+# did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
+# --
+ 
+ 
+ <div class="ContentColumn">
+        <div class="WidgetSimple">
+        	
+			<div class="HeaderForCI">
+            	<h2 class="classForh2">$Text{"Configuration Items"}</h2>
+            </div>
+
+            <div id="CITableContent" class="Content" style="width: 100%;">
+            	<!-- p class="classForP">Please enter a search term to look for customers.</p-->
+            	<table id="CITable" style="display:none"></table>
+            	<div style="width: 100%; text-align: right;">
+	            	<button type="submit" class="CallForAction Plus" onclick="window.location='index.pl?Action=AgentInkaConfigurationItems&subaction=ciform'">
+	            		<span>$Text{"Create New"}</span>
+	            	</button>
+            	</div>
+			</div>
+			
+         </div>
+	</div>            
+<!-- end main body -->
+</div>
+</td>
+</tr>
+</table>
+<!-- end form -->
