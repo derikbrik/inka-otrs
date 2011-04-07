@@ -1,0 +1,33 @@
+# --
+# AgentInkaCITemplates.dtl - provides HTML form for Agent Inka Configuration Items
+# Copyright (C) 2011 Juan Manuel Rodriguez
+# --
+# $Id: AgentInkaCITemplates.dtl
+# --
+# This software comes with ABSOLUTELY NO WARRANTY. For details, see
+# the enclosed file COPYING for license information (AGPL). If you
+# did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
+# --
+ 
+
+<div class="ContentColumn">
+        <div class="WidgetSimple">
+			<div class="HeaderForCI">
+            	<h2 class="classForh2">$Text{"Configuration Items Templates"}</h2>
+            </div>
+            <div class="Content">
+            	$Include{"BasicInkaCITemplateTabs"}
+			</div>
+         </div>
+</div>
+<!-- end main body -->
+</div>
+</td>
+</tr>
+</table>
+
+<script type="text/javascript">
+ jQuery(document).ready(function() {
+			jQuery("#tabs").tabs("remove" , 6 );	 
+	});
+</script>

@@ -1,0 +1,21 @@
+#!/bin/bash
+cd $1
+mkdir 'Kernel'
+cd 'Kernel'
+mkdir 'System'
+mkdir 'Modules'
+mkdir 'Output'
+cd 'Output'
+mkdir 'HTML'
+cd 'HTML'
+mkdir 'Standard'
+cd "../.."
+mkdir 'Conﬁg'
+cd 'Conﬁg'
+mkdir 'Files'
+cd 'Files'
+touch "$1.xml"
+cd '../..'
+mkdir 'Language'
+cd '..'
+touch "$1.sopm"

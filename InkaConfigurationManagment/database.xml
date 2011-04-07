@@ -1,0 +1,306 @@
+<DatabaseInstall Type="post">
+    <TableCreate Type="post" Name="inka_ci_template">
+        <Column AutoIncrement="true" Name="id" PrimaryKey="true" Required="true" Type="INTEGER"></Column>
+        <Column Name="name" Required="true" Size="255" Type="VARCHAR"></Column>
+ 	</TableCreate>		
+ 	<TableCreate Type="post" Name="inka_category">
+        <Column AutoIncrement="true" Name="id" PrimaryKey="true" Required="true" Type="INTEGER"></Column>
+        <Column Name="id_parent"   	 Required="true" Type="INTEGER"></Column>
+        <Column Name="id_template"   Required="true" Type="INTEGER"></Column>
+        <Column Name="name"	 		 Required="true" Size="255" Type="VARCHAR"></Column>
+        <Index Name="inka_id_template_category_FK">
+            <IndexColumn Name="id_template">
+            </IndexColumn>
+        </Index>
+        <Index Name="inka_id_parent_FK">
+            <IndexColumn Name="id_parent">
+            </IndexColumn>
+        </Index>
+        <ForeignKey ForeignTable="inka_category">
+                <Reference Foreign="id" Local="id_parent">
+                </Reference>
+		</ForeignKey>
+        <ForeignKey ForeignTable="inka_ci_template">
+                <Reference Foreign="id" Local="id_template">
+                </Reference>
+		</ForeignKey>		
+ 	</TableCreate>
+	<TableCreate Type="post" Name="inka_ci_state">
+        <Column AutoIncrement="true" Name="id" PrimaryKey="true" Required="true" Type="INTEGER"></Column>
+        <Column Name="id_category"   Required="true" Type="INTEGER"></Column>
+        <Column Name="name"	 		 Required="true" Size="255" Type="VARCHAR"></Column>
+ 		<Index Name="inka_id_category_FK">
+            <IndexColumn Name="id_category">
+            </IndexColumn>
+        </Index>
+ 		 <ForeignKey ForeignTable="inka_category">
+                <Reference Foreign="id" Local="id_category">
+                </Reference>
+		</ForeignKey>
+	</TableCreate>
+	<TableCreate Type="post" Name="inka_ci_provider_list">
+ 		<Column AutoIncrement="true" Name="id" PrimaryKey="true" Required="true" Type="INTEGER"></Column>
+ 		<Column Name="id_category"   Required="true" Type="INTEGER"></Column>
+ 		<Column Name="name"	 		 Required="true" Size="255" Type="VARCHAR"></Column>
+ 		<Index Name="inka_id_category_provider_list_FK">
+            <IndexColumn Name="id_category">
+            </IndexColumn>
+        </Index>
+ 		<ForeignKey ForeignTable="inka_category">
+                <Reference Foreign="id" Local="id_category">
+                </Reference>
+		</ForeignKey>		        
+	</TableCreate>
+	<TableCreate Type="post" Name="inka_ci">
+ 		<Column AutoIncrement="true" Name="id" PrimaryKey="true" Required="true" Type="INTEGER"></Column>
+ 		<Column Name="id_category"   Required="true" Type="INTEGER"></Column>
+ 		<Column Name="id_state"   Required="true" Type="INTEGER"></Column>
+ 		<Column Name="id_provider"   Required="true" Type="INTEGER"></Column>
+ 		<Column Name="unique_name"	 Required="true" Size="255" Type="VARCHAR"></Column>
+ 		<Column Name="serial_number" Size="255" Type="VARCHAR"></Column>
+ 		<Column Name="description"   Type="LONGBLOB"></Column>
+		<Column Name="cost"   Type="DECIMAL"></Column>
+		<Column Name="acquisition_day"   Type="DATE"></Column>
+		<Index Name="inka_id_category_FK">
+            <IndexColumn Name="id_category">
+            </IndexColumn>
+        </Index>
+		<Index Name="inka_id_state_FK">
+            <IndexColumn Name="id_state">
+            </IndexColumn>
+        </Index>
+		<Index Name="inka_id_provider_ci_FK">
+            <IndexColumn Name="id_provider">
+            </IndexColumn>
+        </Index>
+		<ForeignKey ForeignTable="inka_category">
+                <Reference Foreign="id" Local="id_category">
+                </Reference>
+		</ForeignKey>
+		<ForeignKey ForeignTable="inka_ci_state">
+                <Reference Foreign="id" Local="id_state">
+                </Reference>
+		</ForeignKey>
+		<ForeignKey ForeignTable="inka_id_provider_ci_FK">
+                <Reference Foreign="id" Local="id_provider">
+                </Reference>
+		</ForeignKey>			
+	</TableCreate>
+    <TableCreate Type="post" Name="inka_metatype">
+        <Column AutoIncrement="true" Name="id" PrimaryKey="true" Required="true" Type="INTEGER"></Column>
+        <Column Name="name" Required="true" Size="255" Type="VARCHAR"></Column>
+ 	</TableCreate>
+    <TableCreate Type="post" Name="inka_ci_generic_list">
+        <Column AutoIncrement="true" Name="id" PrimaryKey="true" Required="true" Type="INTEGER"></Column>
+		<Column Name="id_list"   Required="true" Type="INTEGER"></Column>
+		<Column Name="id_category"   Required="true" Type="INTEGER"></Column>		
+        <Column Name="list_name" Required="true" Size="255" Type="VARCHAR"></Column>
+        <Column Name="name"  Required="true" Size="255" Type="VARCHAR"></Column>
+		<Column Name="value" Required="true" Size="255" Type="VARCHAR"></Column>
+		<Index Name="inka_id_category_generic_list_FK">
+            <IndexColumn Name="id_category">
+            </IndexColumn>
+        </Index>
+        <ForeignKey ForeignTable="inka_category">
+                <Reference Foreign="id" Local="id_category">
+                </Reference>
+		</ForeignKey>				        
+ 	</TableCreate>		 			
+	<TableCreate Type="post" Name="inka_file">
+	        <Column AutoIncrement="true" Name="id" PrimaryKey="true" Required="true" Type="INTEGER"></Column>
+			<Column Name="filename"  Required="true" Size="255" Type="VARCHAR"></Column>
+			<Column Name="content_type"  Size="255" Type="VARCHAR"></Column>
+			<Column Name="content_size"  Size="30" Type="VARCHAR"></Column>		
+	 		<Column Name="content"  Required="true" Type="LONGBLOB"></Column>
+			<Column Name="creation_date"  Required="true" Type="DATE"></Column>
+			<Column Name="modification_date"  Required="true" Type="DATE"></Column>
+	</TableCreate>
+    <TableCreate Type="post" Name="inka_ci_properties_group">
+        	<Column AutoIncrement="true" Name="id" PrimaryKey="true" Required="true" Type="INTEGER"></Column>
+    	    <Column Name="name" Required="true" Size="255" Type="VARCHAR"></Column>
+ 	</TableCreate>
+	<TableCreate Type="post" Name="inka_ci_template_properties">
+	        <Column AutoIncrement="true" Name="id" PrimaryKey="true" Required="true" Type="INTEGER"></Column> 	
+			<Column Name="id_template"   Required="true" Type="INTEGER"></Column>
+			<Column Name="id_metatype"   Required="true" Type="INTEGER"></Column>
+			<Column Name="id_properties_group"   Required="true" Type="INTEGER"></Column>			
+  			<Column Name="caption" Required="true" Size="255" Type="VARCHAR"></Column>
+			<Column Name="mandatory"  Type="SMALLINT"></Column>
+			<Column Name="display"    Type="SMALLINT"></Column>
+			<Index Name="inka_id_template_template_properties_FK">
+            	<IndexColumn Name="id_template">
+            	</IndexColumn>
+        	</Index>
+			<Index Name="inka_id_metatype_template_properies_FK">
+            	<IndexColumn Name="id_metatype">
+            	</IndexColumn>
+        	</Index>        	
+ 			<Index Name="inka_id_properties_group_template_properties_properties_group">
+            	<IndexColumn Name="id_properties_group">
+            	</IndexColumn>
+        	</Index> 
+ 			<ForeignKey ForeignTable="inka_ci_template">
+                <Reference Foreign="id" Local="id_template">
+                </Reference>
+			</ForeignKey>	
+			<ForeignKey ForeignTable="inka_metatype">
+                <Reference Foreign="id" Local="id_metatype">
+                </Reference>
+			</ForeignKey>			
+			<ForeignKey ForeignTable="id_properties_group">
+                <Reference Foreign="id" Local="id_properties_group">
+                </Reference>
+			</ForeignKey>			
+	</TableCreate>
+	<TableCreate Type="post" Name="inka_ci_properties">
+	        <Column AutoIncrement="true" Name="id" PrimaryKey="true" Required="true" Type="INTEGER"></Column> 	
+			<Column Name="id_ci"   Required="true" Type="INTEGER"></Column>
+			<Column Name="id_metatype"   Required="true" Type="INTEGER"></Column>
+ 			<Column Name="name" Required="true" Size="255" Type="VARCHAR"></Column>
+ 			<Column Name="id_template_properties"  Required="true" Type="INTEGER"></Column>
+			<Column Name="value_int"   Type="INTEGER"></Column>
+			<Column Name="value_float" Type="DECIMAL"></Column>
+ 			<Column Name="value_str"   Size="255" Type="VARCHAR"></Column>
+  			<Column Name="value_date"  Size="255" Type="DATE"></Column>
+  			<Column Name="id_generic_item_list"   Type="INTEGER"></Column>
+  			<Column Name="id_file"   Type="INTEGER"></Column>			
+  			<Index  Name="inka_id_ci_FK">
+            	<IndexColumn Name="id_ci">
+            	</IndexColumn>
+        	</Index>
+        	<Index  Name="inka_id_metatype_FK">
+            	<IndexColumn Name="id_metatype">
+            	</IndexColumn>
+        	</Index>
+        	<Index  Name="inka_id_template_properties_template_properties_properties">
+            	<IndexColumn Name="id_template_properties">
+            	</IndexColumn>
+        	</Index>
+        	<ForeignKey ForeignTable="inka_ci">
+                <Reference Foreign="id" Local="id_ci">
+                </Reference>
+			</ForeignKey>
+			<ForeignKey ForeignTable="inka_metatype">
+                <Reference Foreign="id" Local="id_metatype">
+                </Reference>
+			</ForeignKey>
+			<ForeignKey ForeignTable="inka_ci_generic_list">
+                <Reference Foreign="id" Local="id_generic_item_list">
+                </Reference>
+			</ForeignKey>
+			<ForeignKey ForeignTable="inka_file">
+                <Reference Foreign="id" Local="id_file">
+                </Reference>
+			</ForeignKey>
+			<ForeignKey ForeignTable="inka_ci_template_properties">
+                <Reference Foreign="id" Local="id_template_properties">
+                </Reference>
+			</ForeignKey>
+	</TableCreate>			
+	<TableCreate Type="post" Name="inka_ci_history">
+	        <Column AutoIncrement="true" Name="id" PrimaryKey="true" Required="true" Type="INTEGER"></Column> 	
+			<Column Name="modification_date"   Required="true" Type="INTEGER"></Column>
+			<Column Name="modificated_by"      Required="true" Type="INTEGER"></Column>
+ 			<Column Name="id_ci" 			   Required="true" Type="INTEGER"></Column>
+ 			<Column Name="new_state"  		   Required="true" Type="INTEGER"></Column>
+ 			<Column Name="note"  Size="255" Type="VARCHAR"></Column>
+			<Index  Name="inka_id_ci_history_FK">
+		            	<IndexColumn Name="id_ci">
+		            	</IndexColumn>
+		    </Index>
+		    <Index  Name="inka_new_state_FK">
+		            	<IndexColumn Name="new_state">
+		            	</IndexColumn>
+		    </Index>
+		    <Index  Name="inka_ci_history_modificated_by_FK">
+		            	<IndexColumn Name="modificated_by">
+		            	</IndexColumn>
+		    </Index>
+			<ForeignKey ForeignTable="inka_ci">
+		              <Reference Foreign="id" Local="id_ci">
+		              </Reference>
+			</ForeignKey>
+			<ForeignKey ForeignTable="inka_ci_state">
+		              <Reference Foreign="id" Local="new_state">
+		              </Reference>
+			</ForeignKey>
+			<ForeignKey ForeignTable="users">
+                <Reference Foreign="id" Local="modificated_by">
+                </Reference>
+			</ForeignKey>
+	</TableCreate>
+    <TableCreate Type="post" Name="inka_ci_link_type">
+        	<Column AutoIncrement="true" Name="id" PrimaryKey="true" Required="true" Type="INTEGER"></Column>
+    	    <Column Name="name" Required="true" Size="255" Type="VARCHAR"></Column>
+ 	</TableCreate>
+    <TableCreate Type="post" Name="inka_ci_user_link_type">
+        	<Column AutoIncrement="true" Name="id" PrimaryKey="true" Required="true" Type="INTEGER"></Column>
+    	    <Column Name="name" Required="true" Size="255" Type="VARCHAR"></Column>
+ 	</TableCreate>
+	<TableCreate Type="post" Name="inka_ci_ci_link">
+        	<Column Name="id_ci_up"     PrimaryKey="true" Required="true" Type="INTEGER"></Column>
+        	<Column Name="id_ci_down"   PrimaryKey="true" Required="true" Type="INTEGER"></Column>
+        	<Column Name="id_link_type" PrimaryKey="true" Required="true" Type="INTEGER"></Column>
+			<Index  Name="inka_inka_ci_ci_link_full_FK">
+		            	<IndexColumn Name="id_ci_up">
+		            	</IndexColumn>		    
+		            	<IndexColumn Name="id_ci_down">
+		            	</IndexColumn>		    
+		            	<IndexColumn Name="id_link_type">
+		            	</IndexColumn>
+		    </Index>		    		    
+			<ForeignKey ForeignTable="inka_ci">
+		              <Reference Foreign="id" Local="id_ci_up">
+		              </Reference>			
+		              <Reference Foreign="id" Local="id_ci_down">
+		              </Reference>
+			</ForeignKey>
+			<ForeignKey ForeignTable="inka_ci_link_type">
+		              <Reference Foreign="id" Local="id_link_type">
+		              </Reference>
+			</ForeignKey>
+	</TableCreate>
+	<TableCreate Type="post" Name="inka_ci_user_link">
+        	<Column Name="id_ci"     PrimaryKey="true" Required="true" Type="INTEGER"></Column>
+        	<Column Name="id_user"   PrimaryKey="true" Required="true" Type="INTEGER"></Column>
+        	<Column Name="id_user_link_type" PrimaryKey="true" Required="true" Type="INTEGER"></Column>
+			<Index  Name="fk_inka_inka_ci_user_link_all">
+		            	<IndexColumn Name="id_ci">
+		            	</IndexColumn>		  
+		            	<IndexColumn Name="id_user">
+		            	</IndexColumn>		 
+		            	<IndexColumn Name="id_user_link_type">
+		            	</IndexColumn>		              
+			</Index>
+			<ForeignKey ForeignTable="inka_ci">
+		              <Reference Foreign="id" Local="id_ci">
+		              </Reference>
+			</ForeignKey>
+			<ForeignKey ForeignTable="users">
+                <Reference Foreign="id" Local="id_user">
+                </Reference>
+			</ForeignKey>
+			<ForeignKey ForeignTable="inka_ci_user_link_type">
+		              <Reference Foreign="id" Local="id_user_link_type">
+		              </Reference>
+			</ForeignKey>
+	</TableCreate>
+</DatabaseInstall>
+<DatabaseUninstall>
+	<TableDrop Name="inka_ci_user_link" />
+	<TableDrop Name="inka_ci_ci_link" />
+	<TableDrop Name="inka_ci_user_link_type" />
+	<TableDrop Name="inka_ci_link_type" />
+	<TableDrop Name="inka_ci_history" />
+	<TableDrop Name="inka_ci_properties" />
+	<TableDrop Name="inka_ci_template_properties" />
+	<TableDrop Name="inka_ci_properties_group" />
+	<TableDrop Name="inka_file" />
+	<TableDrop Name="inka_ci_generic_list" />
+	<TableDrop Name="inka_metatype" />
+	<TableDrop Name="inka_ci" />
+	<TableDrop Name="inka_ci_provider_list" />
+	<TableDrop Name="inka_ci_state" />
+	<TableDrop Name="inka_category" />
+	<TableDrop Name="inka_ci_template" />
+</DatabaseUninstall>

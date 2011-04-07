@@ -1,0 +1,42 @@
+# --
+# AgentInkaCI.dtl - provides HTML form for Agent Inka Configuration Items
+# Copyright (C) 2011 Juan Manuel Rodriguez
+# --
+# $Id: AgentInkaCI.dtl
+# --
+# This software comes with ABSOLUTELY NO WARRANTY. For details, see
+# the enclosed file COPYING for license information (AGPL). If you
+# did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
+# --
+
+<!-- start form -->
+<table border="0" width="100%" cellspacing="0" cellpadding="3">
+<tr>
+<td class="mainhead">
+$Env{"Box0"}$Text{"Overview"}:  $Text{"$QData{"Title"}"}$Env{"Box1"}
+</td>
+</tr>
+<tr>
+<td class="mainbody">
+<div id="MessageMenuDiv" class="OTRS3MessageBox OTRS3Notice" style="display: none;">
+    <p id="MessageMenuP">&nbsp;</p>
+</div>
+<div class="mainBoxCI">
+<!-- main body -->
+<h2>$Text{"Configuration Items"}</h2>
+
+    <div class="SidebarColumn">
+        <div class="WidgetSimple">
+            <div class="HeaderForCI">
+                <h2 class="classForh2">$Text{"Configuration Items"}</h2>
+            </div>
+
+            <div class="Content">
+                <ul class="ActionList">
+                	<!-- dtl:block:MenuArray -->										
+					<li class="MenuLi"><a href="$Data{"URL"}" >$Text{"$QData{"Name"}"}</a></li>		
+					<!-- dtl:block:MenuArray -->
+                </ul>
+            </div>
+        </div>	      
+    </div>

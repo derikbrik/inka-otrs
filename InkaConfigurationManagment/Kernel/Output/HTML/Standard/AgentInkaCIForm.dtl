@@ -1,0 +1,127 @@
+# --
+# AgentInkaCIForm.dtl - provides HTML form for Agent Inka Configuration Items
+# Copyright (C) 2011 Juan Manuel Rodriguez
+# --
+# $Id: AgentInkaCIForm.dtl $
+# --
+# This software comes with ABSOLUTELY NO WARRANTY. For details, see
+# the enclosed file COPYING for license information (AGPL). If you
+# did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
+# --
+ 
+ <div class="ContentColumn">
+        <div class="WidgetSimple">        	
+			<div class="HeaderForCI">
+            	<h2 class="classForh2">$Text{"$QData{"Title"}"}</h2>
+            </div>
+			<center>
+			<form action="index.pl" method="POST" id="ciformForm" enctype="multipart/form-data" name="compose">
+				<input name="Action" type="hidden" value="AgentInkaConfigurationItems" />
+				<input name="method" type="hidden" value="saveCI" />
+	            <div class="Content" id="ciform_content">
+	            	<div class="groupOfProperties" style="width: 80%;">
+	            	<table width="100%" id="ciform_table_default" >
+	            	<thead>
+	            		<tr style="background-color: #d7d7d7;">
+	            			<th width="30%">$Text{"Properties Group"}:</th>
+	            			<th colspan="2">$QData{"Default_Properties_Group"}</th>
+	            		</tr>
+	            	</thead>
+	            	<tbody id="ciformBodyDefaultTable">
+	            		<tr>
+	            			<td class="tdCaptionForm"><label for="ciformCategory" >$Text{"Category"}:</label></td>
+	            			<td colspan="2">
+								<div id="ciformSelectCategoryContainer">
+									<select class="ciformSelects" id="ciformCategory"></select>
+								</div>
+								<input type="hidden" id="ciformCategoryParentsArray" value=""/>
+							</td>
+	            		</tr>        		
+						<tr>
+	            			<td class="tdForCategory tdCaptionForm"><label for="ciformSubCategory" >* $Text{"Sub category"}:</label></td>
+	            			<td colspan="2" class="tdForCategory">
+								<div id="ciformSubCategoryContainer">
+									<select class="ciformSelects" id="ciformSubCategory" name="id_category"></select>
+								</div>
+							</td>				
+	            		</tr>
+						<tr>
+	            			<td class="tdCaptionForm"><label for="ciform_unique_name">* $Text{"Unique name"}:</label></td>
+	            			<td colspan="2"><input name="unique_name" class="ciformInputs" type="text" value="$QData{"unique_name"}" id="ciform_unique_name" onkeyup="return validateUniqueName(this.value);" onblur="return validateUniqueName(this.value);" /></td>
+	            		</tr>
+	            		<tr>
+	            			<td class="tdCaptionForm"><label for="ciform_serial_number">$Text{"Serial number"}:</label></td>
+	            			<td colspan="2"><input name="serial_number" class="ciformInputs" type="text" value="$QData{"serial_number"}" id="ciform_serial_number" /></td>
+	            		</tr>
+	            		<tr>
+	            			<td class="tdCaptionForm"><label for="ciformVendor">$Text{"Vendor"}:</label></td>
+	            			<td colspan="2">
+	            				<div id="ciformVendorContainer">
+									<select class="ciformSelects" id="ciformVendor" name="id_provider"></select>
+								</div>
+	            			</td>       			
+	            		</tr>        		
+	            		<tr style="display: none;" id="trCiformNewVendor">
+	            			<td class="tdCaptionForm"><label for="ciformNewVendor">$Text{"New Vendor"}:</label></td>
+	            			<td colspan="2">
+	            				<input class="ciformInputs" name="newVendor" type="text" value="" id="ciformNewVendor"/>
+	            			</td>
+	            		</tr>        		
+	            		<tr>
+	            			<td class="tdCaptionForm"><label for="ciformState">$Text{"State"}:</label></td>
+	            			<td colspan="2">
+	            				<div id="ciformStateContainer">
+									<select class="ciformSelects" id="ciformState" name="id_state"></select>
+								</div>
+	            			</td>       			
+	            		</tr>
+	            		<tr>
+	            			<td class="tdCaptionForm"><label for="ciformCost">$Text{"Cost"}:</label></td>
+	            			<td colspan="2"><input name="cost" class="ciformInputs" type="text" value="$QData{"cost"}" onkeypress="return validateFloatInput(event,this);" id="ciformCost"/></td>
+	            		</tr>
+	            		<tr>
+	            			<td class="tdCaptionForm"><label for="ciformBuyDate">$Text{"Day of acquisition"}:</label></td>
+	            			<td colspan="2">
+	            				 <input name="acquisition_day" type="text" id="ciformBuyDate" value="$QData{"acquisition_day"}" class="ciformInputs" />
+	            				 <small><i>dd/mm/yyyy</i></small>
+	            			</td>
+	            		</tr>
+	            		<tr>
+	            			<td class="tdCaptionForm"><label for="RichText">$Text{"Description"}:</label></td>
+	            			<td colspan="2">
+								<textarea id="RichText" rows="10" cols="40" name="Body">$QData{"description"}</textarea>
+	            			</td>
+	            		</tr>
+	            		<tr id="ciformTrLoading" style="display: none;">
+							<td class="tdCaptionForm">
+								&nbsp;
+		    				</td>
+		    				<td colspan="2" style="background-color: white;">
+		    						<div id="ciformLoaddivFields" style="display: block;" class="loadingCIForm">
+										<div id="ciformTextLoadingFields">$Text{"Please wait while loading all fields..."}</div>
+									</div>
+		    				</td>
+						</tr>
+	            		</tbody>
+	            	</table>
+	            	</div>            		
+				</div>
+				<button type="submit" title="$Text{"New"}" accesskey="g" id="ciformSubmit" onclick="return submitCIForm();" class="Primary">$Text{"$QData{"Button"}"}</button>
+				 $Text{"or"} <a href="index.pl?Action=AgentInkaConfigurationItems">$Text{"Cancel"}</a>
+				 <input name="id" type="hidden" value="$Data{"id"}" id="ciformCIID"/>				 
+			</form>
+			</center>
+         </div>
+</div>
+<!-- end main body -->
+</div>
+</td>
+</tr>
+</table>
+<script type="text/javascript">
+<!--
+var currentValuesMap = $Data{"jsonCurrValues"};
+//-->
+</script>
+<!-- end form -->
+$Include{"RichTextEditor"}

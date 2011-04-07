@@ -1,0 +1,145 @@
+# --
+# AdminInkaHeader.dtl - provides global HTML header for Inka screens. Support Jquery Ajax
+# Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
+# Copyright (C) 2011 Juan Manuel Rodriguez
+# --
+# $Id: AgentInkaHeader.dtl $
+# --
+# This software comes with ABSOLUTELY NO WARRANTY. For details, see
+# the enclosed file COPYING for license information (AGPL). If you
+# did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
+# --
+#
+# http headers
+Content-Type: text/html; charset=$Env{"UserCharset"};
+Content-Disposition: $Data{"ContentDisposition"}
+X-Powered-By: $Config{"Product"} $Config{"Version"} - Open Ticket Request System (http://otrs.org/)
+Expires: Tue, 1 Jan 1980 12:00:00 GMT
+Cache-Control: no-cache
+Pragma: no-cache
+
+# include Copyright.dtl
+$Include{"Copyright"}
+# --
+# set some html variables
+# --
+<dtl set $Env{"Box0"} = "[ ">
+<dtl set $Env{"Box1"} = " ]">
+# --
+<html>
+<head>
+<!-- dtl:block:MetaHttpEquivRefresh -->
+  <meta http-equiv="refresh" content="$QData{"Refresh"}"/>
+<!-- dtl:block:MetaHttpEquivRefresh -->
+<!-- dtl:block:MetaLink -->
+  <link rel="$QData{"Rel"}" type="$QData{"Type"}" title="$QData{"Title"}" href="$Data{"Href"}"/>
+<!-- dtl:block:MetaLink -->
+  <link rel="shortcut icon" href="$Config{"Frontend::ImagePath"}product.ico" type="image/ico"/>
+# include css file
+  <link href="$Config{"Frontend::CSSPath"}Standard/agent.css" rel="stylesheet" type="text/css"/>  
+	<script type="text/javascript" src="$Config{"Frontend::JavaScriptPath"}jquery.js"></script>
+	<script type="text/javascript" src="$Config{"Frontend::JavaScriptPath"}jquery-ui.min.js"></script>  
+	<script type="text/javascript" src="$Config{"Frontend::JavaScriptPath"}dtree/dtree.js"></script>
+	<script type="text/javascript" src="$Config{"Frontend::JavaScriptPath"}inkaCommon.js"></script>
+	<script type="text/javascript" src="$Config{"Frontend::JavaScriptPath"}inkaCM.js"></script>
+	<script type="text/javascript" src="$Config{"Frontend::JavaScriptPath"}json2.js"></script>
+	<link href="$Config{"Frontend::CSSPath"}Standard/jquery-ui-otrs.css" rel="stylesheet" type="text/css" />
+	<link href="$Config{"Frontend::CSSPath"}Standard/inkaCM.css" rel="stylesheet" type="text/css" />
+	<link href="$Config{"Frontend::JavaScriptPath"}dtree/dtree.css" rel="stylesheet" type="text/css" />
+	
+  <title>$Config{"ProductName"} $Text{"$QData{"Title"}"}</title>
+<script type="text/javascript" >
+
+ //Javascript constants
+ var JAVASCRIPT_PATH = '$Config{"Frontend::JavaScriptPath"}'; 
+ var IMAGE_PATH = '$Config{"Frontend::ImagePath"}';
+ var CHARSET = '$Env{"UserCharset"}';
+ var LISTA_ID = $QData{"LISTA_ID"};
+ //End Javascript constants
+ //Javascript globales
+ var categoryTree;
+ var stateTree;
+
+ //Dictionary
+ var dic = new Array(); 
+
+dic["NO_STATUS"]="$Text{"Unable to retrive operation status"}";
+dic['NONE']="$Text{"none"}";
+dic["NAME_EMPTY"]="$Text{"field name can't be empty"}";
+dic["CAPTION_EMPTY"]="$Text{"field caption can't be empty"}";
+dic["PROP_EMPTY"]="$Text{"properties group name can't be empty"}";
+dic["NAME_VALUE_EMPTY"]="$Text{"fields name and value can't be empty"}";
+dic["NO_DEL_ELE"]="$Text{"Unable to delete element"}";
+dic["NO_DEL_LIST"]="$Text{"Unable to delete selected list"}";
+dic["NO_DEL_TEMP"]="$Text{"Unable to delete template"}";
+dic["CONFIRM_CHILD"]="$Text{"Are you sure you want to remove this element and all its children?"}";
+dic["CONFIRM_ELEM"]="$Text{"Are you sure you want to remove this element?"}";
+dic["CONFIRM_SEL_ELEM"]="$Text{"Are you sure you want to remove all selected elements?"}";
+dic["NO_ELEM_LIST"]="$Text{"Unable to get elements in the list"}";
+dic["NO_LIST"]="$Text{"Unable to get lists"}";
+dic["NO_VENDOR_LIST"]="$Text{"Unable to get vendor list"}";
+dic["NO_STATES"]="$Text{"Unable to get states"}";
+dic["NO_CAT"]="$Text{"Unable to get categories"}";
+dic["NO_CAT_DATA"]="$Text{"Unable to get category data"}";
+dic["NO_CAT_LIST"]="$Text{"Unable to get category list"}";
+dic["NO_CAT_SUBLIST"]="$Text{"Unable to get category sublist"}";
+dic["NO_CAT_PARENT"]="$Text{"Unable to get category sublist"}";
+dic["NO_TEMP_LIST"]="$Text{"Unable to get template list"}";
+dic["NO_PROPG"]="$Text{"Unable to get properties groups"}";
+dic["NO_TEMP_DATA"]="$Text{"Unable to get template data"}";
+dic["NO_VENDORES_MESS"]="$Text{"There are no vendors for this category.  (parent vendors would be used)"}";
+dic["NO_ELEM_LIST2"]="$Text{"There are no elements in this list"}";
+dic["OTHER"]="$Text{"other"}";
+
+
+ 
+ jQuery.noConflict();
+ jQuery(document).ready(function() {
+	 jQuery("#tabs").tabs({
+		    show: function(event, ui) {
+		    var tabSelected = ui.tab.hash.substring(1,ui.tab.hash.length);
+		    switch(tabSelected)
+		    {
+			    case 'categories':
+			    	tabsCITLoadCategories();
+			      break;
+			    case 'states':
+			    	tabsCITLoadStates();
+			      break;
+			    case 'vendors':
+			    	tabsCITLoadVendors();
+			    break;  
+			    case 'templates':
+			    	tabsCITLoadTemplates();
+				   break;
+			    case 'links':
+			    	tabsCITLoadLinks();			    	
+				    break;
+				case 'generic_lists':
+					tabsCITLoadGenericLists();
+				   break;			      
+			    default: break;
+			      
+		    }
+			 	
+		}
+	});
+  });
+</script>
+  
+</head>
+<body>
+<a name="top"></a>
+<table border="0" width="100%" cellspacing="0" cellpadding="3">
+  <tr>
+    <td align="left" width="20%" class="header">
+      <b>
+      $Env{"Box0"}<a href="$Env{"Baselink"}" accesskey="h" onmouseover="window.status='$JSText{"Home"}'; return true;" onmouseout="window.status='';" class="headeritem">$Config{"ProductName"}</a>$Env{"Box1"}
+      </b>
+    </td>
+    <td align="right" width="80%" class="header">
+      $Env{"UserFirstname"} $Env{"UserLastname"} $Env{"UserLoginIdentifier"} $Env{"TimeLong"}
+    </td>
+  </tr>
+</table>
+<!-- end header -->

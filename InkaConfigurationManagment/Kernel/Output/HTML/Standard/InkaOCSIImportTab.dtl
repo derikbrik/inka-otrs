@@ -1,0 +1,12 @@
+# --
+# InkaOCSIImportTab.dtl - Contains the Help Tab, for the Inka Configuration Managment - OCSI Tab for DO import
+# Copyright (C) 2011 Juan Manuel Rodriguez
+# --
+# $Id: InkaOCSIImportTab.dtl $
+# --
+# This software comes with ABSOLUTELY NO WARRANTY. For details, see
+# the enclosed file COPYING for license information (AGPL). If you
+# did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
+# --
+   
+<h2>$Text{"$QData{"Tab01"}"}</h2>

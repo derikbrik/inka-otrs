@@ -1,0 +1,88 @@
+# --
+# AgentInkaOCSIHeader.dtl - provides HTML header for Inka OCSI -sections
+# Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
+# Copyright (C) 2011 Juan Manuel Rodriguez
+# --
+# $Id: AgentInkaOCSIHeader.dtl $
+# --
+# This software comes with ABSOLUTELY NO WARRANTY. For details, see
+# the enclosed file COPYING for license information (AGPL). If you
+# did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
+# --
+#
+# http headers
+Content-Type: text/html; charset=$Env{"UserCharset"};
+Content-Disposition: $Data{"ContentDisposition"}
+X-Powered-By: $Config{"Product"} $Config{"Version"} - Open Ticket Request System (http://otrs.org/)
+Expires: Tue, 1 Jan 1980 12:00:00 GMT
+Cache-Control: no-cache
+Pragma: no-cache
+
+# include Copyright.dtl
+$Include{"Copyright"}
+# --
+# set some html variables
+# --
+<dtl set $Env{"Box0"} = "[ ">
+<dtl set $Env{"Box1"} = " ]">
+# --
+<html>
+<head>
+<!-- dtl:block:MetaHttpEquivRefresh -->
+  <meta http-equiv="refresh" content="$QData{"Refresh"}"/>
+<!-- dtl:block:MetaHttpEquivRefresh -->
+<!-- dtl:block:MetaLink -->
+  <link rel="$QData{"Rel"}" type="$QData{"Type"}" title="$QData{"Title"}" href="$Data{"Href"}"/>
+<!-- dtl:block:MetaLink -->
+	<link rel="shortcut icon" href="$Config{"Frontend::ImagePath"}product.ico" type="image/ico"/>
+# include css file
+	<link href="$Config{"Frontend::CSSPath"}Standard/agent.css" rel="stylesheet" type="text/css"/>
+	<link rel="stylesheet" type="text/css" href="$Config{"Frontend::JavaScriptPath"}flexigrid/flexigrid.css" />	        
+	<script type="text/javascript" src="$Config{"Frontend::JavaScriptPath"}jquery.js"></script>	
+	<script type="text/javascript" src="$Config{"Frontend::JavaScriptPath"}jquery-ui.min.js"></script>		
+	<script type="text/javascript" src="$Config{"Frontend::JavaScriptPath"}flexigrid/flexigrid.js"></script>
+	<script type="text/javascript" src="$Config{"Frontend::JavaScriptPath"}inkaCommon.js"></script>
+	<script type="text/javascript" src="$Config{"Frontend::JavaScriptPath"}inkaCM4.js"></script>
+	<script type="text/javascript" src="$Config{"Frontend::JavaScriptPath"}json2.js"></script>	
+	
+	<link href="$Config{"Frontend::CSSPath"}Standard/jquery-ui-otrs.css" rel="stylesheet" type="text/css" />
+	<link href="$Config{"Frontend::CSSPath"}Standard/inkaCM.css" rel="stylesheet" type="text/css" />	
+	<title>$Config{"ProductName"} $Text{"$QData{"Title"}"}</title>
+	
+<script type="text/javascript" >
+//Javascript constants
+var JAVASCRIPT_PATH =  '$Config{"Frontend::JavaScriptPath"}';
+var IMAGE_PATH = 	   '$Config{"Frontend::ImagePath"}';
+var CHARSET = 		   '$Env{"UserCharset"}';
+var CURRENT_SECTION =  '$QData{"Section"}';
+
+var enabled = $QData{"enabled"};
+var step = '$Data{"step"}';
+
+//Dictionary
+	 var dic = new Array();	 
+	 dic["FIELD_REQ"]="$Text{"This field is requiered"}";
+	 dic["CNT"]="$Text{"Creating new templates"}";
+	 
+	jQuery.noConflict();
+	jQuery(document).ready(function() {
+				initialiceOCSIPage();
+	});
+</script>
+
+</head>
+<body>
+<a name="top"></a>
+<table border="0" width="100%" cellspacing="0" cellpadding="3">
+  <tr>
+    <td align="left" width="20%" class="header">
+      <b>
+      $Env{"Box0"}<a href="$Env{"Baselink"}" accesskey="h" onmouseover="window.status='$JSText{"Home"}'; return true;" onmouseout="window.status='';" class="headeritem">$Config{"ProductName"}</a>$Env{"Box1"}
+      </b>
+    </td>
+    <td align="right" width="80%" class="header">
+      $Env{"UserFirstname"} $Env{"UserLastname"} $Env{"UserLoginIdentifier"} $Env{"TimeLong"}
+    </td>
+  </tr>
+</table>
+<!-- end header -->

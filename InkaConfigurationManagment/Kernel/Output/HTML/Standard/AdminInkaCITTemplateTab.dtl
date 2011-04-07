@@ -1,0 +1,241 @@
+# --
+# AdminInkaCITTemplateTab.dtl - Contains the Templates Tab, for the Inka Configuration Managment - Admin Templates section
+# Copyright (C) 2011 Juan Manuel Rodriguez
+# --
+# $Id: AdminInkaCITTemplateTab.dtl $
+# --
+# This software comes with ABSOLUTELY NO WARRANTY. For details, see
+# the enclosed file COPYING for license information (AGPL). If you
+# did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
+# --
+   
+        <div class="divContainer">
+    		<div class="divLeft">
+    			<h2>$Text{"Templates"}</h2>
+    			<div>
+	    			<div  class="shortTopInnerLeft">
+	    				<table>
+		    				<tr style="padding-bottom: 20px;">
+								<td class="listField">$Text{"Templates"}:</td>
+								<td>
+									<div id="templateSelectContainer" class="buttonCreateTop">
+										<select id="listTemplates"></select>
+									</div>
+								</td>
+							</tr>					
+	    				</table>
+	    			</div>    			
+	    			<p style="text-align: right;">
+	    				<input type="button" value="$Text{"Edit template"}" onclick=" return openTemplateForm(1);" />
+	    				&nbsp;
+	    				<input type="button" value="$Text{"Create new template"}" onclick=" return openTemplateForm(0);" />
+	    			</p>
+    			</div>
+    			
+				<h2>$Text{"Template fields"}</h2>				         
+				<p>
+					<div class="fakeLink" onclick="jQuery('#templateFieldsDefaultBody').toggle();" >$Text{"Hide/Show Default fields"}</div>
+				<p>
+    			<div class="shortInnerLeft" id="templateInnerLeft">
+								
+						<table id="templateFieldsDefault" class="templateTableDefault">
+							<thead>
+								<tr>
+									<th class="percent10">&nbsp;&nbsp;&nbsp;</th>
+									<th class="percent40">$Text{"Name"}</th>
+									<th class="percent30">$Text{"Type"}</th>
+									<th class="percent10">$Text{"Mandatory"}</th>
+									<th class="percent10">$Text{"Display"}</th>
+								</tr>
+							</thead>
+						<tbody id="templateFieldsDefaultBody">
+							<tr>
+								<td class="percent10"><input type="checkbox" disabled="disabled"/></td>
+								<td class="percent40">$Text{"Unique name"}</td>
+								<td class="percent30">STRING</td>
+								<td class="percent10"><input type="checkbox" checked="checked" disabled="disabled"/></td>
+								<td class="percent10"><input type="checkbox" checked="checked" disabled="disabled"/></td>
+							</tr>
+							<tr>
+								<td><input type="checkbox" disabled="disabled"/></td>
+								<td>$Text{"Serial number"}</td>
+								<td>STRING</td>
+								<td><input type="checkbox" disabled="disabled"/></td>
+								<td><input type="checkbox" checked="checked" disabled="disabled"/></td>
+							</tr>
+							<tr>
+								<td><input type="checkbox" disabled="disabled"/></td>
+								<td>$Text{"Description"}</td>
+								<td>TEXT</td>
+								<td><input type="checkbox" disabled="disabled"/></td>
+								<td><input type="checkbox" checked="checked" disabled="disabled"/></td>
+							</tr>
+							<tr>
+								<td><input type="checkbox" disabled="disabled"/></td>
+								<td>$Text{"State"}</td>
+								<td>LIST</td>
+								<td><input type="checkbox" checked="checked" type="checkbox" disabled="disabled"/></td>
+								<td><input type="checkbox" checked="checked" disabled="disabled"/></td>
+							</tr>
+							<tr>
+								<td><input type="checkbox" disabled="disabled"/></td>
+								<td>$Text{"Vendor"}</td>
+								<td>LIST</td>
+								<td><input type="checkbox" disabled="disabled"/></td>
+								<td><input type="checkbox" checked="checked" disabled="disabled"/></td>
+							</tr>
+							<tr>
+								<td><input type="checkbox" disabled="disabled"/></td>
+								<td>$Text{"Cost"}</td>
+								<td>FLOAT</td>
+								<td><input type="checkbox" disabled="disabled"/></td>
+								<td><input type="checkbox" checked="checked" disabled="disabled"/></td>
+							</tr>
+							<tr>
+								<td><input type="checkbox" disabled="disabled"/></td>
+								<td>$Text{"Day of acquisition"}</td>
+								<td>DATE TIME</td>
+								<td><input type="checkbox"  disabled="disabled"/></td>
+								<td><input type="checkbox" checked="checked" disabled="disabled"/></td>
+							</tr>
+						</tbody>
+					</table>
+					<table id="templateFields" class="templateTable" >
+					
+							<!-- thead>
+								<tr>
+									<th class="percent10">&nbsp;&nbsp;&nbsp;</th>
+									<th class="percent40">$Text{"Name"}</th>
+									<th class="percent30">$Text{"Type"}</th>
+									<th class="percent10">$Text{"Mandatory"}</th>
+									<th class="percent10">$Text{"Display"}</th>
+								</tr>
+							</thead-->									
+						<tbody id="templateFieldsBody">
+						</tbody>
+					</table>
+				</div>
+				<p class="pButtonRight">
+					<input type="button" value="$Text{"Delete Selected"}" onclick=" return deleteSelectedTFields();" class="buttonDeleteSelected" />
+				    <input type="button" value="$Text{"Create New"}"      onclick=" return openTemplateFieldForm();" class="buttonCreateNew"  />
+				</p>
+			</div>			
+    		<div class="divRigth">
+    			<div id="templateForm" class="superInnerRigth"> <!-- start Template Form -->
+    				<div id="titleNewTemplate"><center><h2>$Text{"New template"}</h2></center></div>
+    				<div id="titleEditTemplate"><center><h2>$Text{"Edit template"}</h2></center></div>
+    			<div class="innerRigth"  ><!-- template form -->
+    				<form action="#">
+    					<table>
+    						<tbody>
+    							<tr>
+    								<td colspan="2">&nbsp;</td>
+    							</tr>
+    							<tr>
+    								<td>$Text{"Name"} :</td>
+    								<td><input onkeypress="if((event.keyCode && event.keyCode == 13)||(event.which && event.which == 13)){ submitTemplateForm(); return false; }else return validateinputtext(event, this);" type="text" id="templateName"/></td>
+    							</tr>    						
+    							<!-- tr id="templateExtendDefaultTR">
+    								<td>$Text{"Extend Default"} :</td>
+    								<td><input type="checkbox" checked="checked" id="templateExtendDefault" /></td>
+    							</tr-->
+    							<tr>
+    								<td colspan="2">&nbsp;</td>
+    							</tr>    							
+    							<tr style="text-align: right;">
+    								<td style="text-align: left;">
+    									<input id="deleteTemplateButton" type="button" value="$Text{"Delete"}" onclick="javascript: return deleteTemplate();" />
+    								</td>    								
+    								<td style="text-align: right;">
+    									<input type="button" value="$Text{"Submit"}"  onclick="javascript: return submitTemplateForm();"/>
+    									<input type="button" value="$Text{"Cancel"}"  onclick="javascript: return closeTemplateForm();" />    									
+										<input type="hidden" value="0" id="templateId"/>					
+    								</td>    								
+    							</tr>
+    						</tbody>    					
+    					</table>
+    				</form>
+    			</div><!--  end Template form  -->
+    			</div> <!-- end super inner rigth -->
+    			<div id="templateFieldForm" class="superInnerRigth">
+    				<div id="titleNewTemplateField"><center><h2>$Text{"New field"}</h2></center></div>
+    				<div id="titleEditTemplateField"><center><h2>$Text{"Edit field"}</h2></center></div>
+    			<div class="innerRigth"  ><!-- field template form -->
+    				<form action="#">
+    					<table>
+    						<tbody>
+    							<tr>
+    								<td colspan="2">&nbsp;</td>
+    							</tr>    							
+    							<tr>
+    								<td>$Text{"Caption"} :</td>
+    								<td><input onkeypress="if((event.keyCode && event.keyCode == 13)||(event.which && event.which == 13)){ submitTemplateFieldForm(); return false; }else return validateinputtext(event, this);" type="text" id="templateFieldCaption"/></td>
+    							</tr>
+    							<tr>
+    								<td>$Text{"Template"} :</td>
+    								<td><div class="noeditable" id="templateNameTemplateField"></div></td>
+    							</tr>
+								<tr>	    							
+    								<td>$Text{"Type"} :</td>
+    								<td>
+	    								<select onchange="return checkMetaType(this.options[this.selectedIndex].value);" id="templateFieldMetaType">		
+										<!-- dtl:block:Metatype -->
+										<option value="$Data{"id"}">$Data{"name"}</option>		
+										<!-- dtl:block:Metatype -->									
+										</select>
+									</td>
+    							</tr>
+    							<tr id="templateFieldListContainer" style="display: none;">
+    								<td>$Text{"List"} :</td>    								
+    								<td id="listTemplateContainer">
+    									<select id="listTemplate">
+    									</select>    								
+    								</td>
+    							</tr>
+    							<tr>
+    								<td>$Text{"Mandatory"} :</td>
+    								<td><input type="checkbox" id="templateFieldMandatory"/></td>
+    							</tr>
+    							
+    							<tr>
+    								<td>$Text{"Display"} :</td>
+    								<td><input type="checkbox" id="templateFieldDisplay" /></td>
+    							</tr>
+    							
+    							<tr>
+    								<td>$Text{"Properties Group"} :</td>
+    								<td id="propertiesGroupTemplateContainer">
+    									<select id="propertiesGroupTemplate">
+    									</select>
+    								</td>
+    							</tr>
+    							<tr id="templateFieldGroupTextContainer" style="display: none;">
+    								<td>$Text{"New Properties Group"} :</td>    								
+    								<td><input onkeypress="if((event.keyCode && event.keyCode == 13)||(event.which && event.which == 13)){ submitTemplateFieldForm(); return false; }else return validateinputtext(event, this);" type="text" id="templateFieldGroupText"/></td>
+    							</tr>       						
+    							<tr>
+    								<td colspan="2">&nbsp;</td>
+    							</tr>    							
+    							<tr style="text-align: right;">
+    								<td style="text-align: left;">
+    									<input id="deleteTemplateFieldButton" type="button" value="$Text{"Delete"}" onclick="javascript: return deleteFieldTemplateElement();" />
+    								</td>    								
+    								<td style="text-align: right;">
+    									<input type="button" value="$Text{"Submit"}"  onclick="javascript: return submitTemplateFieldForm();"/>
+    									<input type="button" value="$Text{"Cancel"}"  onclick="javascript: return closeTemplateForm();" />    									
+										<input type="hidden" value="0" id="templateFieldId"/>					
+    								</td>    								
+    							</tr>
+    							
+    						</tbody>    					
+    					</table>
+    				</form>
+    			</div><!--  end template field form  -->
+				</div><!-- second super div inner rigth -->
+    			
+    			<div id="vendorMessageDiv">
+    							<div id="MessageOkTT" class="messageOk">&nbsp;</div>
+    							<div id="MessageErrorTT" class="messageError">&nbsp;</div>
+    			</div>
+    		</div>
+		</div>

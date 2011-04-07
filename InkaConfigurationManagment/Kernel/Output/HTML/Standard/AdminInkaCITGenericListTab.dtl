@@ -1,0 +1,119 @@
+# --
+# AdminInkaCITGenericListTab.dtl - Contains the GenericList Tab, for the Inka Configuration Managment - Admin Templates section
+# Copyright (C) 2011 Juan Manuel Rodriguez
+# --
+# $Id: AdminInkaCITGenericListTab.dtl $
+# --
+# This software comes with ABSOLUTELY NO WARRANTY. For details, see
+# the enclosed file COPYING for license information (AGPL). If you
+# did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
+# --
+   
+   <div class="divContainer">
+    		<div class="divLeft">
+    			<h2>$Text{"Lists"}</h2>
+    			<div>
+    			<div  class="shortTopInnerLeft">
+    				<table>
+	    				<tr style="padding-bottom: 20px;">
+							<td class="listField">$Text{"Lists"}:</td>
+							<td>
+								<div id="listSelectContainer" class="buttonCreateTop">
+									<select id="listList"></select>
+								</div>
+							</td>
+						</tr>					
+    				</table>
+    			</div>    			
+    			<p style="text-align: right;">
+    				<input type="button" value="$Text{"Edit List"}" onclick=" return openListForm(1);" />
+    				&nbsp;
+    				<input type="button" value="$Text{"Create New List"}" onclick=" return openListForm(0);" />
+    			</p>
+    			</div>
+    			
+				<h2>$Text{"List Elements"}</h2>    			   			
+    			<div class="shortInnerLeft" id="listInnerLeft">
+					<ul id="listElements" >				    		
+					</ul>
+				</div>
+				<p><input type="button" value="$Text{"Create New"}" onclick=" return openElementListForm();" class="buttonCreateNew"/></p>
+			</div>			
+    		<div class="divRigth">
+    			<div id="listForm" class="superInnerRigth">
+    				<div id="titleNewList"><center><h2>$Text{"New List"}</h2></center></div>
+    				<div id="titleEditList"><center><h2>$Text{"Edit List"}</h2></center></div>
+    			<div class="innerRigth"  ><!-- list form -->
+    				<form action="#">
+    					<table>
+    						<tbody>
+    							<tr>
+    								<td colspan="2">&nbsp;</td>
+    							</tr>
+    							<tr>
+    								<td>$Text{"Name"} :</td>
+    								<td><input onkeypress="if((event.keyCode && event.keyCode == 13)||(event.which && event.which == 13)){ submitListForm(); return false; }else return validateinputtext(event, this);" type="text" id="listName"/></td>
+    							</tr>    						
+    							<tr>
+    								<td colspan="2">&nbsp;</td>
+    							</tr>    							
+    							<tr style="text-align: right;">
+    								<td style="text-align: left;">
+    									<input id="deleteListButton" type="button" value="$Text{"Delete"}" onclick="javascript: return deleteList();" />
+    								</td>    								
+    								<td style="text-align: right;">
+    									<input type="button" value="$Text{"Submit"}"  onclick="javascript: return submitListForm();"/>
+    									<input type="button" value="$Text{"Cancel"}"  onclick="javascript: return closeListForm();" />    									
+										<input type="hidden" value="0" id="listId"/>					
+    								</td>    								
+    							</tr>
+    							
+    						</tbody>    					
+    					</table>
+    				</form>
+    			</div><!--  end list form  -->
+    			</div> <!-- end super inner rigth -->
+    			<div id="listElementForm" class="superInnerRigth">
+    				<div id="titleNewListElement"><center><h2>$Text{"New Element List"}</h2></center></div>
+    				<div id="titleEditListElement"><center><h2>$Text{"Edit Element List"}</h2></center></div>
+    			<div class="innerRigth"  ><!-- element list form -->
+    				<form action="#">
+    					<table>
+    						<tbody>
+    							<tr>
+    								<td colspan="2">&nbsp;</td>
+    							</tr>
+    							<tr>
+    								<td>$Text{"Name"} :</td>
+    								<td><input onkeypress="if((event.keyCode && event.keyCode == 13)||(event.which && event.which == 13)){ submitListElementForm(); return false; }else return validateinputtext(event, this);" type="text" id="listElementName"/></td>
+    							</tr>
+    							<tr>
+    								<td>$Text{"Value"} :</td>
+    								<td><input onkeypress="if((event.keyCode && event.keyCode == 13)||(event.which && event.which == 13)){ submitListElementForm(); return false; }else return validateinputtext(event, this);" type="text" id="listElementValue"/></td>
+    							</tr>       						
+    							<tr>
+    								<td colspan="2">&nbsp;</td>
+    							</tr>    							
+    							<tr style="text-align: right;">
+    								<td style="text-align: left;">
+    									<input id="deleteListElementButton" type="button" value="$Text{"Delete"}" onclick="javascript: return deleteListElement();" />
+    								</td>    								
+    								<td style="text-align: right;">
+    									<input type="button" value="$Text{"Submit"}"  onclick="javascript: return submitListElementForm();"/>
+    									<input type="button" value="$Text{"Cancel"}"  onclick="javascript: return closeListForm();" />    									
+										<input type="hidden" value="0" id="listElementId"/>					
+    								</td>    								
+    							</tr>
+    							
+    						</tbody>    					
+    					</table>
+    				</form>
+    			</div><!--  end element list form  -->
+				</div><!-- second super div inner rigth -->
+    			
+    			<div id="vendorMessageDiv">
+    							<div id="MessageOkGLT" class="messageOk">&nbsp;</div>
+    							<div id="MessageErrorGLT" class="messageError">&nbsp;</div>
+    			</div>
+    		</div>
+		</div><!-- generic list end container -->
