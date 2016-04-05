@@ -1,0 +1,1 @@
+Module for OTRS which provides all the Configuration Manager functionality and integration with OCS Inventory for automated DataBase population
